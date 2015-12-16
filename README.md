@@ -1,2 +1,2 @@
 # doodlepad
-Yet another Java object graphics library
+Yet another object graphics library for Java
