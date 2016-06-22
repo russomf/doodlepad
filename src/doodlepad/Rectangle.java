@@ -25,6 +25,7 @@ package doodlepad;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 /**
  * A class that implements a graphical rectangle object
@@ -71,9 +72,16 @@ public class Rectangle extends Shape
 
     /**
      * Default constructor for the Rectangle object.
+     * Creates a new 100x100 draggable shape and positions it randomly.
      */
     public Rectangle() {
-        this(100., 100., 100., 100.);
+        this(0, 0, 100.0, 100.0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight()-100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
     
      /**
@@ -103,8 +111,8 @@ public class Rectangle extends Shape
     }
     
     /**
-     * Build a String representation of the Rectangle object
-     * @return Rectangle String representation
+     * Generate a representation of the Rectangle object
+     * @return String representation
      */
     @Override
     public String toString() {

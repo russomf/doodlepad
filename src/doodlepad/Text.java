@@ -30,6 +30,7 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.font.TextLayout;
 import java.awt.font.FontRenderContext;
+import java.util.Random;
 import javax.swing.UIManager;
 
 /**
@@ -53,7 +54,7 @@ public class Text extends Shape
      * @param size      The font size used to draw the Text object.
      * @param style     The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
      * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
-     * @param layer     The Layer object to which the Image should be added, or null if not to add to a Pad.
+     * @param layer     The Layer object to which the Text should be added, or null if not to add to a Pad.
      */
     public Text(String text, double x, double y, int size, int style, String fontName, Layer layer) {
         super(x, y, 0, 0, layer);
@@ -81,19 +82,19 @@ public class Text extends Shape
         this(text, x, y, size, style, fontName, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Text object constructor
-//     * @param text      The String drawn as the Text object
-//     * @param x         The x-coordinate of the Text object upper left corner.
-//     * @param y         The y-coordinate of the Text object upper left corner.
-//     * @param size      The font size used to draw the Text object.
-//     * @param style     The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
-//     * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
-//     * @param pad       The Pad to which the Text object should be added.
-//     */
-//    public Text(String text, double x, double y, int size, int style, String fontName, Pad pad) {
-//        this(text, x, y, size, style, fontName, pad.getLayer(0));
-//    }
+    /**
+     * Text object constructor
+     * @param text      The String drawn as the Text object
+     * @param x         The x-coordinate of the Text object upper left corner.
+     * @param y         The y-coordinate of the Text object upper left corner.
+     * @param size      The font size used to draw the Text object.
+     * @param style     The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
+     * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
+     * @param pad       The Pad to which the Text object should be added.
+     */
+    public Text(String text, double x, double y, int size, int style, String fontName, Pad pad) {
+        this(text, x, y, size, style, fontName, pad.getLayer(0));
+    }
     
     /**
      * Text object constructor. Create a Text object with an Arial font.
@@ -118,17 +119,17 @@ public class Text extends Shape
         this(text, x, y, size, Font.PLAIN, "Arial", Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Text object constructor. Create a Text object with style Font.PLAIN and an Arial font.
-//     * @param text  The String drawn as the Text object
-//     * @param x     The x-coordinate of the Text object upper left corner.
-//     * @param y     The y-coordinate of the Text object upper left corner.
-//     * @param size  The font size used to draw the Text object.
-//     * @param pad   The Pad to which the Text object should be added.
-//     */
-//    public Text(String text, double x, double y, int size, Pad pad) {
-//        this(text, x, y, size, Font.PLAIN, "Arial", pad.getLayer(0));
-//    }
+    /**
+     * Text object constructor. Create a Text object with style Font.PLAIN and an Arial font.
+     * @param text  The String drawn as the Text object
+     * @param x     The x-coordinate of the Text object upper left corner.
+     * @param y     The y-coordinate of the Text object upper left corner.
+     * @param size  The font size used to draw the Text object.
+     * @param pad   The Pad to which the Text object should be added.
+     */
+    public Text(String text, double x, double y, int size, Pad pad) {
+        this(text, x, y, size, Font.PLAIN, "Arial", pad.getLayer(0));
+    }
     
     /**
      * Text object constructor. Create a Text object with style Font.PLAIN and an Arial font.
@@ -152,16 +153,16 @@ public class Text extends Shape
         this(text, x, y, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Text object constructor. Create a Text object with the default system font attributes.
-//     * @param   text    The String drawn as the Text object
-//     * @param   x       The x-coordinate of the Text object upper left corner.
-//     * @param   y       The y-coordinate of the Text object upper left corner.
-//     * @param   pad     The Pad to which the Text object should be added.
-//     */
-//    public Text(String text, double x, double y, Pad pad) {
-//        this(text, x, y, pad.getLayer(0));
-//    }
+    /**
+     * Text object constructor. Create a Text object with the default system font attributes.
+     * @param   text    The String drawn as the Text object
+     * @param   x       The x-coordinate of the Text object upper left corner.
+     * @param   y       The y-coordinate of the Text object upper left corner.
+     * @param   pad     The Pad to which the Text object should be added.
+     */
+    public Text(String text, double x, double y, Pad pad) {
+        this(text, x, y, pad.getLayer(0));
+    }
     
     /**
      * Text object constructor. Create a Text object with the default system font attributes.
@@ -184,15 +185,26 @@ public class Text extends Shape
     }
     
     /**
-     * Text object constructor. Create a sample Text object at 100, 100.
+     * Text object constructor. 
+     * Creates a randomly positioned Text object.
      */
     public Text() {
-        this("Hello", 100, 100);
+        this("Hello", 0, 0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight() - 100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
     
+    /**
+     * Generate a representation of the Text object.
+     * @return String representation
+     */
     @Override
     public String toString() {
-        return "Text x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
+        return "Text x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "text=" + text + ", layer=" + layer;
     }
     
     /**

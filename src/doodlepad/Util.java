@@ -23,18 +23,33 @@
 package doodlepad;
 
 /**
- *
- * @author Mark
+ * A class with useful static utility methods.
+ * 
+ * @author Mark F. Russo, PhD
+ * @version 1.0
  */
 public class Util {
     
-    // Private utility method to constrain a value
+    /**
+     * Constrain a value to the given range.
+     * @param val The value to constrain.
+     * @param min The minimum possible value.
+     * @param max The maximum possible value.
+     * @return The constrained value.
+     */
     public static int constrain(int val, int min, int max) {
         if (val < min) val = min;
         if (val > max) val = max;
         return val;
     }
     
+    /**
+     * Constrain a value to the given range.
+     * @param val The value to constrain.
+     * @param min The minimum possible value.
+     * @param max The maximum possible value.
+     * @return The constrained value.
+     */
     public static double constrain(double val, double min, double max) {
         return Math.max(Math.min(val, max), min);
     }

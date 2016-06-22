@@ -26,6 +26,7 @@ import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Random;
 
 /**
  * A class that implements a graphical rectangle object with rounded corners
@@ -82,12 +83,23 @@ public class RoundRect extends Shape
     }
     
     /**
-     * The default constructor of the RoundRect object.
+     * Default constructor for the RoundRect object.
+     * Creates a new 100x100 draggable shape and positions it randomly.
      */
     public RoundRect() {
-        this(100., 100., 100., 100., 20., 20.);
+        this(0, 0, 100.0, 100.0, 20.0, 20.0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight()-100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
     
+    /**
+     * Generate a representation of the RoundRect object.
+     * @return String representation
+     */
     @Override
     public String toString() {
         return "RoundRect x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
@@ -119,6 +131,15 @@ public class RoundRect extends Shape
         if (selected) drawSelRect(g);
     }
     
+    /**
+     * Get the Area object associated with this round rectangle.
+     * @return The Area object.
+     */
+    @Override
+    public Area getArea() {
+        return new Area( new RoundRectangle2D.Double(x, y, width, height, arcWidth, arcHeight));
+    }
+
 //    /**
 //     * Draw the region that will be used to detect a hit on the shape
 //     * @param g The Graphics2D on which to draw the hit region
@@ -130,9 +151,4 @@ public class RoundRect extends Shape
 //        g.setColor(clr);
 //        g.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
 //    }
-    
-    @Override
-    public Area getArea() {
-        return new Area( new RoundRectangle2D.Double(x, y, width, height, arcWidth, arcHeight));
-    }
 }

@@ -26,9 +26,10 @@ import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.util.Random;
 
 /**
- * A class that implements a graphical oval shape
+ * A class that implements a graphical oval shape.
  * 
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
@@ -46,17 +47,17 @@ public class Oval extends Shape
         this(x, y, width, height, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Constructor for the Oval constructor.
-//     * @param   x       The x-coordinate of the upper left-hand corner of the Oval object.
-//     * @param   y       The y-coordinate of the upper left-hand corner of the Oval object.
-//     * @param   width   The width of the Oval object.
-//     * @param   height  The height of the Oval object.
-//     * @param   pad     The Pad to which the Oval should be added.
-//     */
-//    public Oval(double x, double y, double width, double height, Pad pad) {
-//        this(x, y, width, height, pad.getLayer(0));
-//    }
+    /**
+     * Constructor for the Oval constructor.
+     * @param   x       The x-coordinate of the upper left-hand corner of the Oval object.
+     * @param   y       The y-coordinate of the upper left-hand corner of the Oval object.
+     * @param   width   The width of the Oval object.
+     * @param   height  The height of the Oval object.
+     * @param   pad     The Pad to which the Oval should be added.
+     */
+    public Oval(double x, double y, double width, double height, Pad pad) {
+        this(x, y, width, height, pad.getLayer(0));
+    }
     
     /**
      * Constructor for the Oval constructor.
@@ -72,13 +73,20 @@ public class Oval extends Shape
 
     /**
      * Default constructor for the Oval object.
+     * Creates a new 100x100 draggable shape and positions it randomly.
      */
     public Oval() {
-        this(100., 100., 100., 100.);
+        this(0.0, 0.0, 100.0, 100.0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight()-100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
     
     /**
-     * Build a String representation of the Oval object
+     * Generate a representation of the Oval object
      * @return Oval String representation
      */
     @Override
@@ -112,6 +120,15 @@ public class Oval extends Shape
         if (selected) drawSelRect(g);
     }
     
+    /**
+     * Complete the area of the Oval object
+     * @return An Area object
+     */
+    @Override
+    public Area getArea() {
+        return new Area( new java.awt.geom.Ellipse2D.Double(x, y, width, height));
+    }
+    
 //    /**
 //     * Draw the region that will be used to detect a hit on the shape
 //     * @param g The Graphics2D on which to draw the hit region
@@ -123,13 +140,4 @@ public class Oval extends Shape
 //        g.setColor(clr);
 //        g.fillOval(x, y, width, height);
 //    }
-    
-    /**
-     * Complete the area of the Oval object
-     * @return An Area object
-     */
-    @Override
-    public Area getArea() {
-        return new Area( new java.awt.geom.Ellipse2D.Double(x, y, width, height));
-    }
 }

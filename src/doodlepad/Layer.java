@@ -27,18 +27,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *
- * @author Mark
+ * An object representing a drawing layer for the Pad class.
+ * Each Layer maintains its own collection of Shapes.
+ * 
+ * @author Mark F. Russo, PhD
+ * @version 1.0
  */
 public class Layer implements Iterable<Shape>
 {
-    // Master list of Shape objects being managed by the Pad
+    /**
+     * Master list of Shape objects being managed by the Pad
+     */
     private final java.util.List<Shape> shapes = new ArrayList<>();
     
-    // The current affine transform to be used when drawing all Shapes on this Pad
+    /**
+     * The current affine transform to be used when drawing all Shapes on this Pad
+     */
     AffineTransform transform;
     
-    // The Pad that holds this Layer
+    /**
+     * The Pad that holds this Layer
+     */
     private Pad pad = null;
     
     /**
@@ -204,16 +213,24 @@ public class Layer implements Iterable<Shape>
         repaint();
     }
     
+    /**
+     * Clone the Layer's current AffineTransform.
+     * @return The cloned AffineTransform.
+     */
     public AffineTransform getTransform() {
         return (AffineTransform)transform.clone();
     }
     
+    /**
+     * Set a new AffineTransform for the Layer.
+     * @param transform The new transform.
+     */
     public void setTransform(AffineTransform transform) {
         this.transform = transform;
     }
     
     /**
-     * Delegate to parent Pad object
+     * Repaint Layer by delegating to parent Pad object.
      */
     public void repaint() {
         pad.repaint();

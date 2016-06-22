@@ -27,12 +27,13 @@ import java.awt.Color;
 import java.awt.BasicStroke;
 import java.awt.geom.Area;
 import java.awt.geom.Arc2D;
+import java.util.Random;
 
 /**
  * A class that implements a graphical arc shape.
  * An Arc is a partial section of an ellipse that is bounded by the rectangle
  * defined by the parameters passed to the Arc constructor. The start angle and
- * angle extent define the part of the ellipse that make up the Arc.
+ * angle extent define the section of the ellipse that makes up the Arc.
  * 
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
@@ -43,7 +44,15 @@ public class Arc extends Shape
     private double arcAngle = 0;
     
     /**
-     * Arc constructor
+     * Creates an arc shape defined by a section of an ellipse bounded by the rectangle with upper left
+     * corner at (x, y) and size (width, height). The section starts at angle startAngle (degrees) and
+     * extends by arcAngle (degrees).
+     * 
+     * <pre>
+     * // Creates an arc with an upper left corner at (10, 20) and a size of (100, 50) 
+     * // from an angle of 0&deg; and continuing by an extent of 45&deg;.
+     * Arc arc = new Arc(10, 20, 100, 50, 0, 45);
+     * </pre>
      * @param   x           The upper x-coordinate of the Arc`s related ellipse bounding box (pixels).
      * @param   y           The upper y-coordinate of the Arc`s related ellipse bounding box (pixels).
      * @param   width       The width of the Arc`s related ellipse (pixels).
@@ -55,22 +64,26 @@ public class Arc extends Shape
         this(x, y, width, height, startAngle, arcAngle, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Arc constructor
-//     * @param   x           The upper x-coordinate of the Arc`s related ellipse bounding box (pixels).
-//     * @param   y           The upper y-coordinate of the Arc`s related ellipse bounding box (pixels).
-//     * @param   width       The width of the Arc`s related ellipse (pixels).
-//     * @param   height      The height of the Arc`s related ellipse bounding box (pixels).
-//     * @param   startAngle  The starting angle at which to begin drawing the Arc (degrees).
-//     * @param   arcAngle    The angular extent of the Arc, which defines its length (degrees).
-//     * @param   pad         The Pad object on which to create the Arc.
-//     */
-//    public Arc(double x, double y, double width, double height, double startAngle, double arcAngle, Pad pad) {
-//        this(x, y, width, height, startAngle, arcAngle, pad.getLayer(0));
-//    }
+    /**
+     * Creates an arc shape defined by a section of an ellipse bounded by the rectangle with upper left
+     * corner at (x, y) and size (width, height). The section starts at angle startAngle (degrees) and
+     * extends by arcAngle (degrees).
+     * @param   x           The upper x-coordinate of the Arc`s related ellipse bounding box (pixels).
+     * @param   y           The upper y-coordinate of the Arc`s related ellipse bounding box (pixels).
+     * @param   width       The width of the Arc`s related ellipse (pixels).
+     * @param   height      The height of the Arc`s related ellipse bounding box (pixels).
+     * @param   startAngle  The starting angle at which to begin drawing the Arc (degrees).
+     * @param   arcAngle    The angular extent of the Arc, which defines its length (degrees).
+     * @param   pad         The Pad object on which to create the Arc.
+     */
+    public Arc(double x, double y, double width, double height, double startAngle, double arcAngle, Pad pad) {
+        this(x, y, width, height, startAngle, arcAngle, pad.getLayer(0));
+    }
     
     /**
-     * Arc constructor
+     * Creates an arc shape defined by a section of an ellipse bounded by the rectangle with upper left
+     * corner at (x, y) and size (width, height) and the layer on which the arc will be drawn. 
+     * The section starts at angle startAngle (degrees) and extends by arcAngle (degrees). 
      * @param   x           The upper x-coordinate of the Arc`s related ellipse bounding box (pixels).
      * @param   y           The upper y-coordinate of the Arc`s related ellipse bounding box (pixels).
      * @param   width       The width of the Arc`s related ellipse (pixels).
@@ -87,32 +100,39 @@ public class Arc extends Shape
     }
     
     /**
-     * Default constructor for an Arc.
-     * Specifies generic parameters to allow an Arc object to be created quickly and easily.
+     * Default constructor for the Arc object.
+     * Creates an arc shape with the default parameters width=100, height=100, startAngle=0, arcAngle=270.
+     * that is draggable shape and positioned randomly.
      */
     public Arc() {
-        this(100., 100., 100., 100., 0., 270.);
+        this(0, 0, 100.0, 100.0, 0.0, 270.0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight()-100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
-    
+
     /**
-     * Get the start angle for the Arc Shape.
-     * @return the start angle for this Arc
+     * Returns the start angle for the Arc Shape.
+     * @return start angle (degrees)
      */
     public double getStartAngle() {
         return this.startAngle;
     }
     
     /**
-     * Get the arc angle for the Arc Shape.
-     * @return the arc angle for this Arc
+     * Returns the arc angle for the Arc Shape.
+     * @return arc angle extent (degrees)
      */
     public double getArcAngle() {
         return this.arcAngle;
     }
     
     /**
-     * Set the start angle for the Arc Shape.
-     * @param angle start angle
+     * Sets the start angle for the Arc Shape.
+     * @param angle start angle (degrees)
      */
     public void setStartAngle(double angle) {
         this.startAngle = angle;
@@ -120,22 +140,25 @@ public class Arc extends Shape
     }
     
     /**
-     * Set the arc angle for the Arc Shape.
-     * @param angle arc angle
+     * Sets the arc angle extent for the Arc Shape.
+     * @param angle arc angle extent (degrees)
      */
     public void setArcAngle(double angle) {
         this.arcAngle = angle;
         repaint();
     }
-    
+    /**
+     * Builds and returns a string representation of the arc shape that includes position, size and layer.
+     * @return String representation of the arc.
+     */
     @Override
     public String toString() {
         return "Arc x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
     }
     
      /**
-     * Draw the shape   
-     * @param g         The Graphics2D object on which to draw
+     * Draw the shape
+     * @param g         The Graphics2D object on which to draw the arc
      */
     @Override
     public void draw(Graphics2D g)
@@ -182,6 +205,10 @@ public class Arc extends Shape
 //        if (this.strokeColor.getAlpha() > 0) g.drawArc(x, y, width, height, startAngle, arcAngle);
 //    }
     
+    /**
+     * Return the area of an arc. The area will be of the pie section if filled, and an open section if not filled.
+     * @return A java.awt.geom.Area object.
+     */
     @Override
     public Area getArea() {
         int typ;

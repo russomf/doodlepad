@@ -1,5 +1,5 @@
 /*
- * shapeMouseListener.java
+ * ShapeMouseListener.java
  * 
  * Author: Mark F. Russo, Ph.D.
  * Copyright (c) 2012-2016 Mark F. Russo

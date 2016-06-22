@@ -30,6 +30,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+//import java.util.ArrayList;
 
 /**
  * Abstract base class for all graphical shape objects
@@ -125,6 +126,12 @@ public abstract class Shape
      */
     protected boolean draggable = false;
     
+    // Removed traditional Java event handling method
+//    /**
+//     * List of custom listeners registered to receive events
+//     */
+//    private java.util.List<ShapeMouseListener> mouseListeners = new ArrayList<>();
+    
     /**
      * Interface used by methods that assign mouse event handlers
      * given a method reference as a parameter.
@@ -160,16 +167,25 @@ public abstract class Shape
      */
     protected ShapeMouseListener shapeListener = new ShapeMouseListener() {
         
+        /**
+         * Gets the current Shape.
+         * @return The current Shape.
+         */
         @Override
         public Shape getShape() {
             return Shape.this;
         }
         
+        /**
+         * Apply current transform and invoke the onMousePressed method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mousePressed(double x, double y, int button) {
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
             
             // Perform inverse transforms for the Shape coodinate system
@@ -187,12 +203,23 @@ public abstract class Shape
             
             // Invoke method to override
             onMousePressed(eX, eY, button);
+            
+                // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mousePressed(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke the onMouseReleased method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseReleased(double x, double y, int button) {
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             stopDrag();
@@ -210,14 +237,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseReleased(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseReleased(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke onMouseMoved method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseMoved(double x, double y, int button) {
             // and perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -232,14 +270,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseMoved(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseMoved(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke the onMouseDragged method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseDragged(double x, double y, int button) {
             // Perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -254,14 +303,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseDragged(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseDragged(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke the onMouseClicked method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseClicked(double x, double y, int button) {
             // Perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -276,14 +336,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseClicked(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseClicked(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke the onMouseDoubleClicked method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseDoubleClicked(double x, double y, int button) {
             // Perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -298,14 +369,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseDoubleClicked(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseDoubleClicked(eX, eY, button);
+//            }
         }        
         
+        /**
+         * Apply current transform and invoke the onMouseEntered method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseEntered(double x, double y, int button) {
             // Perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -320,14 +402,25 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseEntered(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseEntered(eX, eY, button);
+//            }
         }
         
+        /**
+         * Apply current transform and invoke the onMouseExited method.
+         * @param   x       x-coordinate of mouse event.
+         * @param   y       y-coordinate of mouse event.
+         * @param   button  Integer identifying button pressed during mouse event.
+         */
         @Override
         public void mouseExited(double x, double y, int button) {
             // Perform inverse transforms for the Shape coodinate system
 
-            // If pad is null, the shape has been deleted and should not receive the event
-            //if (pad == null) return;
+            // If layer is null, the shape has been deleted and should not receive the event
             if (layer == null) return;
 
             Point2D.Double pt = new Point2D.Double(x, y);
@@ -342,32 +435,14 @@ public abstract class Shape
             
             // Invoke method to override
             onMouseExited(eX, eY, button);
+            
+            // Removed traditional Java event handling method
+//            // Notify other registerd listeners
+//            for (ShapeMouseListener ml : mouseListeners) {
+//                ml.mouseExited(eX, eY, button);
+//            }
         }
     };
-    
-    /**
-     * Constructor for Shape object.
-     * @param   x       Shape x-coordinate
-     * @param   y       Shape y-coordinate
-     * @param   width   Shape width
-     * @param   height  Shape height
-     */
-    public Shape(double x, double y, double width, double height)
-    {
-        this(x, y, width, height, Pad.getPad().getLayer(0)); //Pad.getPad());
-    }
-    
-//    /**
-//     * Constructor for Shape object.
-//     * @param   x       Shape x-coordinate
-//     * @param   y       Shape y-coordinate
-//     * @param   width   Shape width
-//     * @param   height  Shape height
-//     * @param   pad     The Pad on which to create the Shape
-//     */
-//    public Shape(double x, double y, double width, double height, Pad pad) {
-//        this(x, y, width, height, pad.getLayer(0));
-//    }
     
     /**
      * Constructor for Shape object. Optional Pad object parameter.
@@ -394,12 +469,22 @@ public abstract class Shape
         if (layer != null) layer.addShape(this);
     }
     
-    /**
-     * Default constructor for objects of class Shape
-     */
-    public Shape() {
-        this(0, 0, 50, 50);
-    }
+    // Removed traditional Java event handling method
+//    /**
+//     * Add object to the list of items that are notified on Pad's mouse events.
+//     * @param o The PadMouseListener object to be added.
+//     */
+//    public void addMouseListener(ShapeMouseListener o) {
+//        mouseListeners.add(o);
+//    }
+//    
+//    /**
+//     * Remove object from Pad's mouse listener list.
+//     * @param o The PadMouseListener object to be removed.
+//     */
+//    public void removeMouseListener(ShapeMouseListener o) {
+//        mouseListeners.remove(o);
+//    }
     
     /**
      * A utility method that returns this Shape’s Pad instance
@@ -827,6 +912,7 @@ public abstract class Shape
      * @param   select   a boolean value (true/false) to assign to the flag
      */
     public void setSelectable(boolean select) {
+        if (!select) setSelected(false);
         selectable = select;
     }
     
@@ -918,6 +1004,10 @@ public abstract class Shape
         this.repaint();
     }
     
+    /**
+     * Generate a representation of the Shape object.
+     * @return String representation
+     */
     @Override
     public String toString() {
         return "Shape x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
@@ -1211,10 +1301,18 @@ public abstract class Shape
         repaint();
     }
     
+    /**
+     * Clone the Shape\'s current AffineTransform.
+     * @return The cloned AffineTransform.
+     */
     public AffineTransform getTransform() {
         return (AffineTransform)transform.clone();
     }
     
+    /**
+     * Set a new AffineTransform for the Shape.
+     * @param transform The new transform.
+     */
     public void setTransform(AffineTransform transform) {
         this.transform = transform;
         repaint();

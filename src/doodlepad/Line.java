@@ -26,9 +26,10 @@ import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
+import java.util.Random;
 
 /**
- * A class that implements a graphical straight line shape
+ * A class that implements a graphical straight line shape.
  * 
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
@@ -46,17 +47,17 @@ public class Line extends Shape
         this(x1, y1, x2, y2, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Line object constructor.
-//     * @param   x1  The x-coordinate of the line's first point.
-//     * @param   y1  The y-coordinate of the line's first point.
-//     * @param   x2  The x-coordinate of the line's second point.
-//     * @param   y2  The y-coordinate of the line's second point.
-//     * @param   pad The Pad object to which this Line should be added.
-//     */
-//    public Line(double x1, double y1, double x2, double y2, Pad pad) {
-//        this(x1, y1, x2, y2, pad.getLayer(0));
-//    }
+    /**
+     * Line object constructor.
+     * @param   x1  The x-coordinate of the line's first point.
+     * @param   y1  The y-coordinate of the line's first point.
+     * @param   x2  The x-coordinate of the line's second point.
+     * @param   y2  The y-coordinate of the line's second point.
+     * @param   pad The Pad object to which this Line should be added.
+     */
+    public Line(double x1, double y1, double x2, double y2, Pad pad) {
+        this(x1, y1, x2, y2, pad.getLayer(0));
+    }
     
     /**
      * Line object constructor.
@@ -71,12 +72,19 @@ public class Line extends Shape
     }
     
     /**
-     * Default Line object constructor.
+     * Default constructor for the Line object.
+     * Creates a new 100x100 draggable shape and positions it randomly.
      */
     public Line() {
-        this(100, 100, 200, 200);
+        this(0, 0, 100.0, 100.0);
+        Pad pad = Pad.getPad();
+        Random rnd = new Random();
+        double x = rnd.nextDouble()*(pad.getWidth()-100.0);
+        double y = rnd.nextDouble()*(pad.getHeight()-100.0);
+        this.setLocation(x, y);
+        this.setDraggable(true);
     }
-    
+
     /**
      * Set new endpoint locations for the Line object
      * @param x1 The x-coordinate of the line's first point.
@@ -91,6 +99,10 @@ public class Line extends Shape
         height = y2-y1;
     }
     
+    /**
+     * Generate a representation of the Line object.
+     * @return String representation
+     */
     @Override
     public String toString() {
         return "Line x1=" + x + ", y1=" + y + ", x2=" + (x+width) + ", y2=" + (y+height) + ", layer=" + layer;
@@ -116,6 +128,10 @@ public class Line extends Shape
         if (selected) drawSelRect(g);
     }
     
+    /**
+     * Complete the area of the Line object
+     * @return An Area object
+     */
     @Override
     public Area getArea() {
         return new Area( new java.awt.geom.Line2D.Double(x, y, x+width, y+height));

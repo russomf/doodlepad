@@ -66,37 +66,54 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class Pad extends JFrame implements Iterable<Shape>
 {
     // Temporary stash of Graphics2D object.
-    // May be needed if direct drawing commands added to package
+    // May be needed if direct drawing commands added to class
     //private Graphics2D g2D;
-    
-    // Master list of Shape objects being managed by the Pad
-    //private java.util.List<Shape> shapes = new ArrayList<>();
-    
-    // Layers on the Pad
+
+    /**
+     * Layers on the Pad
+     */
     private List<Layer> layers = null;
     
-    // The current affine transform to be used when drawing all Shapes on this Pad
+    /**
+     * The current affine transform to be used when drawing all Shapes on this Pad
+     */
     //protected AffineTransform transform;
     
-    // Background color used to create the Pad on redraw
+    /**
+     * Background color used to create the Pad on redraw
+     */
     private Color background;
     
-    // If true, all graphical changes trigger a repaint
+    /**
+     * If true, all graphical changes trigger a repaint
+     */
     private boolean immediateMode = true;
     
-    // Flag that keeps event enabled state
+    /**
+     * Flag that keeps event enabled state
+     */
     private boolean eventsEnabled = false;
     
-    // This HashMap should not leak ShapeMouseListener objects 
-    // because the HashMap is rebuilt every time the paint() method is called.
+    /**
+     * This HashMap should not leak ShapeMouseListener objects
+     * because the HashMap is rebuilt every time the paint() method is called.
+     */
     private HashMap<Color, ShapeMouseListener> hitHash;
+    
+    /**
+     * In-memory image used to determine target shapes for mouse events.
+     */
     private BufferedImage hitImg;
 
-    // Timer event support
+    /**
+     * Timer event support
+     */
     private Timer timer = null;
     private double tickRate = 60.0;
     
-    // Lists of custom listeners registered to receive events
+    /**
+     * Lists of custom listeners registered to receive events
+     */
     private java.util.List<PadTickListener> tickListeners = new ArrayList<>();
     private java.util.List<PadMouseListener> mouseListeners = new ArrayList<>();
     private java.util.List<PadKeyListener> keyListeners = new ArrayList<>();
@@ -161,6 +178,10 @@ public class Pad extends JFrame implements Iterable<Shape>
         public void f(Pad pad, String keyText, String keyModifiers);
     }
     
+    /**
+     * Interface used by methods that assign key typed event handlers
+     * given a method reference as a parameter.
+     */
     public interface PadKeyTypedEventHandler {
         public void f(Pad pad, char keyChar);
     }
@@ -216,13 +237,12 @@ public class Pad extends JFrame implements Iterable<Shape>
         {
             // Execute base class paint() method
             super.paintComponent(g);
-            //System.out.println("paint");
 
             // Use Graphics2D api with antialising enabled
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Clear the background to startListening drawing anew
+            // Clear the background to start drawing anew
             g2.setColor(background);
             g2.fillRect(0, 0, getWidth(), getHeight());
 
@@ -320,9 +340,9 @@ public class Pad extends JFrame implements Iterable<Shape>
             onKeyPressed(keyText, keyModifiers);
 
             // Delegate to any registered PadKeyListeners
-            for (PadKeyListener s : keyListeners) {
+            keyListeners.stream().forEach((s) -> {
                 s.onKeyPressed(keyText, keyModifiers);
-            }
+            });
         }
         
         @Override
@@ -334,9 +354,9 @@ public class Pad extends JFrame implements Iterable<Shape>
             onKeyReleased(keyText, keyModifiers);
 
             // Delegate to any registered PadKeyListeners
-            for (PadKeyListener s : keyListeners) {
+            keyListeners.stream().forEach((s) -> {
                 s.onKeyReleased(keyText, keyModifiers);
-            }
+            });
         }
         
         @Override
@@ -346,9 +366,9 @@ public class Pad extends JFrame implements Iterable<Shape>
             onKeyTyped(keyChar);
 
             // Delegate to any registered PadKeyListeners
-            for (PadKeyListener s : keyListeners) {
+            keyListeners.stream().forEach((s) -> {
                 s.onKeyTyped(keyChar);
-            }
+            });
         }
     };
     
@@ -386,7 +406,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     };
     
     /**
-     * Inner class to handle mouse events
+     * Inner class to handle Pad mouse events
      */
     private final MouseListener mouseListener = new MouseListener() 
     {
@@ -573,9 +593,9 @@ public class Pad extends JFrame implements Iterable<Shape>
             
                 // Invoke method to override and notify any listeners
                 onMouseEntered(eX, eY, eBut);
-                for (PadMouseListener ml : mouseListeners) {
+                mouseListeners.stream().forEach((ml) -> {
                     ml.onMouseEntered(eX, eY, eBut);
-                }
+                });
                 
             } catch (NoninvertibleTransformException ex) {
                 System.err.println(ex);
@@ -629,37 +649,9 @@ public class Pad extends JFrame implements Iterable<Shape>
             double eX = pt.getX();
             double eY = pt.getY();
             int eBut = e.getButton();
-            
-            // If a ShapeMouseListener is under the mouse, invoke it's onMouseMoved methods
-            // Otherwise, invoke all registered PadMouseListeners onMouseMoved methods
+                                    
+            // Raise mouseEntered/mouseExited/mouseMoved as appropriate
             ShapeMouseListener s = getShapeMouseListener(e);
-            
-            if (s != null)          // Raise events on new shape
-            {
-                s.mouseMoved(eX, eY, eBut);
-
-            // Otherwise, raise onMouseMoved events on Pad
-            } else {
-            
-                try {
-                    Layer lay = layers.get(0);          // Default layer
-                    Point2D.Double pt1 = new Point2D.Double();
-                    lay.transform.inverseTransform(pt, pt1);
-                    
-                    double eX2 = pt1.getX();
-                    double eY2 = pt1.getY();
-            
-                    onMouseMoved(eX2, eY2, eBut);
-                    for (PadMouseListener ml : mouseListeners) {
-                        ml.onMouseMoved(eX2, eY2, eBut);
-                    }
-            
-                } catch (NoninvertibleTransformException ex) {
-                    System.err.println(ex);
-                }
-            }
-            
-            // Raise mouseEntered/mouseExited
             ShapeMouseListener ll = lastListener.get();
 
             // If moving over a shape and the shape is different than the last listener
@@ -716,9 +708,35 @@ public class Pad extends JFrame implements Iterable<Shape>
                 }
             }
 
+            // If a ShapeMouseListener is under the mouse, invoke it's onMouseMoved methods
+            // Otherwise, invoke all registered PadMouseListeners onMouseMoved methods
+            if (s != null)          // Raise events on new shape
+            {
+                s.mouseMoved(eX, eY, eBut);
+
+            // Otherwise, raise onMouseMoved events on Pad
+            } else {
+            
+                try {
+                    Layer lay = layers.get(0);          // Default layer
+                    Point2D.Double pt1 = new Point2D.Double();
+                    lay.transform.inverseTransform(pt, pt1);
+                    
+                    double eX2 = pt1.getX();
+                    double eY2 = pt1.getY();
+            
+                    onMouseMoved(eX2, eY2, eBut);
+                    for (PadMouseListener ml : mouseListeners) {
+                        ml.onMouseMoved(eX2, eY2, eBut);
+                    }
+            
+                } catch (NoninvertibleTransformException ex) {
+                    System.err.println(ex);
+                }
+            }
+
             // Reset last listener
             lastListener = new WeakReference<>(s);
-            
         }
 
         /**
@@ -1261,6 +1279,13 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
+     * Close the Pad as if by clicking the [X] close button.
+     */
+    public void close() {
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+    
+    /**
      * Free all resources when Pad object is garbage collected.
      * @throws java.lang.Throwable
      */
@@ -1431,6 +1456,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      */
     public void setImmediateMode(boolean mode) {
         immediateMode = mode;
+        redraw();
     }
     
     /**
@@ -1550,7 +1576,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
-     * Add object to the list if items that are notified on Pad's mouse events.
+     * Add object to the list of items that are notified on Pad's mouse events.
      * @param o The PadMouseListener object to be added.
      */
     public void addMouseListener(PadMouseListener o) {
@@ -1737,10 +1763,18 @@ public class Pad extends JFrame implements Iterable<Shape>
         this.getLayer(0).reset();
     }
     
+    /**
+     * Clone the Pad's default Layer AffineTransform.
+     * @return The cloned AffineTransform.
+     */
     public AffineTransform getTransform() {
         return this.getLayer(0).getTransform();
     }
     
+    /**
+     * Set a new AffineTransform for the Pad's default Layer.
+     * @param transform The new transform.
+     */
     public void setTransform(AffineTransform transform) {
         this.getLayer(0).setTransform(transform);
     }
@@ -1815,8 +1849,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param port  The port number on the host through which to connect.
      * @return id of the open socket
      */
-    public int openConnection(String host, int port) 
-    {
+    public int openConnection(String host, int port) {
         Socket socket;
         try {
             socket = new Socket(host, port);
@@ -1876,7 +1909,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
-     * Broad a message to all open network connections.
+     * Broadcast a message to all open network connections.
      * @param msg The message to broadcast.
      */
     public void broadcast(String msg) 
@@ -1960,7 +1993,7 @@ public class Pad extends JFrame implements Iterable<Shape>
             {
                 InetAddress addr = addresses.nextElement();
                 if (addr.isLoopbackAddress() || !(addr instanceof Inet4Address)) continue;
-                IPs.add( addr.getHostAddress().toString() );
+                IPs.add( addr.getHostAddress() );
             }
         }
         
@@ -1988,7 +2021,7 @@ public class Pad extends JFrame implements Iterable<Shape>
             {
                 InetAddress addr = addresses.nextElement();
                 if (addr.isLoopbackAddress() || !(addr instanceof Inet6Address)) continue;
-                IPs.add( addr.getHostAddress().toString() );
+                IPs.add( addr.getHostAddress() );
             }
         }
         
@@ -1996,20 +2029,29 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
-     * This utility method invokes the proper event and method on the dispatch thread
+     * Utility method that invokes the proper event and method on the dispatch thread
      */
     private void invokeOnDispatch(final SocketEventType typ) {
         invokeOnDispatch(typ, 0, "");
     }
     
+    /**
+     * Utility method that invokes the proper event and method on the dispatch thread
+     */
     private void invokeOnDispatch(final SocketEventType typ, final int id) {
         invokeOnDispatch(typ, id, "");
     }
     
+    /**
+     * Utility method that invokes the proper event and method on the dispatch thread
+     */
     private void invokeOnDispatch(final SocketEventType typ, final String msg) {
         invokeOnDispatch(typ, 0, msg);
     }
     
+    /**
+     * Utility method that invokes the proper event and method on the dispatch thread
+     */
     private void invokeOnDispatch(final SocketEventType typ, final int id, final String msg)
     {
         if (!SwingUtilities.isEventDispatchThread())
@@ -2026,9 +2068,13 @@ public class Pad extends JFrame implements Iterable<Shape>
         }
     }
     
+    /**
+     * Interface for the dispatch method with a signature having no parametes.
+     */
     public interface DispatchMethodNoParameters {
         public void f();
     }
+    
     /**
      * Invoke a method on the GUI event dispatch thread
      * @param meth A method implementing the DispatchMethodNoParameters interface, which is a method taking nor parameters.
@@ -2036,6 +2082,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     public void invokeOnDispatch( DispatchMethodNoParameters meth ) {
         SwingUtilities.invokeLater(meth::f);
     }
+    
 //    public void invokeOnDispatch( DispatchMethodNoParameters meth ) {
 //        SwingUtilities.invokeLater(new Runnable() 
 //        {
@@ -2055,20 +2102,14 @@ public class Pad extends JFrame implements Iterable<Shape>
         
         switch (typ) {
         case ServerStarted:
-            //longMsg = "Server started.";
-            //System.out.println(longMsg);
             onServerStarted();
             break;
             
         case ServerStopped:
-            //longMsg = "Server stopped.";
-            //System.out.println(longMsg);
             onServerStopped();
             break;
             
         case ServerInfo:
-            //longMsg = "Server info: " + msg;
-            //System.out.println(longMsg);
             onServerInfo(msg);
             break;
             
@@ -2079,27 +2120,19 @@ public class Pad extends JFrame implements Iterable<Shape>
             break;
             
         case ClientOpened:
-            //longMsg = "Client " + id + " opened.";
-            //System.out.println(longMsg);
             onClientOpened(id);
             break;
             
         case ClientClosed:
             clientConnections.remove(id);
-            //longMsg = "Client " + id + " closed.";
-            //System.out.println(longMsg);
             onClientClosed(id);
             break;
             
         case ClientReceived:
-            //longMsg = "Client " + id + " received " + msg;
-            //System.out.println(longMsg);
             onClientReceived(id, msg);
             break;
             
         case ClientInfo:
-            //longMsg = "Client " + id + " info: " + msg;
-            //System.out.println(longMsg);
             onClientInfo(id, msg);
             break;
             
@@ -2364,8 +2397,8 @@ public class Pad extends JFrame implements Iterable<Shape>
     /**
      * A method that can be overridden to handle the Pad timer`s tick event.
      * The timer tick rate is set with the setTickRate() method. 
- The timer is startListeningListeninged by invoking the startListeningListeningTimer() method.
- The timer is stopListeningListeningped by invoking the stopListeningListeningTimer() method.
+     * The timer is started by invoking the startTimer() method.
+     * The timer is stopped by invoking the stopTimer() method.
      * @param when The difference in milliseconds between the timestamp of when this event occurred and midnight, January 1, 1970 UTC.
      */
     public void onTick(long when) {

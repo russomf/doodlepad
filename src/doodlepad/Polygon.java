@@ -50,7 +50,7 @@ public class Polygon extends Shape
      */
     public Polygon(int[] xPoints, int[] yPoints)
     {
-        super(0, 0, 0, 0);
+        super(0.0, 0.0, 0.0, 0.0, Pad.getPad().getLayer(0));
 
         double[] dxPts = new double[xPoints.length];
         double[] dyPts = new double[yPoints.length];
@@ -76,11 +76,32 @@ public class Polygon extends Shape
     /**
      * Constructor for objects of class Polygon - double arrays
      * @param xPoints The array of x-coordinates for all Polygon object points.
-     * @param yPoints The array of y-coordinates for all Polygon object points.  
+     * @param yPoints The array of y-coordinates for all Polygon object points.
      */
     public Polygon(double[] xPoints, double[] yPoints)
     {
-        super(0, 0, 0, 0);
+        this(xPoints, yPoints, Pad.getPad());
+    }
+
+    /**
+     * Constructor for objects of class Polygon - double arrays and Pad
+     * @param xPoints The array of x-coordinates for all Polygon object points.
+     * @param yPoints The array of y-coordinates for all Polygon object points.
+     * @param pad    The Pad to which the Polygon will be added.
+     */
+    public Polygon(double[] xPoints, double[] yPoints, Pad pad) {
+        this( xPoints, yPoints, pad.getLayer(0));
+    }
+    
+    /**
+     * Constructor for objects of class Polygon - double arrays and Layer
+     * @param xPoints The array of x-coordinates for all Polygon object points.
+     * @param yPoints The array of y-coordinates for all Polygon object points.
+     * @param layer   The Layer object to which the Polygon will be added, or null if not to add to a Pad.
+     */
+    public Polygon(double[] xPoints, double[] yPoints, Layer layer)
+    {
+        super(0, 0, 0, 0, layer);
         
         // Fill the internal arrays with all points
         nPoints = xPoints.length;
@@ -91,7 +112,7 @@ public class Polygon extends Shape
         this.rebuildPath();
         this.updateBoundingBox();
     }
-
+   
     /**
      * Constructor for objects of class Polygon
      * @param points List of Point objects that define coordinate points of Polygon
@@ -100,19 +121,19 @@ public class Polygon extends Shape
         this( points, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Constructor for objects of class Polygon
-//     * @param points List of Point objects that define coordinate points of Polygon
-//     * @param pad    The Pad to which the Polygon should be added.
-//     */
-//    public Polygon(List<Point> points, Pad pad) {
-//        this( points, pad.getLayer(0));
-//    }
+    /**
+     * Constructor for objects of class Polygon
+     * @param points List of Point objects that define coordinate points of Polygon
+     * @param pad    The Pad to which the Polygon will be added.
+     */
+    public Polygon(List<Point> points, Pad pad) {
+        this( points, pad.getLayer(0));
+    }
     
     /**
      * Constructor for objects of class Polygon
      * @param   points  List of Point objects that define coordinate points of Polygon
-     * @param   layer   The Layer object to which the Image should be added, or null if not to add to a Pad.
+     * @param   layer   The Layer object to which the Polygon will be added, or null if not to add to a Pad.
      */
     public Polygon( List<Point> points, Layer layer ) {
         super(0, 0, 0, 0, layer);
@@ -138,8 +159,8 @@ public class Polygon extends Shape
     }
     
     /**
-     * Generate a return a String representation of the Polygon
-     * @return String representation of Polygon
+     * Generate a representation of the Polygon object.
+     * @return String representation
      */
     @Override
     public String toString() {
@@ -289,8 +310,6 @@ public class Polygon extends Shape
         this.rebuildPath();
         this.updateBoundingBox();
     }
-    
-
     
     /**
      * Draw the Polygon object

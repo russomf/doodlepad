@@ -59,19 +59,19 @@ public class Sprite extends Shape {
         this(path, x, y, frameWidth, nFrames, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Constructor for objects of class Sprite
-//     * @param   path        Path to sprite sheet image file.
-//     * @param   x           The x-coordinate of the image upper left corner.
-//     * @param   y           The y-coordinate of the image upper left corner.
-//     * @param   frameWidth  The width of a single frame in the sprite sheet image.
-//     * @param   nFrames     The number of adjacent frames in the entire sprite sheet image.
-//     * @param   pad         The Pad to which the Sprite should be added.
-//     */
-//    public Sprite(String path, double x, double y, int frameWidth, int nFrames, Pad pad)
-//    {
-//        this(path, x, y, frameWidth, nFrames, pad.getLayer(0));
-//    }
+    /**
+     * Constructor for objects of class Sprite
+     * @param   path        Path to sprite sheet image file.
+     * @param   x           The x-coordinate of the image upper left corner.
+     * @param   y           The y-coordinate of the image upper left corner.
+     * @param   frameWidth  The width of a single frame in the sprite sheet image.
+     * @param   nFrames     The number of adjacent frames in the entire sprite sheet image.
+     * @param   pad         The Pad to which the Sprite will be added.
+     */
+    public Sprite(String path, double x, double y, int frameWidth, int nFrames, Pad pad)
+    {
+        this(path, x, y, frameWidth, nFrames, pad.getLayer(0));
+    }
     
     /**
      * Constructor for objects of class Sprite
@@ -80,7 +80,7 @@ public class Sprite extends Shape {
      * @param   y           The y-coordinate of the image upper left corner.
      * @param   frameWidth  The width of a single frame in the sprite sheet image.
      * @param   nFrames     The number of adjacent frames in the entire sprite sheet image.
-     * @param   layer       The Layer object to which the Image should be added, or null if not to add to a Layer.
+     * @param   layer       The Layer object to which the Image will be added, or null if not to add to a Layer.
      */
     public Sprite(String path, double x, double y, int frameWidth, int nFrames, Layer layer)
     {
@@ -142,7 +142,7 @@ public class Sprite extends Shape {
      * @param   nFrames         The number of adjacent frames in the entire sprite sheet image.
      * @param   targetWidth     The width with which to draw the sprite.
      * @param   targetHeight    The height with which to draw the sprite.
-     * @param   layer           The Layer object to which the Image should be added, or null if not to add to a Pad.
+     * @param   layer           The Layer object to which the Sprite will be added, or null if not to add to a Pad.
      */
     public Sprite(String path, double x, double y, double frameWidth, int nFrames, double targetWidth, double targetHeight, Layer layer)
     {
@@ -164,9 +164,13 @@ public class Sprite extends Shape {
         }
     }
     
+    /**
+     * Generate a representation of the Sprite object.
+     * @return String representation
+     */
     @Override
     public String toString() {
-        return "Sprite x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
+        return "Sprite x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", path=" + path + ", layer=" + layer;
     }
     
     /**

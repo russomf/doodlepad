@@ -29,7 +29,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * A class that implements a general graphical path object
+ * A class that implements a general graphical path object.
  * 
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
@@ -182,13 +182,13 @@ public class Path extends Shape
         this(Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Constructor for objects of class Path
-//     * @param   pad     The Pad to which this object should be added.
-//     */
-//    public Path(Pad pad) {
-//        this(pad.getLayer(0));
-//    }
+    /**
+     * Constructor for objects of class Path
+     * @param   pad     The Pad to which this object should be added.
+     */
+    public Path(Pad pad) {
+        this(pad.getLayer(0));
+    }
     
     /**
      * Constructor for objects of class Path
@@ -201,8 +201,8 @@ public class Path extends Shape
     }
     
     /**
-     * Generate a return a String representation of the Path
-     * @return String representation of Path
+     * Generate a representation of the Path object.
+     * @return String representation
      */
     @Override
     public String toString() {

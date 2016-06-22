@@ -53,17 +53,17 @@ public class Image extends Shape
         this(path, x, y, Pad.getPad().getLayer(0));
     }
     
-//    /**
-//     * Constructor for objects of class Image
-//     * @param   path    Path to image file.
-//     * @param   x       The x-coordinate of the image upper left corner.
-//     * @param   y       The y-coordinate of the image upper left corner.
-//     * @param   pad     The Pad to which the Image should be added.
-//     */
-//    public Image(String path, double x, double y, Pad pad)
-//    {
-//        this(path, x, y, pad.getLayer(0));
-//    }
+    /**
+     * Constructor for objects of class Image
+     * @param   path    Path to image file.
+     * @param   x       The x-coordinate of the image upper left corner.
+     * @param   y       The y-coordinate of the image upper left corner.
+     * @param   pad     The Pad to which the Image should be added.
+     */
+    public Image(String path, double x, double y, Pad pad)
+    {
+        this(path, x, y, pad.getLayer(0));
+    }
     
     /**
      * Constructor for objects of class Image
@@ -76,8 +76,8 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        this.setStroked(false);
-        this.setFilled(false);
+        super.setStroked(false);
+        super.setFilled(false);
         
         try {
             img = ImageIO.read(new File(path));
@@ -127,8 +127,8 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        this.setStroked(false);
-        this.setFilled(false);
+        super.setStroked(false);
+        super.setFilled(false);
         
         try {
             img = ImageIO.read(new File(path));
@@ -139,9 +139,124 @@ public class Image extends Shape
         }
     }
 
+    /**
+     * Constructor for creating an empty image
+     * @param   x       The x-coordinate of the image upper left corner.
+     * @param   y       The y-coordinate of the image upper left corner.
+     * @param   width   The width with which to draw the image.
+     * @param   height  The height with which to draw the image.
+     */
+    public Image(double x, double y, double width, double height)
+    {
+        super(x, y, 0, 0, Pad.getPad().getLayer(0));
+        super.setStroked(false);
+        super.setFilled(false);
+        this.width = width;
+        this.height = height;
+        
+        img = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_ARGB);
+    }
+    
+    /**
+     * Set the color of the pixel at coordinates (x, y)
+     * @param   x       The x-coordinate of the image upper left corner.
+     * @param   y       The y-coordinate of the image upper left corner.
+     * @param   red     The red component of the pixel color [0, 255]
+     * @param   green   The green component of the pixel color [0, 255]
+     * @param   blue    The blue component of the pixel color [0, 255]
+     */
+    public void setPixel(int x, int y, int red, int green, int blue) {
+        int rgb = new Color(red, green, blue).getRGB();
+        img.setRGB(x, y, rgb);
+        repaint();
+    }
+    
+    /**
+     * Set the color of the pixel at coordinates (x, y)
+     * @param   x       The x-coordinate of the image upper left corner.
+     * @param   y       The y-coordinate of the image upper left corner.
+     * @param   clr     The Color object to use to assign pixel color.
+     */
+    public void setPixel(int x, int y, Color clr) {
+        img.setRGB(x, y, clr.getRGB());
+        repaint();
+    }
+
+    /**
+     * Set the color of the pixel at coordinates (x, y)
+     * @param   x       The x-coordinate of the image upper left corner.
+     * @param   y       The y-coordinate of the image upper left corner.
+     * @param   gray    The gray level of the pixel color [0, 255]
+     */
+    public void setPixel(int x, int y, int gray) {
+        setPixel(x, y, gray, gray, gray);
+    }
+    
+    /**
+     * Get the pixel color as a Color object.
+     * @param   x   x-coordinate of the pixel.
+     * @param   y   y-coordinate of the pixel.
+     * @return A Color object encapsulating the pixel color.
+     */
+    public Color getPixel(int x, int y) {
+        return new Color( img.getRGB(x, y) );
+    }
+    
+    /**
+     * Get red component of pixel color.
+     * @param   x   x-coordinate of the pixel.
+     * @param   y   y-coordinate of the pixel.
+     * @return pixel red component as an integer in range [0, 255].
+     */
+    public int getRed(int x, int y) {
+        int rgba = img.getRGB(x, y);
+        //return (rgba & 0x00F0) >>> 8;
+        return getPixel(x, y).getRed();
+    }
+    
+    /**
+     * Get green component of pixel color.
+     * @param   x   x-coordinate of the pixel.
+     * @param   y   y-coordinate of the pixel.
+     * @return pixel green component as an integer in range [0, 255].
+     */
+    public int getGreen(int x, int y) {
+        int rgba = img.getRGB(x, y);
+        //return (rgba & 0x0F00) >>> 16;
+        return getPixel(x, y).getGreen();
+    }
+    
+    /**
+     * Get blue component of pixel color.
+     * @param   x   x-coordinate of the pixel.
+     * @param   y   y-coordinate of the pixel.
+     * @return pixel blue component as an integer in range [0, 255].
+     */
+    public int getBlue(int x, int y) {
+        int rgba = img.getRGB(x, y);
+        //return (rgba & 0xF000) >>> 24;
+        return getPixel(x, y).getBlue();
+    }
+
+    /**
+     * Get alpha component of pixel color.
+     * @param   x   x-coordinate of the pixel.
+     * @param   y   y-coordinate of the pixel.
+     * @return pixel alpha component as an integer in range [0, 255].
+     */
+    public int getAlpha(int x, int y) {
+        int rgba = img.getRGB(x, y);
+        //return (rgba & 0x000F);
+        return getPixel(x, y).getAlpha();
+    }
+    
+    /**
+     * Generate a representation of the Image object.
+     * @return String representation
+     */
     @Override
     public String toString() {
-        return "Image x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", layer=" + layer;
+        return "Image x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", path=" + path + ", layer=" + layer;
     }
     
     /**
