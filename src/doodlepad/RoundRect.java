@@ -41,25 +41,25 @@ public class RoundRect extends Shape
     
     /**
      * Constructor for the RoundRect object, a rounded rectangle.
-     * @param   x           The x-coordinate of the upper left corner of the rounded rectangle.
-     * @param   y           The y-coordinate of the upper left corner of the rounded rectangle.
-     * @param   width       The width of the rounded rectangle.
-     * @param   height      The height of the rounded rectangle.
-     * @param   arcWidth    The width of the arc that forms a corner of the rounded rectangle.
-     * @param   arcHeight   The height of the arc that forms a corner of the rounded rectangle.
+     * @param   x           The x-coordinate of the upper left corner of the RoundRect object.
+     * @param   y           The y-coordinate of the upper left corner of the RoundRect object.
+     * @param   width       The width of the RoundRect object.
+     * @param   height      The height of the RoundRect object.
+     * @param   arcWidth    The width of the arc that forms a corner of the RoundRect object.
+     * @param   arcHeight   The height of the arc that forms a corner of the RoundRect object.
      */
     public RoundRect(double x, double y, double width, double height, double arcWidth, double arcHeight) {
-        this(x, y, width, height, arcWidth, arcHeight, Pad.getPad().getLayer(0)); //Pad.getPad());
+        this(x, y, width, height, arcWidth, arcHeight, Pad.getPad().getLayer(0));
     }
     
 //    /**
 //     * Constructor for the RoundRect object, a rounded rectangle.
-//     * @param   x           The x-coordinate of the upper left corner of the rounded rectangle.
-//     * @param   y           The y-coordinate of the upper left corner of the rounded rectangle.
-//     * @param   width       The width of the rounded rectangle.
-//     * @param   height      The height of the rounded rectangle.
-//     * @param   arcWidth    The width of the arc that forms a corner of the rounded rectangle.
-//     * @param   arcHeight   The height of the arc that forms a corner of the rounded rectangle.
+//     * @param   x           The x-coordinate of the upper left corner of the RoundRect object.
+//     * @param   y           The y-coordinate of the upper left corner of the RoundRect object.
+//     * @param   width       The width of the RoundRect object.
+//     * @param   height      The height of the RoundRect object.
+//     * @param   arcWidth    The width of the arc that forms a corner of the RoundRect object.
+//     * @param   arcHeight   The height of the arc that forms a corner of the RoundRect object.
 //     * @param   pad         The Pad to which this RoundRect should be added.
 //     */
 //    public RoundRect(double x, double y, double width, double height, double arcWidth, double arcHeight, Pad pad) {
@@ -68,12 +68,12 @@ public class RoundRect extends Shape
     
     /**
      * Constructor for the RoundRect object, a rounded rectangle.
-     * @param   x           The x-coordinate of the upper left corner of the rounded rectangle.
-     * @param   y           The y-coordinate of the upper left corner of the rounded rectangle.
-     * @param   width       The width of the rounded rectangle.
-     * @param   height      The height of the rounded rectangle.
-     * @param   arcWidth    The width of the arc that forms a corner of the rounded rectangle.
-     * @param   arcHeight   The height of the arc that forms a corner of the rounded rectangle.
+     * @param   x           The x-coordinate of the upper left corner of the RoundRect object.
+     * @param   y           The y-coordinate of the upper left corner of the RoundRect object.
+     * @param   width       The width of the RoundRect object.
+     * @param   height      The height of the RoundRect object.
+     * @param   arcWidth    The width of the arc that forms a corner of the RoundRect object.
+     * @param   arcHeight   The height of the arc that forms a corner of the RoundRect object.
      * @param   layer       The Layer object to which the Image should be added, or null if not to add to a Layer.
      */
     public RoundRect(double x, double y, double width, double height, double arcWidth, double arcHeight, Layer layer) {

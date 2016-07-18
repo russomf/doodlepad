@@ -25,11 +25,20 @@ package doodlepad;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.io.File;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.util.List;
 
 /**
  * A class that loads an image from a file and draws it on a Pad.
@@ -76,7 +85,7 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        super.setStroked(false);
+        super.setStroked(true);
         super.setFilled(false);
         
         try {
@@ -209,7 +218,7 @@ public class Image extends Shape
      * @return pixel red component as an integer in range [0, 255].
      */
     public int getRed(int x, int y) {
-        int rgba = img.getRGB(x, y);
+        //int rgba = img.getRGB(x, y);
         //return (rgba & 0x00F0) >>> 8;
         return getPixel(x, y).getRed();
     }
@@ -221,7 +230,7 @@ public class Image extends Shape
      * @return pixel green component as an integer in range [0, 255].
      */
     public int getGreen(int x, int y) {
-        int rgba = img.getRGB(x, y);
+        //int rgba = img.getRGB(x, y);
         //return (rgba & 0x0F00) >>> 16;
         return getPixel(x, y).getGreen();
     }
@@ -233,7 +242,7 @@ public class Image extends Shape
      * @return pixel blue component as an integer in range [0, 255].
      */
     public int getBlue(int x, int y) {
-        int rgba = img.getRGB(x, y);
+        //int rgba = img.getRGB(x, y);
         //return (rgba & 0xF000) >>> 24;
         return getPixel(x, y).getBlue();
     }
@@ -245,9 +254,321 @@ public class Image extends Shape
      * @return pixel alpha component as an integer in range [0, 255].
      */
     public int getAlpha(int x, int y) {
-        int rgba = img.getRGB(x, y);
+        //int rgba = img.getRGB(x, y);
         //return (rgba & 0x000F);
         return getPixel(x, y).getAlpha();
+    }
+    
+    /**
+     * Draws an arc on the Image. The arc is defined by a section of an ellipse bounded by the rectangle with upper left
+     * corner at (x, y) and size (width, height). The section starts at angle startAngle (degrees) and
+     * extends by arcAngle (degrees).
+     * 
+     * @param   x           The upper x-coordinate of the arc`s related ellipse bounding box (pixels).
+     * @param   y           The upper y-coordinate of the arc`s related ellipse bounding box (pixels).
+     * @param   width       The width of the arc`s related ellipse (pixels).
+     * @param   height      The height of the arc`s related ellipse bounding box (pixels).
+     * @param   startAngle  The starting angle at which to begin drawing the arc (degrees).
+     * @param   arcAngle    The angular extent of the arc, which defines its length (degrees).
+     */
+    public void drawArc(double x, double y, double width, double height, double startAngle, double arcAngle) 
+    {
+        Graphics2D g = img.createGraphics();
+        
+        // Set the type based on the filled setting
+        int typ;
+        if (filled == true) {
+            typ = java.awt.geom.Arc2D.PIE;
+        } else {
+            typ = java.awt.geom.Arc2D.OPEN;
+        }
+        
+        // Create the shape
+        Arc2D.Double arc = new Arc2D.Double(x, y, width, height, startAngle, arcAngle, typ);
+        
+        if (filled == true) {
+            g.setColor(this.fillColor);
+            g.fill( arc );
+        }
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor(this.strokeColor);
+            
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            g.draw( arc );
+        }
+        
+        repaint();
+    }
+    
+    /**
+     * Draw an oval on the Image.
+     * @param   x       The x-coordinate of the upper left-hand corner of the oval.
+     * @param   y       The y-coordinate of the upper left-hand corner of the oval.
+     * @param   width   The width of the oval.
+     * @param   height  The height of the oval.
+     */
+    public void drawOval(double x, double y, double width, double height) 
+    {
+        Graphics2D g = img.createGraphics();
+        
+        // Create the shape
+        Ellipse2D.Double ellipse = new Ellipse2D.Double(x, y, width, height);
+        
+        if (filled == true) {
+            g.setColor(this.fillColor);
+            g.fill( ellipse );
+        }
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor(this.strokeColor);
+            
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            g.draw(ellipse);
+        }
+
+        repaint();
+    }
+    
+    /**
+     * Draw a rectangle on the Image.
+     * @param   x       The x-coordinate of the upper left-hand corner of the rectangle.
+     * @param   y       The y-coordinate of the upper left-hand corner of the rectangle.
+     * @param   width   The width of the rectangle.
+     * @param   height  The height of the rectangle.
+     */
+    public void drawRectangle(double x, double y, double width, double height) 
+    {
+        Graphics2D g = img.createGraphics();
+        
+        Rectangle2D.Double rect = new Rectangle2D.Double(x, y, width, height);
+        
+        if (filled == true) {
+            g.setColor(fillColor);
+            g.fill( rect);
+        }
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor(strokeColor);
+            
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            g.draw( rect );
+        }
+
+        repaint();
+    }
+
+    /**
+     * Draw a line on the Image.
+     * @param   x1  The x-coordinate of the line's first point.
+     * @param   y1  The y-coordinate of the line's first point.
+     * @param   x2  The x-coordinate of the line's second point.
+     * @param   y2  The y-coordinate of the line's second point.
+     */
+    public void drawLine(double x1, double y1, double x2, double y2) 
+    {
+        Graphics2D g = img.createGraphics();
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor(this.strokeColor);
+
+            float _strokeWidth = (float)strokeWidth;
+            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            
+            g.draw( new Line2D.Double(x1, y1, x2, y2));
+        }
+        
+        repaint();
+    }
+    
+    /**
+     * Draw a rounded rectangle on the Image.
+     * @param   x           The x-coordinate of the upper left corner of the rounded rectangle.
+     * @param   y           The y-coordinate of the upper left corner of the rounded rectangle.
+     * @param   width       The width of the rounded rectangle.
+     * @param   height      The height of the rounded rectangle.
+     * @param   arcWidth    The width of the arc that forms a corner of the rounded rectangle.
+     * @param   arcHeight   The height of the arc that forms a corner of the rounded rectangle.
+     */
+    public void drawRoundRect(double x, double y, double width, double height, double arcWidth, double arcHeight) 
+    {
+        Graphics2D g = img.createGraphics();
+        
+        RoundRectangle2D.Double rect = new RoundRectangle2D.Double(x, y, width, height, arcWidth, arcHeight);
+        if (filled == true) {
+            g.setColor(this.fillColor);
+            g.fill( rect );
+        }
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor(this.strokeColor);
+            
+            float _strokeWidth = (float)strokeWidth;
+            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            
+            g.draw( rect );
+        }
+        
+        repaint();
+    }
+
+    /**
+     * Draw a polygon on the Image
+     * @param   points  List of Point objects that define coordinate points of polygon
+     */
+    public void drawPolygon( List<Point> points )
+    {
+        // Compute the number of points in the Polygon.
+        int nPoints = points.size();
+
+        // Create and fill arrays
+        double[] xPoints = new double[nPoints];
+        double[] yPoints = new double[nPoints];
+        
+        if (nPoints > 0) {
+            for (int i=0; i<nPoints; i++) {
+                Point pt = points.get(i);
+                xPoints[i] = pt.getX();
+                yPoints[i] = pt.getY();
+            }                
+        }
+
+        this.drawPolygon(xPoints, yPoints);
+    }
+    
+    /**
+     * Draw a polygon on the Image
+     * @param xPoints The array of x-coordinates for all polygon points.
+     * @param yPoints The array of y-coordinates for all polygon points.
+     */
+    public void drawPolygon(double[] xPoints, double[] yPoints)
+    {
+        // Test the number of points
+        if (xPoints.length == 0 || yPoints.length == 0) return;
+        int nPoints = xPoints.length;
+        
+        // Build a path object
+        Path2D.Double _path = new Path2D.Double();
+        
+        _path.moveTo(xPoints[0], yPoints[0]);
+        for (int i=1; i<nPoints; i++) {
+            _path.lineTo(xPoints[i], yPoints[i]);
+        }
+        _path.closePath();
+        
+        Graphics2D g = img.createGraphics();
+        
+        if (filled == true) {
+            g.setColor( fillColor );
+            g.fill(_path);
+        }
+        
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor( strokeColor );
+            
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            
+            g.draw(_path);
+        }
+        
+        repaint();
+    }
+
+    /**
+     * Draw text on the Image.
+     * @param text      The String drawn as the Text object
+     * @param x         The x-coordinate of the Text object upper left corner.
+     * @param y         The y-coordinate of the Text object upper left corner.
+     * @param size      The font size used to draw the Text object.
+     * @param style     The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
+     * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
+     */
+    public void drawText(String text, double x, double y, int size, int style, String fontName) 
+    {
+        if (text.isEmpty()) return;
+
+        // Draw the string
+        if (stroked == true ) {
+            Graphics2D g = img.createGraphics();
+
+            Font font = new Font(fontName, style, size);
+            FontRenderContext frc = g.getFontRenderContext();
+            TextLayout tl = new TextLayout(text, font, frc);
+
+            Rectangle2D bounds = tl.getBounds();
+            double height = bounds.getHeight();
+        
+            g.setColor( fillColor );
+
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+            
+            tl.draw(g, (float)x, (float)(y+height));
+            
+            repaint();
+        }
+    }
+ 
+    /**
+     * Draw text on an Image with some default font attributes.
+     * @param   text        The String drawn as the Text object
+     * @param   x           The x-coordinate of the Text object upper left corner.
+     * @param   y           The y-coordinate of the Text object upper left corner.
+     * @param   size        The font size used to draw the Text object.
+     * @param   fontName    The name of the font used to draw the Text object, Example: "Arial"
+     */
+    public void drawText(String text, double x, double y, int size, String fontName) {
+        this.drawText(text, x, y, size, Font.PLAIN, fontName);
+    }
+
+    /**
+     * Draw text on an Image with some default font attributes.
+     * @param   text        The String drawn as the Text object
+     * @param   x           The x-coordinate of the Text object upper left corner.
+     * @param   y           The y-coordinate of the Text object upper left corner.
+     * @param   fontName    The name of the font used to draw the Text object, Example: "Arial"
+     */
+    public void drawText(String text, double x, double y, String fontName) {
+        this.drawText(text, x, y, 12, Font.PLAIN, fontName);
+    }
+
+    /**
+     * Draw text on an Image with some default font attributes.
+     * @param   text    The String drawn as the Text object
+     * @param   x       The x-coordinate of the Text object upper left corner.
+     * @param   y       The y-coordinate of the Text object upper left corner.
+     * @param   size    The font size used to draw the Text object.
+     * @param   style   The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
+     */
+    public void drawText(String text, double x, double y, int size, int style) {
+        this.drawText(text, x, y, size, style, "Arial");
+    }
+    
+    /**
+     * Draw text on an Image with some default font attributes.
+     * @param   text    The String drawn as the Text object
+     * @param   x       The x-coordinate of the Text object upper left corner.
+     * @param   y       The y-coordinate of the Text object upper left corner.
+     * @param   size    The font size used to draw the Text object.
+     */
+    public void drawText(String text, double x, double y, int size) {
+        this.drawText(text, x, y, size, Font.PLAIN, "Arial");
+    }
+    
+    /**
+     * Draw text on an Image with the default font attributes.
+     * @param   text    The String drawn as the Text object
+     * @param   x       The x-coordinate of the Text object upper left corner.
+     * @param   y       The y-coordinate of the Text object upper left corner.
+     */
+    public void drawText(String text, double x, double y) {
+        this.drawText(text, x, y, 12, Font.PLAIN, "Arial");
     }
     
     /**
@@ -272,15 +593,18 @@ public class Image extends Shape
         int ih = (int)Math.round(height);
         g.drawImage(img, ix, iy, iw, ih, null);
         
-        if (stroked == true && strokeWidth > 0.0) {
-            g.setColor(this.strokeColor);
-
-            float _strokeWidth = (float)strokeWidth;
-            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
-            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
-            
-            g.drawRect(ix, iy, iw, ih);
-        }
+        // Images do not have an stroked outline.
+        // Stroke is reserved for graphics drawn on an Image.
+        
+//        if (stroked == true && strokeWidth > 0.0) {
+//            g.setColor(this.strokeColor);
+//
+//            float _strokeWidth = (float)strokeWidth;
+//            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
+//            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+//            
+//            g.drawRect(ix, iy, iw, ih);
+//        }
         
         if (selected) drawSelRect(g);
     }

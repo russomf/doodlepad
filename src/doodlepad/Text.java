@@ -109,6 +109,18 @@ public class Text extends Shape
     }
 
     /**
+     * Text object constructor. Create a Text object with an Arial font.
+     * @param text      The String drawn as the Text object
+     * @param x         The x-coordinate of the Text object upper left corner.
+     * @param y         The y-coordinate of the Text object upper left corner.
+     * @param size      The font size used to draw the Text object.
+     * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
+     */
+    public Text(String text, double x, double y, int size, String fontName) {
+        this(text, x, y, size, Font.PLAIN, fontName);
+    }
+
+    /**
      * Text object constructor. Create a Text object with style Font.PLAIN and an Arial font.
      * @param text  The String drawn as the Text object
      * @param x     The x-coordinate of the Text object upper left corner.
@@ -148,20 +160,20 @@ public class Text extends Shape
      * @param   text    The String drawn as the Text object
      * @param   x       The x-coordinate of the Text object upper left corner.
      * @param   y       The y-coordinate of the Text object upper left corner.
-     */
-    public Text(String text, double x, double y) {
-        this(text, x, y, Pad.getPad().getLayer(0));
-    }
-    
-    /**
-     * Text object constructor. Create a Text object with the default system font attributes.
-     * @param   text    The String drawn as the Text object
-     * @param   x       The x-coordinate of the Text object upper left corner.
-     * @param   y       The y-coordinate of the Text object upper left corner.
      * @param   pad     The Pad to which the Text object should be added.
      */
     public Text(String text, double x, double y, Pad pad) {
         this(text, x, y, pad.getLayer(0));
+    }
+    
+    /**
+     * Text object constructor. Create a Text object with the default font attributes.
+     * @param   text    The String drawn as the Text object
+     * @param   x       The x-coordinate of the Text object upper left corner.
+     * @param   y       The y-coordinate of the Text object upper left corner.
+     */
+    public Text(String text, double x, double y) {
+        this(text, x, y, Pad.getPad().getLayer(0));
     }
     
     /**
@@ -241,7 +253,6 @@ public class Text extends Shape
             g.setColor( fillColor );
             
             float _strokeWidth = (float)strokeWidth;
-            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
             g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
             
             // Stash the size and offset of the rendered text

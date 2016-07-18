@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DoodlePad</title>
+        <style>
+        * {
+            margin: 0;
+            font-family: arial;
+            font-size: 12pt;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        #header {
+            background-color: #def;
+            width: 100%;
+            height: 100px;
+        }
+        #header #logo {
+            position: relative;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+        }
+        #header #mail {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 20px;
+            float: right;
+        }
+        #nav {
+            position: absolute;
+            top: 100px;
+            bottom: 0px;
+            width: 250px;
+            background-color: #efe;
+            padding: 10px;
+            overflow: auto;
+        }
+        #main {
+            position: absolute;
+            left: 270px;
+            top: 100px;
+            bottom: 0px;
+            right: 0px;
+        }
+        iframe {
+            border: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .heading {
+            font-size: 14pt;
+        }
+        a:link {
+            text-decoration: none;
+        }
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:active {
+            text-decoration: underline;
+        }
+        </style>
+        <script type="text/javascript">
+        function loadURL(url) {
+            document.getElementById('main_content').src=url;
+        }
+        </script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-80544484-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            <img id="logo" src="logo.png" >
+            <a href="mailto:mark@doodlepad.org?subject=about page" title="Contact us"><img id="mail" src="images/envelope.png"></a>
+        </div>
+        <div id="nav">
+          <div>
+            <ul>
+                <li class="heading">Introduction
+                    <ul>
+                        <li><a href="#" onclick="loadURL('about.html');">About DoodlePad</a></li>
+                        <li><a href="#" onclick="loadURL('first.html');">Getting Started</a></li>
+                        <li><a href="#" onclick="loadURL('license.html');">GPL3 License</a></li>
+                        <li><a href="http://doodlepad.org/dist/doodlepad.jar">Download Library</a></li>
+                        <li><a href="#" onclick="loadURL('compile_run.html');">Compile and Run</a></li>
+                        <li><a href="http://doodlepad.org/dist/javadoc/" target="_blank">JavaDocs</a></li>
+                        <li><a href="https://github.com/russomf/doodlepad.git" target="_blank">GitHub Repo</a></li>
+                        <li><a href="mailto:mark@doodlepad.org">Contact Us</a></li>
+                    </ul>
+                </li>
+                <li class="heading">Topics
+                    <ul>
+                        <li><a href="#" onclick="loadURL('model.html');">Drawing Model</a></li>
+                        <li><a href="#" onclick="loadURL('basic_shapes.html');">Basic Shapes</a></li>
+                        <li><a href="#" onclick="loadURL('position_size.html');">Position and Size</a></li>
+                        <li>Colors</li>
+                        <li>Stroke and Fill</li>
+                        <li>Events</li>
+                        <li>Repeated Actions</li>
+                        <li>Transformations</li>
+                        <li>Images</li>
+                        <li>Paths</li>
+                        <li>Networking</li>
+                        <li>...</li>
+                    </ul>
+                </li>
+                <li class="heading">Examples
+                    <ul>
+                        <li>Solar System</li>
+                        <li>Image Filters</li>
+                        <li>Reflected Dragging</li>
+                        <li>...</li>
+                    </ul>
+                </li>
+            </ul>
+          </div>
+        </div>
+        <div id="main">
+             <iframe id="main_content" src="about.html"></iframe> 
+        </div>
+    </body>
+</html>

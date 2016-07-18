@@ -38,10 +38,10 @@ public class Line extends Shape
 {
     /**
      * Line object constructor.
-     * @param   x1  The x-coordinate of the line's first point.
-     * @param   y1  The y-coordinate of the line's first point.
-     * @param   x2  The x-coordinate of the line's second point.
-     * @param   y2  The y-coordinate of the line's second point.
+     * @param   x1  The x-coordinate of the Line object's first point.
+     * @param   y1  The y-coordinate of the Line object's first point.
+     * @param   x2  The x-coordinate of the Line object's second point.
+     * @param   y2  The y-coordinate of the Line object's second point.
      */
     public Line(double x1, double y1, double x2, double y2) {
         this(x1, y1, x2, y2, Pad.getPad().getLayer(0));
@@ -49,10 +49,10 @@ public class Line extends Shape
     
     /**
      * Line object constructor.
-     * @param   x1  The x-coordinate of the line's first point.
-     * @param   y1  The y-coordinate of the line's first point.
-     * @param   x2  The x-coordinate of the line's second point.
-     * @param   y2  The y-coordinate of the line's second point.
+     * @param   x1  The x-coordinate of the Line object's first point.
+     * @param   y1  The y-coordinate of the Line object's first point.
+     * @param   x2  The x-coordinate of the Line object's second point.
+     * @param   y2  The y-coordinate of the Line object's second point.
      * @param   pad The Pad object to which this Line should be added.
      */
     public Line(double x1, double y1, double x2, double y2, Pad pad) {
@@ -61,10 +61,10 @@ public class Line extends Shape
     
     /**
      * Line object constructor.
-     * @param   x1      The x-coordinate of the line's first point.
-     * @param   y1      The y-coordinate of the line's first point.
-     * @param   x2      The x-coordinate of the line's second point.
-     * @param   y2      The y-coordinate of the line's second point.
+     * @param   x1      The x-coordinate of the Line object's first point.
+     * @param   y1      The y-coordinate of the Line object's first point.
+     * @param   x2      The x-coordinate of the Line object's second point.
+     * @param   y2      The y-coordinate of the Line object's second point.
      * @param   layer    The Layer object to which the Line should be added, or null if not to add to a Layer.
      */
     public Line(double x1, double y1, double x2, double y2, Layer layer) {
