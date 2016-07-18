@@ -15,4 +15,4 @@ public class MyClass {
 }
 ```
 
-See http://doodlepad.org/dist/javadoc/
+See http://doodlepad.org
