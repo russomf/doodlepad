@@ -28,6 +28,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -85,8 +86,8 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        super.setStroked(true);
-        super.setFilled(false);
+        super.setStrokeWidth(0.0);
+        super.setFillColor(Color.BLACK);
         
         try {
             img = ImageIO.read(new File(path));
@@ -136,8 +137,8 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        super.setStroked(false);
-        super.setFilled(false);
+        super.setStrokeWidth(0.0);
+        super.setFillColor(Color.BLACK);
         
         try {
             img = ImageIO.read(new File(path));
@@ -158,8 +159,8 @@ public class Image extends Shape
     public Image(double x, double y, double width, double height)
     {
         super(x, y, 0, 0, Pad.getPad().getLayer(0));
-        super.setStroked(false);
-        super.setFilled(false);
+        super.setStrokeWidth(0.0);
+        super.setFillColor(Color.BLACK);
         this.width = width;
         this.height = height;
         
@@ -257,6 +258,34 @@ public class Image extends Shape
         //int rgba = img.getRGB(x, y);
         //return (rgba & 0x000F);
         return getPixel(x, y).getAlpha();
+    }
+    
+    /**
+     * Set the background color for the Image 
+     * @param red   The background color red component
+     * @param green The background color green component
+     * @param blue  The background color blue component
+     */
+    public void setBackground(double red, double green, double blue)
+    {
+        int r = (int)Math.round(Util.constrain(red, 0, 255));
+        int g = (int)Math.round(Util.constrain(green, 0, 255));
+        int b = (int)Math.round(Util.constrain(blue, 0, 255));
+        
+        Graphics2D g2 = img.createGraphics();
+        g2.setColor(new Color(r, g, b));
+        g2.fillRect(0, 0, (int)width, (int)height);
+        
+        repaint();
+    }
+
+    /**
+     * Set the background color for the Image to a gray value
+     * @param gray The background gray scale
+     */
+    public void setBackground(double gray)
+    {
+        setBackground(gray, gray, gray);
     }
     
     /**
@@ -491,28 +520,38 @@ public class Image extends Shape
      */
     public void drawText(String text, double x, double y, int size, int style, String fontName) 
     {
+        if (stroked == false && filled == false) return;
         if (text.isEmpty()) return;
 
-        // Draw the string
-        if (stroked == true ) {
-            Graphics2D g = img.createGraphics();
-
-            Font font = new Font(fontName, style, size);
-            FontRenderContext frc = g.getFontRenderContext();
-            TextLayout tl = new TextLayout(text, font, frc);
-
-            Rectangle2D bounds = tl.getBounds();
-            double height = bounds.getHeight();
+        Graphics2D g = img.createGraphics();
         
-            g.setColor( fillColor );
+        Font font = new Font(fontName, style, size);
+        FontRenderContext frc = g.getFontRenderContext();
+        TextLayout tl = new TextLayout(text, font, frc);
 
+        // Stash the size and offset of the rendered text
+        Rectangle2D bounds = tl.getBounds();
+        double height = bounds.getHeight();
+        
+        // Fill the text
+        if (filled == true) {
+            g.setColor( fillColor );                        
+            tl.draw(g, (float)x, (float)(y+height));
+        }
+        
+        // Stroke the text
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor( strokeColor );
             float _strokeWidth = (float)strokeWidth;
             g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
-            
-            tl.draw(g, (float)x, (float)(y+height));
-            
-            repaint();
+
+            //AffineTransform tx = new AffineTransform();
+            //tx.translate(x, y+height);
+            AffineTransform tx = new AffineTransform(1.0, 0.0, 0.0, 1.0, x, y+height);
+            g.draw(tl.getOutline(tx));
         }
+        
+        repaint();
     }
  
     /**

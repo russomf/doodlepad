@@ -30,7 +30,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
-//import java.util.ArrayList;
 
 /**
  * Abstract base class for all graphical shape objects
@@ -646,6 +645,7 @@ public abstract class Shape
      */
     public void setStrokeWidth(double width) {
         this.strokeWidth = width;
+        this.setStroked( true );
         repaint();
     }
     
@@ -1256,10 +1256,10 @@ public abstract class Shape
     
     /**
      * Add a rotation angle to Shape transform.
-     * @param angle Adds the rotation angle to the current transform (radians)
+     * @param angle Adds the rotation angle to the current transform (degrees)
      */
     public void rotate(double angle) {
-        transform.rotate(angle);
+        transform.rotate(angle*Math.PI/180.0);
         repaint();
     }
     

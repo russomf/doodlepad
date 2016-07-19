@@ -30,11 +30,13 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.font.TextLayout;
 import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.util.Random;
 import javax.swing.UIManager;
 
 /**
- * A class that implements a graphical object made up of text
+ * A class that implements a graphical object made up of text.
+ * Starts filled with black and no stroke.
  * 
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
@@ -243,28 +245,38 @@ public class Text extends Shape
     @Override
     public void draw(Graphics2D g)
     {
+        if (stroked == false && filled == false) return;
         if (this.text.isEmpty()) return;
         
-        if (stroked == true) {
-            FontRenderContext frc = g.getFontRenderContext();
-            TextLayout tl = new TextLayout(this.text, font, frc);
-            
-            // Draw the string
-            g.setColor( fillColor );
-            
-            float _strokeWidth = (float)strokeWidth;
-            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
-            
-            // Stash the size and offset of the rendered text
-            Rectangle2D bounds = tl.getBounds();
-            width = bounds.getWidth();
-            height = bounds.getHeight();
-            offX = bounds.getX();
-            offY = bounds.getY();
-            
+        FontRenderContext frc = g.getFontRenderContext();
+        TextLayout tl = new TextLayout(this.text, font, frc);
+
+        // Stash the size and offset of the rendered text
+        Rectangle2D bounds = tl.getBounds();
+        width  = bounds.getWidth();
+        height = bounds.getHeight();
+        offX   = bounds.getX();
+        offY   = bounds.getY();
+        
+        // Fill the text
+        if (filled == true) {
+            g.setColor( fillColor );                        
             tl.draw(g, (float)x, (float)(y+height));
         }
         
+        // Stroke the text
+        if (stroked == true && strokeWidth > 0.0) {
+            g.setColor( strokeColor );
+            float _strokeWidth = (float)strokeWidth;
+            g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
+
+            //AffineTransform tx = new AffineTransform();
+            //tx.translate(x, y+height);
+            AffineTransform tx = new AffineTransform(1.0, 0.0, 0.0, 1.0, x, y+height);
+            g.draw(tl.getOutline(tx));
+        }
+        
+        // Draw select rect
         if (selected) drawSelRect(g);
     }
     

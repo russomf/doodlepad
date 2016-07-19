@@ -1235,7 +1235,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     public Pad(String title, int width, int height, Color background, boolean singleton)
     {
         // Create and configure a new Canvas, which subclasses JPanel
-        cvs.setPreferredSize (new java.awt.Dimension(width, height));
+        cvs.setPreferredSize(new java.awt.Dimension(width, height));
         cvs.setDoubleBuffered(true);
         //RepaintManager.currentManager(cvs).setDoubleBufferingEnabled(false);
         
@@ -1723,10 +1723,10 @@ public class Pad extends JFrame implements Iterable<Shape>
     
     /**
      * Add a rotation angle to Pad transform.
-     * @param angle Adds the rotation angle to the current transform (radians)
+     * @param angle Adds the rotation angle to the current transform (degrees)
      */
     public void rotate(double angle) {
-        this.getLayer(0).rotate(angle);
+        this.getLayer(0).rotate(angle*Math.PI/180.0);
     }
     
     /**
