@@ -464,7 +464,6 @@ public abstract class Shape
         this.strokeColor = Color.black;
         this.strokeWidth = 1;
 
-        //if (pad != null) pad.addShape(this);
         if (layer != null) layer.addShape(this);
     }
     

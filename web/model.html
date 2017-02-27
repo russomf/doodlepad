@@ -2,8 +2,15 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Drawing Model</title>
+        <title>DoodlePad Drawing Model</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
           ga('create', 'UA-80544484-1', 'auto');
@@ -40,7 +47,7 @@ and how to add and/or remove graphic objects from a Pad.
 </p>
 <img src="images/coordinates.png" style="float:left;padding:10px;">
 <p>
-By default, distances on a Pad are measured in pixels. While x-coordinate values increase from left to rigt, y-coordinate values increase from top to bottom.
+By default, distances on a Pad are measured in pixels. While x-coordinate values increase from left to right, y-coordinate values increase from top to bottom.
 As a result, the origin (0,0) in located in the upper left corner of the Pad window.
 The coordinate system of a Pad window and each individual graphic object may be modified using affine transformations. 
 This technique is discussed in more detail later.

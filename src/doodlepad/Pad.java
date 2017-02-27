@@ -235,9 +235,11 @@ public class Pad extends JFrame implements Iterable<Shape>
         @Override
         public void paintComponent(Graphics g) 
         {
+            //System.out.println("paintComponent");
+            
             // Execute base class paint() method
             super.paintComponent(g);
-
+            
             // Use Graphics2D api with antialising enabled
             Graphics2D g2 = (Graphics2D)g;
             g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);

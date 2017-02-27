@@ -2,50 +2,45 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>DoodlePad</title>
+        <title>DoodlePad - A Simple Event-Driven Graphics Library for Java</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
         <style>
         * {
             margin: 0;
-            font-family: arial;
+            font-family: 'Roboto',helvetica,arial;
             font-size: 12pt;
         }
         html, body {
             height: 100%;
-            overflow: hidden;
+            /*overflow: hidden;*/
         }
         #header {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        #header img {
+            max-width:100%;
+            max-height:100%;
+        }
+        #row1 {
             background-color: #def;
-            width: 100%;
-            height: 100px;
-        }
-        #header #logo {
-            position: relative;
-            top: 50%;
-            left: -10px;
-            transform: translateY(-50%);
-        }
-        #header #mail {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-right: 20px;
-            float: right;
         }
         #nav {
-            position: absolute;
-            top: 100px;
-            bottom: 0px;
-            width: 250px;
+            height: calc(100vh - 90px);
             background-color: #efe;
-            padding: 10px;
+            padding-left: 3px;
+            padding-right: 0px;
             overflow: auto;
         }
         #main {
-            position: absolute;
-            left: 270px;
-            top: 100px;
-            bottom: 0px;
-            right: 0px;
+            height: calc(100vh - 90px);
+            padding-left: 0px;
+            padding-right: 0px;
         }
         iframe {
             border: 0;
@@ -70,6 +65,9 @@
             text-decoration: underline;
         }
         </style>
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script type="text/javascript">
         function loadURL(url) {
             document.getElementById('main_content').src=url;
@@ -82,33 +80,35 @@
         </script>
     </head>
     <body>
-        <div id="header">
-            <img id="logo" src="logo.png" >
-            <a href="mailto:mark@doodlepad.org?subject=about page" title="Contact us"><img id="mail" src="images/envelope.png"></a>
-        </div>
-        <div id="nav">
-          <div>
-            <ul>
-                <li class="heading">Introduction
+        <div class="container">
+            <div id="row1" class="row">
+                <div id="header" class="col-sm-12">
+                    <img src="logo.png"><span style="font-size:28px;color:#999;position:absolute;left:490px;top:2px;">&trade;</span>
+                </div>
+            </div>
+            <div id="row2" class="row">
+                <div id="nav" class="col-sm-3">
+                    <div class="heading">Introduction</div>
                     <ul>
                         <li><a href="#" onclick="loadURL('about.html');">About DoodlePad</a></li>
                         <li><a href="#" onclick="loadURL('first.html');">Getting Started</a></li>
                         <li><a href="#" onclick="loadURL('license.html');">GPL3 License</a></li>
-                        <li><a href="http://doodlepad.org/dist/doodlepad.jar">Download Library</a></li>
+                        <li><a href="https://github.com/russomf/doodlepad/blob/master/dist/doodlepad.jar?raw=true">Download Library</a></li>
                         <li><a href="#" onclick="loadURL('compile_run.html');">Compile and Run</a></li>
                         <li><a href="http://doodlepad.org/dist/javadoc/" target="_blank">JavaDocs</a></li>
                         <li><a href="https://github.com/russomf/doodlepad.git" target="_blank">GitHub Repo</a></li>
-                        <li><a href="mailto:mark@doodlepad.org">Contact Us</a></li>
+                        <li><a href="mailto:mark@doodlepad.org" title="Contact us">Contact Us</a></li>
                     </ul>
-                </li>
-                <li class="heading">Topics
+                    <div class="heading">Topics</div>
                     <ul>
                         <li><a href="#" onclick="loadURL('model.html');">Drawing Model</a></li>
                         <li><a href="#" onclick="loadURL('basic_shapes.html');">Basic Shapes</a></li>
+                        <li><a href="#" onclick="loadURL('polygons.html');">Polygons</a></li>
                         <li><a href="#" onclick="loadURL('position_size.html');">Position and Size</a></li>
-                        <li>Colors</li>
-                        <li>Stroke and Fill</li>
-                        <li>Events</li>
+                        <li><a href="#" onclick="loadURL('colors.html');">Colors</a></li>
+                        <li><a href="#" onclick="loadURL('stroke_fill.html');">Stroke and Fill</a></li>
+                        <li><a href="#" onclick="loadURL('paths.html');">Paths</a></li>
+                        <li><a href="#" onclick="loadURL('events.html');">Events</a></li>
                         <li>Repeated Actions</li>
                         <li>Transformations</li>
                         <li>Images</li>
@@ -116,20 +116,22 @@
                         <li>Networking</li>
                         <li>...</li>
                     </ul>
-                </li>
-                <li class="heading">Examples
+                    <div class="heading">Examples</div>
                     <ul>
-                        <li>Solar System</li>
+                        <li><a href="#" onclick="loadURL('checkers.html');">Checkers</a></li>
+                        <li>Color Matching</li>
+                        <li>Interactive Drawing</li>
                         <li>Image Filters</li>
+                        <li>Solar System</li>
                         <li>Reflected Dragging</li>
+                        <li>Battleship</li>
                         <li>...</li>
                     </ul>
-                </li>
-            </ul>
-          </div>
-        </div>
-        <div id="main">
-             <iframe id="main_content" src="about.html"></iframe> 
+                </div>
+                <div id="main" class="col-sm-9">
+                    <iframe id="main_content" src="about.html"></iframe>
+                </div>
+            </div>
         </div>
     </body>
 </html>

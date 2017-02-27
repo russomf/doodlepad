@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    font-family: verdana,arial;
+    font-family: 'Roboto',verdana,arial;
 }
 body {
     padding: 10px;
@@ -9,6 +9,10 @@ h2, h3, p, table.figure td {
     padding: 10px;
 }
 p {
+    color: #555;
+    line-height: 1.5;
+}
+li {
     color: #555;
 }
 pre  span{
@@ -23,9 +27,22 @@ pre {
     font-family: courier;
     background-color: #f0f0f0;
 }
+table {
+    border-collapse: collapse;
+}
 table.center {
     margin-left:auto; 
     margin-right:auto;
+}
+th {
+    text-align: left;
+}
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2
 }
 a:link {
     text-decoration: none;

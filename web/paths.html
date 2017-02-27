@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Paths in DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-80544484-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <h2>Paths</h2>
+        <hr></hr>
+<p>
+    A <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html" target="_blank">Path</a> is a complex shape made up of
+    various types of curves and straight lines. Unlike other Shapes in the DoodlePad library, a Path is assembled incrementally by
+    adding line segments and curves to form the Shape outline. This is done a manner similar to the way we might draw a shape with a pencil.
+    A path may even be open, meaning the final Shape is not required to be enclosed by a continuous line covering all sides.
+</p>
+<img src="images/path1.png" style="float:right;padding:10px;">
+<p>
+    Consider the shape on the right, which looks like a
+    <a href="http://doodlepad.org/dist/javadoc/doodlepad/Rectangle.html" target="_blank">Rectangle</a> missing its top side.
+    Previously, when we created a <a href="basic_shapes.html">basic Rectangle object</a>,
+    we made use of a constructor that created a Rectangle shape having all four sides.
+    To create the Path as shown in the figure, we must take a different approach.
+</p>
+<p>
+    To create any Path shape we build up the shape incrementally by adding one side at a time.
+    We start by creating an empty Path object (having no sides) and then invoke a sequence of its methods to add new sides,
+    one at a time.
+    When finished, we may choose to close the Path Shape outline with a final line segment, or leave it open.
+    The listing below for the <span class="code">PathDemo1</span> class is a small program that creates the previous
+    Path object in code using DoodlePad.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class PathDemo1 {
+    public static void main(String[] args) {
+
+        Path p1 = new Path();       // 1) Create an empty Path object
+        p1.moveTo(150.0,  50.0);    // 2) Move the virtual pencil to (150, 50)
+        p1.lineTo(150.0, 150.0);    // 3) Draw a line down to (150, 150)
+        p1.lineTo( 50.0, 150.0);    // 4) Add a line over to (50, 150)
+        p1.lineTo( 50.0,  50.0);    // 5) Add a line up to (50, 50)
+
+    }
+}
+</code></pre>
+<p>
+    Creating the previous Path object required five lines of code. Recall that the <a href="model.html">DoodlePad drawing model</a>
+    sets the default location of the coordinate system origin to the upper left corner of the drawing window.
+    Following is a more detailed description of the program.
+    <ul>
+        <li>Line 1 uses the nullary Path constructor to create an empty Path object and saves a reference to
+            the variable <span class="code">p1</span>.
+            Path objects each have a notion of the current point, which is initialized to the coordinates (0.0, 0.0).
+            The current point is updated as new sides are added to the Path, with the starting coordinates of each new side
+            being set to the current point and the end coordinates of each new side being set as the current point after
+            the side is added. This assures that sides are added end to end: the endpoint of one side becomes the starting point of the next.
+        </li>
+        <li>Line 2 starts the Path definition by moving the Path's current
+            point to the coordinates (150.0, 50.0) without adding a side to the Path. In most cases we want to start defining a Path
+            at coordinates other than the origin (0, 0), so the first method invokes is often
+            <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#moveTo-double-double-" target="_blank"><span class="code">moveTo(&hellip;)</span></a>.
+            This point corresponds to the upper  coordinates of the Path's right side.
+        </li>
+        <li>Lines 3, 4 and 5 add the three more straight lines as sides to the Path: the right side from the
+            starting point of (150.0, 50.0) down to (150.0, 150.0), the bottom from (150.0, 150.0) over to (50.0, 150.0),
+            and the left from (50.0, 150.0) to (50.0, 50.0). The Path object
+            <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#lineTo-double-double-" target="_blank"><span class="code">lineTo(&hellip;)</span></a> method is used.
+        </li>
+        <li>If we wanted to close the Path by adding a final line to form the top of the shape, we could have invoked the
+            <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#closePath--" target="_blank"><span class="code">closePath()</span></a> method
+            of the Path object. In this case we leave the Path open.</li>
+    </ul>
+</p>
+<p>
+    After creating a Path object, its
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#moveTo-double-double-" target="_blank"><span class="code">moveTo(&hellip;)</span></a>,
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#lineTo-double-double-" target="_blank"><span class="code">lineTo(&hellip;)</span></a>, and
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#closePath--" target="_blank"><span class="code">closePath()</span></a>
+        methods may be used to create any shape with multiple line segments as sides, open or closed.
+</p>
+<h3>Sides made up of Quadratic Curve Segments</h3>
+<p>
+    It is also possible to add curved side to a Path object. Two types or curved sides are permitted: one based on a quadratic curve,
+    and another based on a Bézier spline.
+</p>
+<p>
+    To add a side to a Path made up of a segment from a quadratic curve, use the Path object's
+    <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html#quadTo-double-double-double-double-" target="_blank"><span class="code">quadTo(&hellip;)</span></a>
+    method.
+    <span class="code">quadTo(&hellip;)</span> takes four <span class="code">double</span> parameters instead of two,
+    as was the case with <span class="code">lineTo(&hellip;)</span>.
+    The first two <span class="code">quadTo(&hellip;)</span> parameters define the side's <i>control point</i>,
+    and the second two define its endpoint. As usual, the side starts at the current point coordinates.
+</p>
+<p>
+    The following listing for the <span class="code">PathDemo2</span> class is identical to <span class="code">PathDemo1</span>
+    only the second side is changed from from a line to a quadratic curve segment. Notice that in line 4 the
+    <span class="code">quadTo(&hellip;)</span> method takes four numeric parameters.
+    The endpoint of (50.0, 150.0) is preceded with a control point of (100.0, 200.0), which defines how the side will curve.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class PathDemo2 {
+    public static void main(String[] args) {
+
+        Path p2 = new Path();       // 1) Create an empty Path object
+        p2.moveTo(150.0,  50.0);    // 2) Move your pencil to (150, 50)
+        p2.lineTo(150.0, 150.0);    // 3) Draw a line down to (150, 150)
+                                    // 4) Add a quadratic segment over to (50, 150)
+        p2.quadTo(100.0, 200.0, 50.0, 150.0);
+        p2.lineTo( 50.0,  50.0);    // 5) Add a line up to (50, 50)
+        p2.closePath();             // 6) Close the Path.
+
+    }
+}
+</code></pre>
+
+<p style="float:right">
+    <canvas id="cvs1" width="200" height="250" style="border: 1px solid black;"></canvas>
+    <script type="text/javascript" src="widgets/quadTo.min.js"></script>
+</p>
+
+<p>
+    To illustrate how the control point of the <span class="code">quadTo(&hellip;)</span> method impacts the shape of the
+    quadratic segment making up the bottom of the Path, have a look at the interactive widget to the right.
+    The Path shape outlined by the black line is the shape that is drawn by the code in the <span class="code">PathDemo2</span> sample listing.
+    Gray boxes represent the side endpoints and the red box is the control point for the curved side.
+    The dashed line shows the relationship between the control point of the curved side and its endpoints.
+    The coordinates of the control point are printed at the bottom of the widget.
+</p>
+<p>
+    The boxes in the widget are draggable using your mouse. Move the position of each box to see how it affects the Path shape
+    outline. Of particular interest is the red box representing the control point. Click and drag this box to see how the shape
+    of the side changes. Also note the value of the control point and how it relates to the shape of the side. Dashed lines
+    between the control point and the side's endpoints are tangent to the curved segment at its endpoints.
+</p>
+
+<h3>Sides made of Spline Segments</h3>
+
+<p>
+    Curved sides of a Path shape may be more complex than a segment of a quadratic curve. Sides may be made up of a Bézier spline,
+    which requires two control points instead of one.
+    In the following listing for <span class="code">PathDemo3</span> a Path is created with a Bézier spline as the bottom side.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class PathDemo3 {
+    public static void main(String[] args) {
+
+        Path p3 = new Path();       // 1) Create an empty Path object
+        p3.moveTo( 150.0,  50.0);   // 2) Move your pencil to (150, 50)
+        p3.lineTo( 150.0, 150.0);   // 3) Draw a line down to (150, 150)
+                                    // 4) Add a bezier spline over to (50, 150)
+        p3.curveTo(100.0, 200.0, 100.0, 100.0, 50.0, 150.0);
+        p3.lineTo(  50.0,  50.0);   // 5) Add a line up to (50, 50)
+        p3.closePath();             // 6) Close the Path.
+
+    }
+}
+</code></pre>
+
+<p style="float:right">
+    <canvas id="cvs2" width="200" height="250" style="border: 1px solid black;"></canvas>
+    <script type="text/javascript" src="widgets/curveTo.min.js"></script>
+</p>
+
+<p>
+    To add a side composed of a Bézier spline to a Path object, use the <span class="code">curveTo(&hellip;)</span> method of Path,
+    which can be found in the listing on line 4. The <span class="code">curveTo(&hellip;)</span> method takes six parameters.
+    The first two arguments make up the coordinates of the first control point. The second two arguments make up the coordinates
+    for the second control point. Finally, the last two arguments are used for endpoint coordinates of the side being added.
+</p>
+<p>
+    Once again, to illustrate how these control points impact the shape of the Path side added with the
+    <span class="code">curveTo(&hellip;)</span> method, have a cose look at the accompanying interactive widget.
+    In this case the first control point is outlined in red, and the second is outlined in green.
+    The boxes in this widget are interactive; click and drag them to get a sense for how the shape of the side added
+    with <span class="code">curveTo(&hellip;)</span> changes with the position of the associated control points.
+    The first control point governs the shape of start of the curved side and the second control point governs
+    the shape of the end of the curved side. The coordinates of both control points are drawn at the bottom of
+    the widget.
+</p>
+
+<h3>Drawing and Styling a Path</h3>
+<img src="images/heart1.png" style="float:right;padding:10px;">
+<p>
+    Path objects inherit all methods from the Shape class in DoodlePad.
+    In particular, a Path may be moved, resized and styled in a manner identical to any of the other Shape subclasses.
+</p>
+<p>
+    The <span class="code">HeartPath</span> class in the following listing creates a Path in the shape of an iconic heart.
+    The image on the right shows what this DoodlePad program draws when run.
+    The heart Path itself is made up of two quadratic curve segments, one for each side.
+    These two sides are defined on lines 1 and 2 in the listing using the <span class="code">quadTo(&hellip;)</span> method.
+    The different control points for each side are selected strategically in order to give the Path its shape.
+    After the Path is defined, <a href="http://localhost:8000/stroke_fill.html">standard fill and stroke commands</a>
+    are used to fill the Path with a pure red and prevent it from drawing an outline.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class HeartPath {
+    public static void main(String[] args) {
+        // Create heart-shaped Path
+        Path h = new Path();
+        h.moveTo(100.0, 70.0);
+        h.quadTo( 10.0, 25.0, 100.0, 150.0);    // 1) Left side of heart
+        h.quadTo(190.0, 25.0, 100.0,  70.0);    // 2) Right side of heart
+        h.closePath();
+
+        // Set fill color and disable stroke
+        h.setFillColor(255, 0, 0);              // 3) Fill with red
+        h.setStroked(false);                    // 4) Do not draw outline
+    }
+}
+</code></pre>
+<p>
+    All standard inherited Shape methods may be invoked on Path objects. For example, it is possible to move a Path using
+    the <span class="code">setX(&hellip;)</span>, <span class="code">setY(&hellip;)</span>, <span class="code">setLocation(&hellip;)</span>,
+    <span class="code">setCenter(&hellip;)</span> and <span class="code">translate(&hellip;)</span> methods.
+    A path may be resized using the <span class="code">setWidth(&hellip;)</span>,
+    <span class="code">setHeight(&hellip;)</span> and <span class="code">scale(&hellip;)</span> methods.
+    It may be rotated with the <span class="code">rotate(&hellip;)</span> method and it will even respond to all
+    <a href="http://localhost:8000/events.html" target="_blank">mouse events</a> in a pixel-perfect manner,
+    no matter how many or the shape of the sides used to construct the Path.
+</p>
+</body>
+</html>

@@ -97,6 +97,7 @@ public class Line extends Shape
         y = y1;
         width = x2-x1;
         height = y2-y1;
+        repaint();
     }
     
     /**

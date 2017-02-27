@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DoodlePad Checkers</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <style>
+            body {
+                padding: 0;
+            }
+        </style>
+        <!--<script type="text/javascript" src="js/highlight.pack.js"></script>-->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-80544484-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+        </head>
+    <body>
+        <h2>Checkers</h2>
+        <hr></hr>
+        <p>
+        Following is a complete program that sets up a simple Checkers game made with DoodlePad. The game is a 640&times;640 pixel window with a classic black and white checkerboard and a set of red and white game pieces. The shapes that make up the checkerboard cannot be moved or modified, but the shapes used as game pieces can be dragged with the mouse. When pieces are captured, double-clicking on them makes them disappear.
+        </p>
+        <p>
+        The game is built into a class named <span class="code">Checkers</span> that subclasses <span class="code">Pad</span>. The appropriate <span class="code">Pad</span> constructor is used to set the size and title of the window. Nested loops in the remainder of the <span class="code">Checkers</span> class constructor create, size and position <span class="code">Rectangle</span> objects to create and game board and <span class="code">Oval</span> objects as the game pieces. The row and column are used with the modulus operator to set the fill colors of the game board squares as well as the game pieces. The <span class="code">setFillColor(...)</span> methods inherited from the base <span class="code">Shape</span> class are used to set fill color. <span class="code">Oval</span> object game pieces are made draggable by invoking <span class="code">setDraggable(true)</span> on each new object. 
+        </p>
+        <p>
+        The <span class="code">Checkers</span> class also has a method named <span class="code">hidePiece(...)</span> which is designed to hide a game piece when captured. We want to trigger this method when an <span class="code">Oval</span> is double-clicked. To make that possible, an event handler is added to each new <span class="code">Oval</span> using the <span class="code">setMouseDoubleClickedHandler(...)</span> method.
+        </p>
+        <p>
+        See <a href="events.html">Events</a> for more information on DoodlePad event handling and <a href="compile_run.html">Compile and Run</a> for instructions on how to compile and run the program.
+        </p>
+        
+<pre><code class="java">// Checkers.java
+
+// Import the entire DoodlePad library
+import doodlepad.*;
+
+// Define the main class as a subclass of Pad
+public class Checkers extends Pad
+{
+    // Define a constructor that sets up the game board
+    public Checkers() {
+        
+        // Invoke the Pad constructor to set window title and size
+        super("Checkers", 640, 640);
+        
+        // Draw board as alternating black and white squares.
+        // Use Rectangle Shape objects.
+        // By default, these shapes will remain in place.
+        int r, c;
+        for (r=0; r<8; ++r) {
+            for (c=0; c<8; ++c) {
+                Rectangle box = new Rectangle(c*80, r*80, 80, 80);
+                if ((r + c) % 2 == 1) {
+                    box.setFillColor(0);            // Black fill color
+                } else {
+                    box.setFillColor(255);          // White fill color
+                }
+            }
+        }
+        
+        // Create game pieces from Oval Shape objects.
+        // Make shapes draggable so players can play game.
+        // Hide shapes on double click so they can be removed when captured.
+        
+        // Create red game pieces.
+        for (r=0; r<3; ++r) {
+            for (c=0; c<8; ++c) {
+                if ((r + c) % 2 == 1) {
+                    Oval piece = new Oval(c*80+2, r*80+2, 76, 76);
+                    piece.setFillColor(255, 0, 0);  // Red fill color
+                    piece.setDraggable(true);
+                    piece.setMouseDoubleClickedHandler( this::hidePiece );
+                }
+            }
+        }
+        
+        // Create white game pieces.
+        for (r=5; r<8; ++r) {
+            for (c=0; c<8; ++c) {
+                if ((r + c) % 2 == 1) {
+                    Oval piece = new Oval(c*80+2, r*80+2, 76, 76);
+                    piece.setFillColor(255);
+                    piece.setDraggable(true);
+                    piece.setMouseDoubleClickedHandler( this::hidePiece );
+                }
+            }
+        }
+    }
+    
+    // Hide pieces when they are double clicked.
+    public void hidePiece(Shape shp, double x, double y, int b) {
+        shp.setVisible(false);
+    }
+    
+    // Getting started.
+    public static void main(String[] args) {
+        new Checkers();
+    }
+}
+</code></pre>
+
+    </body>
+</html>
