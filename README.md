@@ -1,4 +1,4 @@
-# DoodlePad
+# DoodlePad&trade;
 Yet another object graphics library for Java.
 
 As easy as ..
