@@ -2,7 +2,7 @@
  * Sprite.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2016 Mark F. Russo
+ * Copyright (c) 2012-2017 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -93,10 +93,10 @@ public class Sprite extends Shape {
         
         try {
             this.img = ImageIO.read(new File(path));
-            this.width = img.getWidth();
+            this.width = frameWidth;
             this.height = img.getHeight();
             this.targetWidth = frameWidth;
-            this.targetHeight = height;
+            this.targetHeight = this.height;
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -155,7 +155,7 @@ public class Sprite extends Shape {
         
         try {
             this.img = ImageIO.read(new File(path));
-            this.width = img.getWidth();
+            this.width = frameWidth;
             this.height = img.getHeight();
             this.targetWidth = targetWidth;
             this.targetHeight = targetHeight;
@@ -174,10 +174,11 @@ public class Sprite extends Shape {
     }
     
     /**
-     * Advance the sprite frame
+     * Advance the sprite frame and repaint
      */
     public void advance() {
         frameNum = (frameNum + 1) % nFrames;
+        repaint();
     }
     
      /**

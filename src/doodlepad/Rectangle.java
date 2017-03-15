@@ -2,7 +2,7 @@
  * Rectangle.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2016 Mark F. Russo
+ * Copyright (c) 2012-2017 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -36,7 +36,7 @@ import java.util.Random;
 public class Rectangle extends Shape
 {
     /**
-     * Constructor for the Rectangle constructor.
+     * Constructor for the Rectangle object.
      * @param   x       The x-coordinate of the upper left-hand corner of the Rectangle object.
      * @param   y       The y-coordinate of the upper left-hand corner of the Rectangle object.
      * @param   width   The width of the Rectangle object.
@@ -46,20 +46,8 @@ public class Rectangle extends Shape
         this(x, y, width, height, Pad.getPad().getLayer(0)); //Pad.getPad());
     }
     
-//    /**
-//     * Constructor for the Rectangle constructor.
-//     * @param   x       The x-coordinate of the upper left-hand corner of the Rectangle object.
-//     * @param   y       The y-coordinate of the upper left-hand corner of the Rectangle object.
-//     * @param   width   The width of the Rectangle object.
-//     * @param   height  The height of the Rectangle object.
-//     * @param   pad     The Pad to which the Rectangle should be added.
-//     */
-//    public Rectangle(double x, double y, double width, double height, Pad pad) {
-//        this(x, y, width, height, pad.getLayer(0));
-//    }
-    
     /**
-     * Constructor for the Rectangle constructor.
+     * Constructor for the Rectangle object.
      * @param   x       The x-coordinate of the upper left-hand corner of the Rectangle object.
      * @param   y       The y-coordinate of the upper left-hand corner of the Rectangle object.
      * @param   width   The width of the Rectangle object.

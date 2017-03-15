@@ -2,7 +2,7 @@
  * Oval.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2016 Mark F. Russo
+ * Copyright (c) 2012-2017 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -37,7 +37,7 @@ import java.util.Random;
 public class Oval extends Shape
 {   
     /**
-     * Constructor for the Oval constructor.
+     * Constructor for the Oval object.
      * @param   x       The x-coordinate of the upper left-hand corner of the Oval object.
      * @param   y       The y-coordinate of the upper left-hand corner of the Oval object.
      * @param   width   The width of the Oval object.
@@ -48,7 +48,7 @@ public class Oval extends Shape
     }
     
     /**
-     * Constructor for the Oval constructor.
+     * Constructor for the Oval object.
      * @param   x       The x-coordinate of the upper left-hand corner of the Oval object.
      * @param   y       The y-coordinate of the upper left-hand corner of the Oval object.
      * @param   width   The width of the Oval object.
@@ -60,7 +60,7 @@ public class Oval extends Shape
     }
     
     /**
-     * Constructor for the Oval constructor.
+     * Constructor for the Oval object.
      * @param   x       The x-coordinate of the upper left-hand corner of the Oval object.
      * @param   y       The y-coordinate of the upper left-hand corner of the Oval object.
      * @param   width   The width of the Oval object.

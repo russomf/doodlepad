@@ -2,7 +2,7 @@
  * Pad.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2016 Mark F. Russo
+ * Copyright (c) 2012-2017 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -1289,7 +1289,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     
     /**
      * Free all resources when Pad object is garbage collected.
-     * @throws java.lang.Throwable
+     * @throws java.lang.Throwable May throw exceptions 
      */
     @Override
     protected void finalize() throws Throwable {
@@ -1977,7 +1977,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     /**
      * Collect and return all IPv4 addresses for this computer
      * @return List&lt;String&gt; of IPv4 addresses
-     * @throws java.net.SocketException 
+     * @throws java.net.SocketException May throw SocketExceptions
      */
     public List<String> getIPv4Addresses() throws SocketException
     {
@@ -2005,7 +2005,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     /**
      * Collect and return all IPv6 addresses for this computer
      * @return List&lt;String&gt; of IPv6 addresses
-     * @throws java.net.SocketException 
+     * @throws java.net.SocketException May throw SocketExceptions
      */
     public List<String> getIPv6Addresses() throws SocketException
     {

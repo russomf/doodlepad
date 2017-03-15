@@ -29,7 +29,7 @@
             <li><a href="#Introduction">Introduction</a></li>
             <li><a href="#Connecting Events and Methods with Method References">Connecting Events and Methods with Method References</a></li>
             <li><a href="#Shape Mouse Event Connector Methods">Shape Mouse Event Connector Methods</a></li>
-            <li><a href="#Connecting Events and Methods with Dynamic Binding">Connecting Events and Methods with Dynamic Binding</a></li>
+            <li><a href="#Handling Events by Overriding Base Class Methods">Handling Events by Overriding Base Class Methods</a></li>
             <li><a href="#Overridable Shape Event Methods">Overridable Shape Event Methods</a></li>
             <li><a href="#Other Event Related Shape Methods">Other Event Related Shape Methods</a></li>
             <li><a href="#Pad Event Related Methods">Pad Event Related Methods</a></li>
@@ -40,23 +40,23 @@
         <p>
             Perhaps the most distinguishing feature of the DoodlePad library is the ease and extent to which it supports event driven programming.
             All DoodlePad Shape objects and the Pad object may be set up to invoke your custom methods in response to a wide range of user interaction.
-            For example, you may want the change the fill color of one or more shapes when the user hovers over a shape or clicks the shape with the mouse.
-            Alternatively, you may want to move a Shape in specific direction when the user holds down one of the arrow keys.
-            The Pad object implements timing functionality that ticks at a user-specified rate.
+            For example, you may want the change the fill color of one or more shapes when the user hovers over the shape or clicks the shape with the mouse.
+            Alternatively, you may want to move a Shape in specific direction when the user presses one of the arrow keys.
+            The Pad object implements timing functionality that raises tick events at a user-specified rate.
             You may want to invoke one or more of your custom methods each time the Pad's timer ticks, which may be accomplished using the Pad's tick event.
+        </p><p>
             This ability to respond to mouse, keyboard, timer and other events allows DoodlePad to be used to develop a wide range of
             fun interactive graphics programs that are limited only by your imagination.
         </p>
         <h3><a name="Connecting Events and Methods with Method References"></a>Connecting Events and Methods with Method References</h3>
         <p>
-            The simplest way to invoke a method in response to an event is to connect the event associated with a given object
-            to one or your methods.
+            The simplest way to invoke a method in response to an event is to connect the event associated with a given object to one or your methods.
             The most important requirement for making this connection is to ensure that your method's signature matches what the event expects.
             For example, let's say you want to invoke a method when the user clicks on a Shape object.
-            All mouse events, including the click event, requires that the method to be connected have the following four parameters:
+            All mouse events, including the click event, requires that the method to be connected have the following four parameters in the given order:
 
             <table class="center">
-                <tr><th>Number</th><th>Type</th><th>Description</th></tr>
+                <tr><th>#</th><th>Type</th><th>Description</th></tr>
                 <tr><td>1.</td><td>Shape</td><td>The Shape object that initiated the mouse event</td></tr>
                 <tr><td>2.</td><td>double</td><td>The x-coordinate at which the event occurred</td></tr>
                 <tr><td>3.</td><td>double</td><td>The y-coordinate at which the event occurred</td></tr>
@@ -73,84 +73,88 @@
         <p>
             Every Shape object in DoodlePad inherits a set of methods used to attach mouse events to a suitable method - one method for each mouse event.
             Each Shape method takes a single argument: a reference to the method to be invoked when the event occurs.
-            <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank">Method references</a> were added to Java in version 8.
-            This is why Java 8 is a requirement for DoodlePad.
+            <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank">Method references</a>
+            were added to Java in version 8. This is why Java 8 is required by DoodlePad.
             Method references are constructed using the <span class="code">::</span> binary operator.
-            On the left side of the operator is the name of a class or object that implements a method, and on the right side the method to reference.
+            On the left side of the operator is the name of a class or object that implements a method,
+            and on the right side the method to reference.
         </p>
         <p>
             As an example, let's say your class implements the previous <span class="code">onClick</span> method and you would like to invoke
-            this method when the mouse is used to click an Oval Shape saved as an instance variable named <span class="code">myOval</span>.
+            this method when the mouse clicks an Oval Shape object, a reference to which was saved as an instance variable named <span class="code">myOval</span>.
             The following statement establishes this connection, so that when <span class="code">myOval</span> is clicked the
             <span class="code">onClick</span> method implemented by <span class="code">this</span> will be invoked.
         </p>
         <pre><code class="java">myOval.setMouseClickedHandler( this::onClick );</code></pre>
         <p>
-            The inherited <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseClickedHandler(...)</a> method is what is used to establish the connection for click events.
+            The inherited <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseClickedHandler(...)</a>
+            method is what is used to establish the connection for click events.
         </p>
         <p>
-            Following is a complete program demonstrating event handing in DoodlePad using method references.
-            In this example we implement a simple graphical toggle switch made up of two Rectangle shapes, one red and one black.
-            When the black Rectangle is clicked, the fill color of the two Rectangles change, indicating that the switch was activated.
+            Following is a complete program demonstrating event handing in DoodlePad using <a href="https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html" target="_blank">method references</a>.
         </p>
         <pre><code class="java">import doodlepad.*;
 
-public class FlipFlop {
-    // Instance variables
-    private Rectangle flip;
-    private Rectangle flop;
+public class PushButton {
+    private RoundRect shpButton;    // Button Shape
+    private boolean isOn;           // Button state
 
-    // Constructor for objects of class FlipFlop
-    public FlipFlop() {
-        // Initialize Rectangles and set initial fill color
-        flip = new Rectangle(100, 100, 25, 25);
-        flip.setFillColor(255, 0, 0);
-        flop = new Rectangle(125, 100, 25, 25);
-        flop.setFillColor(0);
+    public PushButton() {
+        // Create button shape and initialize
+        shpButton = new RoundRect(100, 100, 75, 50, 20, 20);
+        shpButton.setFillColor(200);
 
-        // Attach event handler to Rectangles
-        flip.setMouseClickedHandler( this::onClick );
-        flop.setMouseClickedHandler( this::onClick );
+        // Starts off
+        isOn = false;
+
+        // Set button click event handler method
+        shpButton.setMouseClickedHandler( this::onClicked );
     }
 
-    // Change Rectangle fill colors in response to a mouse click
-    private void onClick(Shape shp, double x, double y, int button) {
-        if (shp == flop) {
-            flop.setFillColor(255, 0, 0);
-            flip.setFillColor(0);
+    private void onClicked(Shape shp, double x, double y, int button) {
+        // Toggle button state
+        isOn = !isOn;
+
+        // Set button fill color based on state
+        if (isOn) {
+            shpButton.setFillColor(0, 255, 0);
         } else {
-            flip.setFillColor(255, 0, 0);
-            flop.setFillColor(0);
+            shpButton.setFillColor(200);
         }
     }
 
     public static void main(String[] args) {
-        // Create a new instance of the class
-        FlipFlop myFlipFlop = new FlipFlop();
+        // Create a new PushButton
+        PushButton myPushButton = new PushButton();
     }
 }</code></pre>
 
-        <img src="images/flipflop.png" style="float:right;padding:10px;">
+        <img src="images/pushbutton1.png" style="float:right;padding:10px;">
         <p>
-            The <span class="code">FlipFlop</span> class has two Rectangle instance variables, one named <span class="code">flip</span> and the other <span class="code">flop</span>.
-            The constructor creates these Rectangles and initializes their fill colors to red and black.
+            In this example we implement a simple graphical toggle button class named PushButton.
+            For the button graphic we use a <a href="http://doodlepad.org/dist/javadoc/doodlepad/RoundRect.html" target="_blank">RoundRect</a> Shape object.
+            The PushButton constructor creates the RoundRect object and initializes its fill colors to gray.
+            The PushButton class tracks its state using an <span class="code">isOn</span> boolean instance variable.
+            The class is initialized with <span class="code">isOn = false</span> implying the button is initially off.
             The constructor also uses the <span class="code">setMouseClickedHandler</span>
-            method to indicate that the object's <span class="code">onClick</span> method should be invoked when either Rectangle is clicked.
-            The <span class="code">onClick</span> method tests the first parameter named <span class="code">shp</span>,
-            which will hold a reference to the Shape that was clicked, in this case, one of the Rectangles.
-            When the <span class="code">flop</span> Rectangle is clicked, its fill color is set to red
-            and the fill color of <span class="code">flip</span> is set to black. If <span class="code">flip</span> is clicked, the fill colors are reset.
+            method to indicate that the object's <span class="code">onClicked</span> method should be invoked when the RoundRect shape is clicked.
+            The <span class="code">onClicked</span> method toggles the value of <span class="code">isOn</span>
+            and then resets the RoundRect fill color based on the current PushButton state.
+            When the RoundRect is clicked, the PushButton object state is toggled and the RoundRect fill color changes to green,
+            indicating that the button was pressed.
+            A second click toggles PushButton off and sets the RoundRect fill color back to gray.
         </p>
         <p>
-            The image on the right shows the output from running this example program.
-            Clicking the black Rectangle will cause the simulated switch to be activated, regardless of which Rectangle is currently filled with black.
+            The image on the right shows the output from running this example program and clicking the RoundRect Shape once.
         </p>
         <h3><a name="Shape Mouse Event Connector Methods"></a>Shape Mouse Event Connector Methods</h3>
         <p>
+            A wide variety of mouse events may be handled in a similar manner.
             Following is a list of all methods used to connect a mouse event with a Shape.
-            Each method is used to associate a different mouse event with a method.
-            All methods take one method reference as a parameter.
-            Each method signature must be defined with the previously listed four parameter types, otherwise the compiler will throw an error.
+            Each method is used to associate a particular mouse event with a custom method.
+            Each of the following methods takes a method reference as its only parameter.
+            Each method reference must identify a method with a signature that matches the previously listed
+            four parameter types in the given order, otherwise the compiler will complain.
 
         <table class="center">
             <tr><th>Method</th><th>Description</th></tr>
@@ -210,47 +214,104 @@ public class FlipFlop {
             </tr>
         </table>
         </p>
-        <h3><a name="Connecting Events and Methods with Dynamic Binding"></a>Connecting Events and Methods with Dynamic Binding</h3>
+        <h3><a name="Handling Events by Overriding Base Class Methods"></a>Handling Events by Overriding Base Class Methods</h3>
         <p>
-            Another way to invoke custom methods in response to Shape events is to subclass the shape class and override the method associated with the event of interest.
-
+            Another way to associate Shape events with custom methods is to subclass <span class="code">Shape</span>
+            and override the appropriate base class method with an implementation to be invoked when the event fires.
+            The Shape base class implements a series of placeholder methods that do nothing,
+            but exist purely to be overridden by a subclass when custom behavior is desired.
+            This represents an alternative to the method reference approach for setting up custom event handlers,
+            and may be used when comfortable with the concept of inheritance.
         </p>
+        <p>
+            The <span class="code">Shape</span> implements a series of "on" methods: one for each mouse event.
+            For example, Shape implements a method named <span class="code">onMouseClicked</span> which is invoked
+            when a Shape is clicked with the mouse. The signature of this method as well as all other methods that
+            correspond with mouse events share a common signature with the types: <span class="code">double</span>, <span class="code">double</span> and <span class="code">int</span>.
+            These are the mouse event x and y coordinates and an integer identifying the mouse button in use.
+            These parameters are identical to the signature of methods used in the method reference approach,
+            minus the first parameter identifying the Shape object.
+        </p>
+        <p>
+            The following example illustrates an alternate way to implement the previous PushButton class.
+            In this case the <span class="code">PushButton</span> class extends the <span class="code">RoundRect</span> Shape class.
+            the <span class="code">mouseClicked</span> event is handled by overriding the <span class="code">onMouseClicked()</span> method.
+            The remaining logic for this class is identical to the previous example.
+        </p>
+        <pre><code class="java">import doodlepad.*;
+
+public class PushButton extends RoundRect {
+    private boolean isOn;   // Button state
+
+    public PushButton(double x, double y, double w, double h) {
+        super(x, y, w, h, 20, 20);
+
+        // Initialize the button
+        this.setFillColor(200);
+
+        // Starts off
+        isOn = false;
+    }
+
+    @Override
+    public void onMouseClicked(double x, double y, int button) {
+        // Toggle button state
+        isOn = !isOn;
+
+        // Set button fill color based on state
+        if (isOn) {
+            this.setFillColor(0, 255, 0);
+        } else {
+            this.setFillColor(200);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create a new PushButton
+        PushButton myPushButton = new PushButton(100, 100, 75, 50);
+    }
+}
+        </code></pre>
 
         <h3><a name="Overridable Shape Event Methods"></a>Overridable Shape Event Methods</h3>
+        <p>
+            As mentioned, Shape implements one overridable method for each mouse event.
+            The following table lists all methods that may be overridden in order to handle a triggered mouse event.
+        </p>
         <p>
         <table class="center">
             <tr><th>Method</th><th>Description</th></tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseClicked-double-double-int-" target="_blank">onMouseClicked</a></td>
-                <td></td>
+                <td>Override to handle a mouse-click event</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDoubleClicked-double-double-int-" target="_blank">onMouseDoubleClicked</a></td>
-                <td></td>
+                <td>Override to handle a mouse-double-click event.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMousePressed-double-double-int-" target="_blank">onMousePressed</a></td>
-                <td></td>
+                <td>Override to handle a mouse-pressed event - when a mouse button is depressed.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseReleased-double-double-int-" target="_blank">onMouseReleased</a></td>
-                <td></td>
+                <td>Override to handle a mouse-released event - when a mouse button is released after being depressed.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseMoved-double-double-int-" target="_blank">onMouseMoved</a></td>
-                <td></td>
+                <td>Override to handle a mouse-moved event. This occurs when the mouse is moved over a Shape while no buttons are depressed.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDragged-double-double-int-" target="_blank">onMouseDragged</a></td>
-                <td></td>
+                <td>Override to handle a mouse-dragged event. This occurs when the mouse is moved over a Shape while simultaneously holding a mouse button down.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseEntered-double-double-int-" target="_blank">onMouseEntered</a></td>
-                <td></td>
+                <td>Override to handle a mouse-entered event. This occurs when the mouse moves over a Shape from another Shape or the Pad.</td>
             </tr>
             <tr>
                 <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseExited-double-double-int-" target="_blank">onMouseExited</a></td>
-                <td></td>
+                <td>Override to handle a mouse-exited event. This occurs when the mouse moves off a Shape on to another Shape or the Pad.</td>
             </tr>
         </table>
         </p>

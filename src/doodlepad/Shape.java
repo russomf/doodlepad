@@ -2,7 +2,7 @@
  * Shape.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2016 Mark F. Russo
+ * Copyright (c) 2012-2017 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -518,6 +518,38 @@ public abstract class Shape
     }
 
     /**
+     * Get the fill color red component
+     * @return The current fill color red component
+     */
+    public int getFillRed() {
+        return this.fillColor.getRed();
+    }
+    
+    /**
+     * Get the fill color blue component
+     * @return The current fill color blue component
+     */
+    public int getFillBlue() {
+        return this.fillColor.getBlue();
+    }
+    
+    /**
+     * Get the fill color green component
+     * @return The current fill color green component
+     */
+    public int getFillGreen() {
+        return this.fillColor.getGreen();
+    }
+    
+    /**
+     * Get the fill color alpha component
+     * @return The current fill color alpha component
+     */
+    public int getFillAlpha() {
+        return this.fillColor.getAlpha();
+    }
+    
+    /**
      * Set the gray scale fill color with which to draw the shape.
      * @param gray the gray scale value in the range [0, 255]
      */
@@ -586,7 +618,38 @@ public abstract class Shape
     public Color getStrokeColor() {
         return this.strokeColor;
     }
-
+    /**
+     * Get the stroke color red component
+     * @return The current stroke color red component
+     */
+    public int getStrokeRed() {
+        return this.strokeColor.getRed();
+    }
+    
+    /**
+     * Get the stroke color blue component
+     * @return The current stroke color blue component
+     */
+    public int getStrokeBlue() {
+        return this.strokeColor.getBlue();
+    }
+    
+    /**
+     * Get the stroke color green component
+     * @return The current stroke color green component
+     */
+    public int getStrokeGreen() {
+        return this.strokeColor.getGreen();
+    }
+    
+    /**
+     * Get the stroke color alpha component
+     * @return The current stroke color alpha component
+     */
+    public int getStrokeAlpha() {
+        return this.strokeColor.getAlpha();
+    }
+    
     /**
      * Set the gray scale stroke color with which to draw the shape.
      * @param gray the gray scale value in the range [0, 255]
@@ -732,6 +795,14 @@ public abstract class Shape
      */
     public void setCenter(double cx, double cy) {
         this.setLocation(cx - 0.5*width, cy - 0.5*height);
+    }
+    
+    /**
+     * Set the Shape position so that the center is at the given Point.
+     * @param c the Point object indicating the center coordinates
+     */
+    public void setCenter(Point c) {
+        this.setCenter(c.getX(), c.getY());
     }
     
     /**
