@@ -20,8 +20,73 @@
     <body>
         <h2>Colors</h2>
         <hr></hr>
-<p>
-...
-</p>
+        <h3>
+            <a name="components">Color Components</a>
+        </h3>
+        <p>
+            Most DoodlePad Shape subclasses may be filled with one color and stroked (outlined) with a separate color.
+            It is also possible to disable Shape fill or stroke, drawing shapes empty or without an outline.
+            Colors in DoodlePad are constructed from color components: <span style="font-weight: bold; color: red;">red</span>, <span style="font-weight: bold; color: green;">green</span>, <span style="font-weight: bold; color: blue;">blue</span>,
+            and one transparency component: <span style="font-weight: bold;">alpha</span>.
+            The level of each of the four components is specified with an integer in the range [0, 255].
+        </p>
+        <p style="float:right">
+            <canvas id="cvs" width="550" height="350" style="border: 1px solid black;"></canvas>
+        </p>
+        <script src="widgets/colorPicker.min.js" type="text/javascript"></script>
+        <p>
+            Use the interactive widget on the right to explore how these four values are used to achieve a desired fill or stroke color.
+            Drag the colored slider knobs up and down with the mouse to change a component value.
+            The color that results from combining the four components is shown in the rectangular swatch on the right.
+            Behind the swatch there are three colored lines.
+            Transparency is increased by decreasing the alpha component value.
+            Drag the alpha slider down to see the impact.
+        </p>
+        <p>
+            Pure red, green or blue is achieved by setting the corresponding color value to its maximum (255)
+            and leaving the other two color values at 0.
+            Other colors are constructed from different combinations.
+            <ul>
+                <li style="font-family: monospace;">Yellow: &nbsp;{Red: 255, Green: 255, Blue: &nbsp;&nbsp;0}</li>
+                <li style="font-family: monospace;">Orange: &nbsp;{Red: 255, Green: 127, Blue: &nbsp;&nbsp;0}</li>
+                <li style="font-family: monospace;">Cyan: &nbsp;&nbsp;&nbsp;{Red: &nbsp;&nbsp;0, Green: 255, Blue: 255}</li>
+                <li style="font-family: monospace;">Magenta: {Red: 255, Green: &nbsp;&nbsp;0, Blue: 255}</li>
+                <li style="font-family: monospace;">White: &nbsp;&nbsp;{Red: 255, Green: 255, Blue: 255}</li>
+                <li style="font-family: monospace;">Black: &nbsp;&nbsp;{Red: &nbsp;&nbsp;0, Green: &nbsp;&nbsp;0, Blue: &nbsp;&nbsp;0}</li>
+                <li style="font-family: monospace;">Gray: &nbsp;&nbsp;&nbsp;{Red: 127, Green: 127, Blue: 127}</li>
+            </ul>
+            All shades of gray, from black to white, are formed by setting the values of red, green, and blue to equal values between 0 and 255.
+        </p>
+        <h3>
+            <a name="fill_and_stroke">Setting Fill And Stroke Color</a>
+        </h3>
+        <p>
+        ...
+            <ul>
+            <li>Shape.setFillColor(red, green, blue, alpha)</li>
+            <li>Shape.setFillColor(red, green, blue)</li>
+            <li>Shape.setFillColor(gray)</li>
+            <li>Shape.getFillRed()</li>
+            <li>Shape.getFillBlue()</li>
+            <li>Shape.getFillGreen()</li>
+            <li>Shape.getFillAlpha()</li>
+            <li>Shape.getFillColor()</li>
+            <li>Shape.setFilled(true|false)</li>
+            <li>Shape.getFilled()</li>
+            <li>Shape.setStrokeColor(red, green, blue, alpha)</li>
+            <li>Shape.setStrokeColor(red, green, blue)</li>
+            <li>Shape.setStrokeColor(gray)</li>
+            <li>Shape.getStrokeRed()</li>
+            <li>Shape.getStrokeBlue()</li>
+            <li>Shape.getStrokeGreen()</li>
+            <li>Shape.getStrokeAlpha()</li>
+            <li>Shape.getStrokeColor()</li>
+            <li>Shape.setStroked(true|false)</li>
+            <li>Shape.getStroked()</li>
+            <li>Pad.setBackground()</li>
+            <li>Pad.getBackground(red, green, blue)</li>
+            <li>Pad.getBackground(gray)</li>
+            </ul>
+        </p>
     </body>
 </html>
