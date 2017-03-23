@@ -28,31 +28,49 @@
             <ul>
             <li><a href="#Introduction">Introduction</a></li>
             <li><a href="#Connecting Events and Methods with Method References">Connecting Events and Methods with Method References</a></li>
-            <li><a href="#Shape Mouse Event Connector Methods">Shape Mouse Event Connector Methods</a></li>
+            <li><a href="#Shape Mouse Event Related Methods">Shape Mouse Event Related Methods</a></li>
             <li><a href="#Handling Events by Overriding Base Class Methods">Handling Events by Overriding Base Class Methods</a></li>
             <li><a href="#Overridable Shape Event Methods">Overridable Shape Event Methods</a></li>
             <li><a href="#Other Event Related Shape Methods">Other Event Related Shape Methods</a></li>
-            <li><a href="#Pad Event Related Methods">Pad Event Related Methods</a></li>
+            <li><a href="#Pad Keyboard Event Related Methods">Pad Keyboard Event Related Methods</a></li>
+            <li><a href="#Pad Timer Event Related Methods">Pad Timer Event Related Methods</a></li>
+            <li><a href="#Pad Socket Event Related Methods">Pad Socket Event Related Methods</a></li>
+            <li><a href="#Pad Mouse Event Related Methods">Pad Mouse Event Related Methods</a></li>
             </ul>
         </p>
 
         <h3><a name="Introduction"></a>Introduction</h3>
         <p>
             Perhaps the most distinguishing feature of the DoodlePad library is the ease and extent to which it supports event driven programming.
-            All DoodlePad Shape objects and the Pad object may be set up to invoke your custom methods in response to a wide range of user interaction.
+            All DoodlePad Shape objects as well as the Pad object may be set up to invoke custom methods in response to a wide range of user interaction.
             For example, you may want the change the fill color of one or more shapes when the user hovers over the shape or clicks the shape with the mouse.
             Alternatively, you may want to move a Shape in specific direction when the user presses one of the arrow keys.
             The Pad object implements timing functionality that raises tick events at a user-specified rate.
-            You may want to invoke one or more of your custom methods each time the Pad's timer ticks, which may be accomplished using the Pad's tick event.
-        </p><p>
+            You may want to invoke one or more of your custom methods each time the Pad's timer ticks,
+            which may be accomplished using the Pad's tick event.
+        </p>
+        <p>
+            By default, all Shape objects as well as Pad objects trigger a wide array of events.
+            But sometimes you don't want a Shape or Pad to trigger events.
+            For example, it is not uncommon for a program to position one Shape on top of another.
+            Depending upon the circumstances of your program you may want only the bottom Shape to trigger all events
+            and for all other Shapes not to react to the mouse.
+            For example, imagine a Happy Face made up of a large yellow Oval for the face, two smaller black Ovals for the eyes and an Arc for the smile.
+            You might want the eyes and smile to ignore all mouse interaction so that only the underlying yellow face Oval triggers mouse events.
+            This is easily accomplished by disabling events on your eye and smile Shapes.
+            Use the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setEventsEnabled-boolean-">setEventsEnabled(...)</a> method
+            to disable or re-enable event triggering for any Shape object or any Pad object.
+        </p>
+        <p>
             This ability to respond to mouse, keyboard, timer and other events allows DoodlePad to be used to develop a wide range of
             fun interactive graphics programs that are limited only by your imagination.
         </p>
         <h3><a name="Connecting Events and Methods with Method References"></a>Connecting Events and Methods with Method References</h3>
         <p>
             The simplest way to invoke a method in response to an event is to connect the event associated with a given object to one or your methods.
-            The most important requirement for making this connection is to ensure that your method's signature matches what the event expects.
-            For example, let's say you want to invoke a method when the user clicks on a Shape object.
+            The most important requirement for making this connection is to ensure that your method's signature matches what the event expects
+            (by implementing the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.ShapeMouseEventHandler.html" target="_blank">ShapeMouseEventHandler</a> interface).
+            Let's say you want to invoke a method when the user clicks on a Shape object.
             All mouse events, including the click event, requires that the method to be connected have the following four parameters in the given order:
 
             <table class="center">
@@ -64,7 +82,7 @@
             </table>
         </p>
         <p>
-            For example, the following method may be invoked by a mouse event because it implements the necessary four parameter types in the proper order.
+            For example, the following method may be invoked by a mouse event because it implements the necessary four parameter types in the specified order.
         </p>
         <pre><code class="java">public void onClick(Shape shp, double, x, double y, int button) {
     System.out.println("The mouse was clicked at coordinates (" + x + "," + y + ")");
@@ -147,7 +165,7 @@ public class PushButton {
         <p>
             The image on the right shows the output from running this example program and clicking the RoundRect Shape once.
         </p>
-        <h3><a name="Shape Mouse Event Connector Methods"></a>Shape Mouse Event Connector Methods</h3>
+        <h3><a name="Shape Mouse Event Related Methods"></a>Shape Mouse Event Related Methods</h3>
         <p>
             A wide variety of mouse events may be handled in a similar manner.
             Following is a list of all methods used to connect a mouse event with a Shape.
@@ -159,54 +177,54 @@ public class PushButton {
         <table class="center">
             <tr><th>Method</th><th>Description</th></tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseClickedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseClickedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>Set a method to be invoked when the mouse is clicked on a Shape.
                     A mouse-click event occurs when the mouse is pressed and released at the same location.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseDoubleClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseDoubleClickedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseDoubleClickedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseDoubleClickedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>Set a method to be invoked when the mouse is double-clicked on a Shape.
                     A mouse-double-clicked event occurs when the mouse is pressed and released at the same location twice in succession.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMousePressedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMousePressedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMousePressedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMousePressedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when the mouse is pressed on a Shape.
                     A mouse-pressed event occurs when the mouse button is pressed while over a Shape.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseReleasedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseReleasedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseReleasedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseReleasedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when the mouse is released on a Shape.
                     A mouse-released event occurs when the mouse button is released while over a Shape.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseMovedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseMovedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseMovedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseMovedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when a mouse is moved on a Shape.
                     A mouse-moved event occurs when the mouse is moved over a Shape while the mouse button is not pressed.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseDraggedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseDraggedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseDraggedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseDraggedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when the mouse is dragged on a Shape.
                     A mouse-dragged event occurs when the mouse is moved over a Shape while the mouse button is pressed.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseEnteredHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseEnteredHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseEnteredHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseEnteredHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when the mouse enters a Shape.
                     A mouse-entered event occurs when the mouse is moved from a location outside the bounds of a Shape to a location within the bounds of a Shape.
                 </td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseExitedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">setMouseExitedHandler</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setMouseExitedHandler-doodlepad.Shape.ShapeMouseEventHandler-" target="_blank">public void setMouseExitedHandler(ShapeMouseEventHandler handler)</a></td>
                 <td>
                     Set a method to be invoked when the mouse exits a Shape.
                     A mouse-exited event occurs when the mouse is moved from a location within the bounds of a Shape to a location outside the bounds of a Shape.
@@ -282,90 +300,145 @@ public class PushButton extends RoundRect {
         <table class="center">
             <tr><th>Method</th><th>Description</th></tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseClicked-double-double-int-" target="_blank">onMouseClicked</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseClicked-double-double-int-" target="_blank">public void onMouseClicked(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-click event</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDoubleClicked-double-double-int-" target="_blank">onMouseDoubleClicked</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDoubleClicked-double-double-int-" target="_blank">public void onMouseDoubleClicked(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-double-click event.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMousePressed-double-double-int-" target="_blank">onMousePressed</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMousePressed-double-double-int-" target="_blank">public void onMousePressed(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-pressed event - when a mouse button is depressed.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseReleased-double-double-int-" target="_blank">onMouseReleased</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseReleased-double-double-int-" target="_blank">public void onMouseReleased(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-released event - when a mouse button is released after being depressed.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseMoved-double-double-int-" target="_blank">onMouseMoved</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseMoved-double-double-int-" target="_blank">public void onMouseMoved(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-moved event. This occurs when the mouse is moved over a Shape while no buttons are depressed.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDragged-double-double-int-" target="_blank">onMouseDragged</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseDragged-double-double-int-" target="_blank">public void onMouseDragged(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-dragged event. This occurs when the mouse is moved over a Shape while simultaneously holding a mouse button down.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseEntered-double-double-int-" target="_blank">onMouseEntered</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseEntered-double-double-int-" target="_blank">public void onMouseEntered(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-entered event. This occurs when the mouse moves over a Shape from another Shape or the Pad.</td>
             </tr>
             <tr>
-                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseExited-double-double-int-" target="_blank">onMouseExited</a></td>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onMouseExited-double-double-int-" target="_blank">public void onMouseExited(double x, double y, int button)</a></td>
                 <td>Override to handle a mouse-exited event. This occurs when the mouse moves off a Shape on to another Shape or the Pad.</td>
             </tr>
         </table>
         </p>
 
         <h3><a name="Other Event Related Shape Methods"></a>Other Event Related Shape Methods</h3>
-        <ul>
-            <li>setEventsEnabled</li>
-            <li>onSelectionChanged</li>
-            <li>setSelectionChangedHandler</li>
-        </ul>
+        <p>
+            Shapes triggers one additional event beyond the above list of mouse events.
+            The selectionChanged event is triggered whenever the selection status of a Shape changes.
+            For example, if the user clicks on a selectable Shape that is not already selected, the Shape becomes selected,
+            which is indicated by a light gray rectangle drawn around the Shape.
+            If a suitable event handler method is attached to the Shape's selectionChange event,
+            then as the Shape becomes selected, the event method will be invoked,
+            indicating the Shape object whose selection state changed as well as if the Shape is currently selected.
+            Likewise, if another Shape is clicked causing the currently selected Shape to be unselected,
+            the event handler method will once again be invoked.
+        </p>
+        <p>
+            Both the method reference and overriding methods of handling triggered selectionChanged events are supported.
+            Event handler methods to be attached to the selectionChanged event trigger using the method reference approach
+            must have a signature with two parameters: <span class="code">Shape</span> and <span class="code">boolean</span>.
+            This implements the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.ShapeSelectionEventHandler.html" target="_blank">ShapeSelectionEventHandler</a> interface.
+            The first parameter indicates the Shape object whose selection changed, and the second parameter indicates
+            if that Shape is currently selected (<span class="code">true</span>) or not (<span class="code">false</span>).
+        </p>
+        <p>
+            The following two methods are used for handling triggered selectionChanged events.
+            The first method attaches an event handler using the method reference approach.
+            Override the second method to handle the triggered event using the method overriding approach.
+        </p>
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSelectionChangedHandler-doodlepad.Shape.ShapeSelectionEventHandler-" target="_blank">public void setSelectionChangedHandler(ShapeSelectionEventHandler handler)</a></td>
+                <td>Specify a suitable method to handle selectionChanged events triggered by a Shape object.
+                    The method reference must implement the signature defined by the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.ShapeSelectionEventHandler.html" target="_blank">ShapeSelectionEventHandler</a> interface.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#onSelectionChanged-boolean-" target="_blank">public void onSelectionChanged(boolean selected)</a></td>
+                <td>Override this method in a Shape subclass to handle selectionChanged events by overriding the base class method.</td></tr>
+        </table>
 
-<h3><a name="Pad Event Related Methods"></a>Pad Event Related Methods</h3>
-<ul>
-    <li>setEventsEnabled</li>
-    <li>addKeyListener/removeKeyListener</li>
-    <li>addMouseListener/removeMouseListener</li>
-    <li>addTickListener/removeTickListener</li>
-    
-    <li>onKeyPressed</li>
-    <li>onKeyReleased</li>
-    <li>onKeyTyped</li>
-    <li>setKeyPressedHandler</li>
-    <li>setKeyReleasedHandler</li>
-    <li>setKeyTypedHandler</li>
-    
-    <li>onTick</li>
-    <li>setTickHandler</li>
-    
-    <li>onMouseClicked</li>
-    <li>onMouseDoubleClicked</li>
-    <li>onMouseDragged</li>
-    <li>onMouseEntered</li>
-    <li>onMouseExited</li>
-    <li>onMouseMoved</li>
-    <li>onMousePressed</li>
-    <li>onMouseReleased</li>
-    <li>setMouseClickedHandler</li>
-    <li>setMouseDoubleClickedHandler</li>
-    <li>setMouseDraggedHandler</li>
-    <li>setMouseEnteredHandler</li>
-    <li>setMouseExitedHandler</li>
-    <li>setMouseMovedHandler</li>
-    <li>setMousePressedHandler</li>
-    <li>setMouseReleasedHandler</li>
+        <h3><a name="Pad Keyboard Event Related Methods"></a>Pad Keyboard Event Related Methods</h3>
+        <p></p>
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td>addKeyListener</td><td></td></tr>
+            <tr><td>removeKeyListener</td><td></td></tr>
+            <tr><td>onKeyPressed</td><td></td></tr>
+            <tr><td>onKeyReleased</td><td></td></tr>
+            <tr><td>onKeyTyped</td><td></td></tr>
+            <tr><td>setKeyPressedHandler</td><td></td></tr>
+            <tr><td>setKeyReleasedHandler</td><td></td></tr>
+            <tr><td>setKeyTypedHandler</td><td></td></tr>
+        </table>
 
-    <li>onClientClosed</li>
-    <li>onClientError</li>
-    <li>onClientInfo</li>
-    <li>onClientOpened</li>
-    <li>onClientReceived</li>
-    <li>onServerError</li>
-    <li>onServerInfo</li>
-    <li>onServerStarted</li>
-    <li>onServerStopped</li>
-</ul>
+        <h3><a name="Pad Timer Event Related Methods"></a>Pad Timer Event Related Methods</h3>
+
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td>addTickListener</td><td></td></tr>
+            <tr><td>removeTickListener</td><td></td></tr>
+            <tr><td>setTickHandler</td><td></td></tr>
+            <tr><td>onTick</td><td></td></tr>
+        </table>
+
+        <h3><a name="Pad Socket Event Related Methods"></a>Pad Socket Event Related Methods</h3>
+
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td>onClientClosed</td><td></td></tr>
+            <tr><td>onClientError</td><td></td></tr>
+            <tr><td>onClientInfo</td><td></td></tr>
+            <tr><td>onClientOpened</td><td></td></tr>
+            <tr><td>onClientReceived</td><td></td></tr>
+            <tr><td>onServerError</td><td></td></tr>
+            <tr><td>onServerInfo</td><td></td></tr>
+            <tr><td>onServerStarted</td><td></td></tr>
+            <tr><td>onServerStopped</td><td></td></tr>
+        </table>
+        <!--<li>setClientClosedHandler</li>-->
+        <!--<li>setClientErrorHandler</li>-->
+        <!--<li>setClientInfoHandler</li>-->
+        <!--<li>setClientOpenedHandler</li>-->
+        <!--<li>setClientReceivedHandler</li>-->
+        <!--<li>setServerErrorHandler</li>-->
+        <!--<li>setServerInfoHandler</li>-->
+        <!--<li>setServerStartedHandler</li>-->
+        <!--<li>setServerStoppedHandler</li>-->
+
+        <h3><a name="Pad Mouse Event Related Methods"></a>Pad Mouse Event Related Methods</h3>
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td>addMouseListener/removeMouseListener</td><td></td></tr>
+            <tr><td>setMouseClickedHandler</td><td></td></tr>
+            <tr><td>setMouseDoubleClickedHandler</td><td></td></tr>
+            <tr><td>setMouseDraggedHandler</td><td></td></tr>
+            <tr><td>setMouseEnteredHandler</td><td></td></tr>
+            <tr><td>setMouseExitedHandler</td><td></td></tr>
+            <tr><td>setMouseMovedHandler</td><td></td></tr>
+            <tr><td>setMousePressedHandler</td><td></td></tr>
+            <tr><td>setMouseReleasedHandler</td><td></td></tr>
+            <tr><td>onMouseClicked</td><td></td></tr>
+            <tr><td>onMouseDoubleClicked</td><td></td></tr>
+            <tr><td>onMouseDragged</td><td></td></tr>
+            <tr><td>onMouseEntered</td><td></td></tr>
+            <tr><td>onMouseExited</td><td></td></tr>
+            <tr><td>onMouseMoved</td><td></td></tr>
+            <tr><td>onMousePressed</td><td></td></tr>
+            <tr><td>onMouseReleased</td><td></td></tr>
+        </table>
     </body>
 </html>

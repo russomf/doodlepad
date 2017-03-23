@@ -20,19 +20,52 @@
     <body>
         <h2>Graphic Object Position and Size</h2>
         <hr></hr>
-<p>
-All graphic objects have <i>location</i> and <i>size</i>, where <i>location</i> corresponds to the upper left x-y coordinate of the object's bounding box and <i>size</i> is the width and height of the bounding box. 
-</p>
-<ul>
-    <li>getSize/setSize</li>
-    <li>getHeight/setHeight</li>
-    <li>getWidth/setWidth</li>
-    <li>getLocation/setLocation</li>
-    <li>getX/setX</li>
-    <li>getY/setY</li>
-    <li>getCenter/setCenter</li>
-    <li>move</li>
-    
-</ul>
+        <p>
+            All graphic objects have a <i>location</i> and a <i>size</i>,
+            where <i>location</i> corresponds to the upper left x-y coordinate of the object's bounding box
+            and <i>size</i> corresponds to the width and height of the bounding box.
+            A Shape object's bounding box may be visualized by clicking it to select it.
+            A selected Shape is surrounded with a light gray rectangle which identifies the bounding box.
+            All Shapes may be moved and sized by setting the location and size of its bounding box.
+        </p>
+        <p>
+            The following Shape methods permit a Shape's bounding box to be modified.
+            These methods may be used on all Shape subclasses.
+            <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getHeight--" target="_blank">public double getHeight()</a></td>
+                <td>Return the Shape's height.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setHeight-double-" target="_blank">public void setHeight(double height)</a></td>
+                <td>Set the height of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getWidth--" target="_blank">public double getWidth()</a></td>
+                <td>Return the Shape's width.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setWidth-double-" target="_blank">public void setWidth(double width)</a></td>
+                <td>Set the width of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getSize--" target="_blank">public Dimension getSize()</a></td>
+                <td>Return the Shape's height and width as a Dimension object.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSize-double-double-" target="_blank">public void setSize(double width, double height)</a></td>
+                <td>Set both the width and height of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getLocation--" target="_blank">public Point getLocation()</a></td>
+                <td>Return the location of the upper left corner of the Shape's bounding box as a Point object.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setLocation-double-double-" target="_blank">public void setLocation(double x, double y)</a></td>
+                <td>Set the coordinates of the upper left corner of teh Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getX--" target="_blank">public double getX()</a></td>
+                <td>Return the x-location of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setX-double-" target="_blank">public void setX(double x)</a></td>
+                <td>Set the x-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getY--" target="_blank">public double getY()</a></td>
+                <td>Return the y-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setY-double-" target="_blank">public void setY(double y)</a></td>
+                <td>Set the y-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getCenter--" target="_blank">public Point getCenter()</a></td>
+                <td>Return the coordinates of the Shape's bounding box center.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setCenter-double-double-" target="_blank">public void setCenter(double cx, double cy)</a></td>
+                <td>Move the Shape so that its bounding box has specified center coordinates.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#move-double-double-" target="_blank">public void move(double dx, double dy)</a></td>
+                <td>Move a Shape by the distance (dx, dy).</td></tr>
+            </table>
+        </p>
+        <h3>Examples</h3>
+        <p>...</p>
     </body>
 </html>
