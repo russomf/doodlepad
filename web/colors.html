@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/hljs.css">
 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
           ga('create', 'UA-80544484-1', 'auto');
@@ -38,27 +39,29 @@
         </h3>
         <p>
             Most DoodlePad Shape subclasses may be filled with one color and stroked (outlined) with a separate color.
-            It is also possible to disable Shape fill or stroke, drawing shapes empty or without an outline.
-            Colors in DoodlePad are constructed from color components: <span style="font-weight: bold; color: red;">red</span>, <span style="font-weight: bold; color: green;">green</span>, <span style="font-weight: bold; color: blue;">blue</span>,
-            and one transparency component: <span style="font-weight: bold;">alpha</span>.
-            The level of each of the four components is specified with an integer in the range [0, 255].
+            It is also possible to disable Shape fill or stroke, drawing empty shapes or shapes without an outline.
+            Colors in DoodlePad are constructed from color components: <span style="font-weight: bold; color: red;">red</span>, <span style="font-weight: bold; color: green;">green</span>, and <span style="font-weight: bold; color: blue;">blue</span>,
+            and one transparency component called <span style="font-weight: bold;">alpha</span>.
+            The value of each of the four components may be an integer in the range [0, 255].
         </p>
         <p style="float:right">
             <canvas id="cvs" width="550" height="350" style="border: 1px solid black;"></canvas>
         </p>
         <script src="widgets/colorPicker.min.js" type="text/javascript"></script>
         <p>
-            Use the interactive widget on the right to explore how these four values are used to achieve a desired fill or stroke color.
-            Drag the colored slider knobs up and down with the mouse to change a component value.
+            Use the interactive widget on the right to explore how these four values combine to achieve a desired fill or stroke color.
+            Drag the colored slider knobs up and down with the mouse to change a component's value.
             The color that results from combining the four components is shown in the rectangular swatch on the right.
-            Behind the swatch there are three colored lines.
-            Transparency is increased by decreasing the alpha component value.
-            Drag the alpha slider down to see the impact.
+            To illustrate transparency (alpha), behind the swatch there are three colored lines.
+            Transparency is increased by decreasing the alpha component.
+            When alpha is 0, the resulting color is completely transparent.
+            When alpha is 255, the color is completely opaque.
+            Drag the alpha slider up and down to see the impact on color.
         </p>
         <p>
-            Pure red, green or blue is achieved by setting the corresponding color value to its maximum (255)
-            and leaving the other two color values at 0.
-            Other colors are constructed from different combinations.
+            Pure red, green or blue is achieved by setting the corresponding color component value to its maximum (255)
+            and leaving the other two color color values at 0.
+            Other colors are constructed from different combinations of the color components.
             All shades of gray, from black to white, are formed by setting the values of red, green, and blue to equal values between 0 and 255.
         </p>
         <table>
@@ -78,12 +81,68 @@
             Each Shape object's fill color and stroke color may be specified using color component values.
             There are two mutator methods for setting Shape color: <span class="code">setFillColor(...)</span> and <span class="code">getStrokeColor(...)</span>.
             These setter methods each have three overloads.
-            The base method signature has four parameters, one for each of the four color components: red, green, blue and alpha.
+            The base method signature has four parameters, one for each of the four color components: <span style="color:red;font-weight: bold;">red</span>, <span style="color:green;font-weight: bold;">green</span>, <span style="color:blue;font-weight: bold;">blue</span> and <span style="font-weight: bold;">alpha</span>.
             A second overloaded method has only three parameters, which specify red, green and blue components.
             In this case the alpha component is assumed to have a value of 255, meaning that the Shape color has no transparency.
             The third overloaded method has only one parameter, often called <span class="code">gray</span>.
-            In this case the parameter value is repeated for all three color components, and alpha is once again set to 255.
+            In this case the parameter value is repeated for all three color components, and alpha once again is set to 255.
         </p>
+        <h3>
+            <a name="fill_and_stroke_examples">Fill And Stroke Color Examples</a>
+        </h3>
+        <img src="images/colors.png" style="float:right;padding:10px;">
+
+        <p>
+            The following example program creates five shapes with various fill and stroke colors.
+            The resulting Shape objects are shown in the image on the right.
+            Note that the Oval is unfilled, so the underlying red Rectangle is visible.
+            Also note that the filled Arc has a semi-transparent yellow fill, so the underlying Line is partially visible.
+        </p>
+        <pre><code class="java">import doodlepad.*;
+
+public class Colors {
+    private Oval myOval;
+    private Rectangle myRect;
+    private Line myLine;
+    private Arc myArc;
+    private Polygon myPoly;
+
+    public Colors() {
+        // Red Rectangle with default stroke style
+        myRect = new Rectangle( 10, 55, 50, 40);
+        myRect.setFillColor(255, 0, 0);
+
+        // Unfilled Oval with thick light gray stroke
+        myOval = new Oval(40, 50, 50, 50);
+        myOval.setFilled(false);
+        myOval.setStrokeColor(200);
+        myOval.setStrokeWidth(5);
+
+        // Gray Line with thick stroke
+        myLine = new Line(80, 50, 120, 90);
+        myLine.setStrokeColor(127);
+        myLine.setStrokeWidth(10);
+
+        // Semi-transparent yellow filled Arc with default stroke style
+        myArc = new Arc(100, 50, 50, 50, 30, 290);
+        myArc.setFillColor(255, 255, 0, 127);
+
+        // Green Polygon with no stroke
+        double[] xs = {130, 150, 170};
+        double[] ys = {50, 100, 50};
+        myPoly = new Polygon(xs, ys);
+        myPoly.setFillColor(0, 255, 0);
+        myPoly.setStroked(false);
+    }
+
+    public static void main(String[] args) {
+        Colors myColors = new Colors();
+    }
+}
+</code></pre>
+        <h3>
+            <a name="color_related_methods">Color-related Methods</a>
+        </h3>
         <p>
             The following table lists all color-related Shape methods and their overloads with descriptions.
             Both setter and getter methods are listed.
@@ -184,8 +243,8 @@
     <p>
         The Pad object also has a few color-related methods.
         These are used only for setting and getting the Pad's background color.
-        The Pad has only two overloads for its method of setting backgroud color.
-        Because a Pad's color may not be transparent, no overoad is available that includes an alpha parameter.
+        The Pad has only two overloads for its method of setting background color.
+        Because a Pad's color may not be transparent, no overload is available that includes an alpha parameter.
     </p>
     <table>
         <tr><th>Method</th><th>Description</th></tr>

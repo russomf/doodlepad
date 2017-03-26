@@ -1594,7 +1594,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
-     * Add object to the list if items that are notified on Pad's key events.
+     * Add object to the list of items that are notified on Pad's key events.
      * @param   o The PadKeyListener object to be added.
      */
     public void addKeyListener(PadKeyListener o) {

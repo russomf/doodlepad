@@ -28,14 +28,14 @@
             <ul>
             <li><a href="#Introduction">Introduction</a></li>
             <li><a href="#Connecting Events and Methods with Method References">Connecting Events and Methods with Method References</a></li>
-            <li><a href="#Shape Mouse Event Related Methods">Shape Mouse Event Related Methods</a></li>
+            <li><a href="#Shape Mouse Event Related Methods">Shape Mouse Event-Related Methods</a></li>
             <li><a href="#Handling Events by Overriding Base Class Methods">Handling Events by Overriding Base Class Methods</a></li>
             <li><a href="#Overridable Shape Event Methods">Overridable Shape Event Methods</a></li>
-            <li><a href="#Other Event Related Shape Methods">Other Event Related Shape Methods</a></li>
-            <li><a href="#Pad Keyboard Event Related Methods">Pad Keyboard Event Related Methods</a></li>
-            <li><a href="#Pad Timer Event Related Methods">Pad Timer Event Related Methods</a></li>
-            <li><a href="#Pad Socket Event Related Methods">Pad Socket Event Related Methods</a></li>
-            <li><a href="#Pad Mouse Event Related Methods">Pad Mouse Event Related Methods</a></li>
+            <li><a href="#Other Event Related Shape Methods">Other Event-Related Shape Methods</a></li>
+            <li><a href="#Pad Keyboard Event Related Methods">Pad Keyboard Event-Related Methods</a></li>
+            <li><a href="#Pad Timer Event Related Methods">Pad Timer Event-Related Methods</a></li>
+            <li><a href="#Pad Socket Event Related Methods">Pad Socket Event-Related Methods</a></li>
+            <li><a href="#Pad Mouse Event Related Methods">Pad Mouse Event-Related Methods</a></li>
             </ul>
         </p>
 
@@ -58,7 +58,7 @@
             For example, imagine a Happy Face made up of a large yellow Oval for the face, two smaller black Ovals for the eyes and an Arc for the smile.
             You might want the eyes and smile to ignore all mouse interaction so that only the underlying yellow face Oval triggers mouse events.
             This is easily accomplished by disabling events on your eye and smile Shapes.
-            Use the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setEventsEnabled-boolean-">setEventsEnabled(...)</a> method
+            Use the <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setEventsEnabled-boolean-" target="_blank">setEventsEnabled(...)</a> method
             to disable or re-enable event triggering for any Shape object or any Pad object.
         </p>
         <p>
@@ -165,7 +165,7 @@ public class PushButton {
         <p>
             The image on the right shows the output from running this example program and clicking the RoundRect Shape once.
         </p>
-        <h3><a name="Shape Mouse Event Related Methods"></a>Shape Mouse Event Related Methods</h3>
+        <h3><a name="Shape Mouse Event Related Methods"></a>Shape Mouse Event-Related Methods</h3>
         <p>
             A wide variety of mouse events may be handled in a similar manner.
             Following is a list of all methods used to connect a mouse event with a Shape.
@@ -334,7 +334,7 @@ public class PushButton extends RoundRect {
         </table>
         </p>
 
-        <h3><a name="Other Event Related Shape Methods"></a>Other Event Related Shape Methods</h3>
+        <h3><a name="Other Event Related Shape Methods"></a>Other Event-Related Shape Methods</h3>
         <p>
             Shapes triggers one additional event beyond the above list of mouse events.
             The selectionChanged event is triggered whenever the selection status of a Shape changes.
@@ -371,43 +371,45 @@ public class PushButton extends RoundRect {
                 <td>Override this method in a Shape subclass to handle selectionChanged events by overriding the base class method.</td></tr>
         </table>
 
-        <h3><a name="Pad Keyboard Event Related Methods"></a>Pad Keyboard Event Related Methods</h3>
+        <h3><a name="Pad Keyboard Event Related Methods"></a>Pad Keyboard Event-Related Methods</h3>
         <p></p>
         <table>
             <tr><th>Method</th><th>Description</th></tr>
-            <tr><td>addKeyListener</td><td></td></tr>
-            <tr><td>removeKeyListener</td><td></td></tr>
-            <tr><td>onKeyPressed</td><td></td></tr>
-            <tr><td>onKeyReleased</td><td></td></tr>
-            <tr><td>onKeyTyped</td><td></td></tr>
-            <tr><td>setKeyPressedHandler</td><td></td></tr>
-            <tr><td>setKeyReleasedHandler</td><td></td></tr>
-            <tr><td>setKeyTypedHandler</td><td></td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setKeyPressedHandler-doodlepad.Pad.PadKeyEventHandler-" target="_blank">public void setKeyPressedHandler(Pad.PadKeyEventHandler handler)</a></td><td>Assign an onKeyPressed event handler using a method reference.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setKeyReleasedHandler-doodlepad.Pad.PadKeyEventHandler-" target="_blank">public void setKeyReleasedHandler(Pad.PadKeyEventHandler handler)</a></td><td>Assign an onKeyReleased event handler using a method reference.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setKeyTypedHandler-doodlepad.Pad.PadKeyTypedEventHandler-" target="_blank">public void setKeyTypedHandler(Pad.PadKeyTypedEventHandler handler)</a></td><td>Assign an onKeyTyped event handler using a method reference.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onKeyPressed-java.lang.String-java.lang.String-" target="_blank">public void onKeyPressed(java.lang.String keyText, java.lang.String keyModifiers)</a></td><td>A method that can be overridden to handle key pressed events</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onKeyReleased-java.lang.String-java.lang.String-" target="_blank">public void onKeyReleased(java.lang.String keyText, java.lang.String keyModifiers)</a></td><td>A method that can be overridden to handle key released events</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onKeyTyped-char-" target="_blank">public void onKeyTyped(char keyChar)</a></td><td>A method that can be overridden to handle key typed events</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#addKeyListener-doodlepad.PadKeyListener-" target="_blank">public void addKeyListener(PadKeyListener o)</a></td><td>Add object to the list of items that are notified on Pad's key events.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#removeKeyListener-doodlepad.PadKeyListener-" target="_blank">public void removeKeyListener(PadKeyListener o)</a></td><td>Remove object from Pad's key listener list.</td></tr>
         </table>
 
-        <h3><a name="Pad Timer Event Related Methods"></a>Pad Timer Event Related Methods</h3>
+        <h3><a name="Pad Timer Event Related Methods"></a>Pad Timer Event-Related Methods</h3>
 
         <table>
             <tr><th>Method</th><th>Description</th></tr>
-            <tr><td>addTickListener</td><td></td></tr>
-            <tr><td>removeTickListener</td><td></td></tr>
-            <tr><td>setTickHandler</td><td></td></tr>
-            <tr><td>onTick</td><td></td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setTickHandler-doodlepad.Pad.PadTimerEventHandler-" target="_blank">public void setTickHandler(Pad.PadTimerEventHandler handler)</a></td><td>Assign an onTick event handler using a method reference.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onTick-long-" target="_blank">public void onTick(long when)</a></td><td>A method that can be overridden to handle the Pad timer`s tick event. The timer tick rate is set with the setTickRate() method. The timer is started by invoking the startTimer() method. The timer is stopped by invoking the stopTimer() method.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#addTickListener-doodlepad.PadTickListener-" target="_blank">public void addTickListener(PadTickListener o)</a></td><td>Add object to the list if items that are notified on Pad's timer tick action.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#removeTickListener-doodlepad.PadTickListener-" target="_blank">public void removeTickListener(PadTickListener o)</a></td><td>Remove object from Pad's timer tick action listener list.</td></tr>
         </table>
 
-        <h3><a name="Pad Socket Event Related Methods"></a>Pad Socket Event Related Methods</h3>
+        <h3><a name="Pad Socket Event Related Methods"></a>Pad Socket Event-Related Methods</h3>
 
         <table>
             <tr><th>Method</th><th>Description</th></tr>
-            <tr><td>onClientClosed</td><td></td></tr>
-            <tr><td>onClientError</td><td></td></tr>
-            <tr><td>onClientInfo</td><td></td></tr>
-            <tr><td>onClientOpened</td><td></td></tr>
-            <tr><td>onClientReceived</td><td></td></tr>
-            <tr><td>onServerError</td><td></td></tr>
-            <tr><td>onServerInfo</td><td></td></tr>
-            <tr><td>onServerStarted</td><td></td></tr>
-            <tr><td>onServerStopped</td><td></td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientOpened-int-" target="_blank">public void onClientOpened(int id)</a></td><td>Invoked when a new client connection opens</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientOpened-int-" target="_blank">public void onClientOpened(int id)</a></td><td>Invoked when a new client connection opens</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientReceived-int-java.lang.String-" target="_blank">public void onClientReceived(int id, java.lang.String msg)</a></td><td>Invoked when a connected client socket receives a message</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientClosed-int-" target="_blank">public void onClientClosed(int id)</a></td><td>Invoked when a client connection is closed</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientError-int-java.lang.String-" target="_blank">public void onClientError(int id, java.lang.String msg)</a></td><td>Invoked when a connected client socket has has error</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientInfo-int-java.lang.String-" target="_blank">public void onClientInfo(int id, java.lang.String msg)</a></td><td>Invoked when a connected client socket has some information to share</td></tr>
+
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerStarted--" target="_blank">public void onServerStarted()</a></td><td>Invoked when the listening server starts</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerStopped--" target="_blank">public void onServerStopped()</a></td><td>Invoked when the listening server stops and all connections are closed</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerError-java.lang.String-" target="_blank">public void onServerError(java.lang.String msg)</a></td><td>Invoked when the listening server has an error</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerInfo-java.lang.String-" target="_blank">public void onServerInfo(java.lang.String msg)</a></td><td>Invoked when the listening server has some information to share</td></tr>
         </table>
         <!--<li>setClientClosedHandler</li>-->
         <!--<li>setClientErrorHandler</li>-->
@@ -419,26 +421,83 @@ public class PushButton extends RoundRect {
         <!--<li>setServerStartedHandler</li>-->
         <!--<li>setServerStoppedHandler</li>-->
 
-        <h3><a name="Pad Mouse Event Related Methods"></a>Pad Mouse Event Related Methods</h3>
+        <h3><a name="Pad Mouse Event Related Methods"></a>Pad Mouse Event-Related Methods</h3>
         <table>
             <tr><th>Method</th><th>Description</th></tr>
-            <tr><td>addMouseListener/removeMouseListener</td><td></td></tr>
-            <tr><td>setMouseClickedHandler</td><td></td></tr>
-            <tr><td>setMouseDoubleClickedHandler</td><td></td></tr>
-            <tr><td>setMouseDraggedHandler</td><td></td></tr>
-            <tr><td>setMouseEnteredHandler</td><td></td></tr>
-            <tr><td>setMouseExitedHandler</td><td></td></tr>
-            <tr><td>setMouseMovedHandler</td><td></td></tr>
-            <tr><td>setMousePressedHandler</td><td></td></tr>
-            <tr><td>setMouseReleasedHandler</td><td></td></tr>
-            <tr><td>onMouseClicked</td><td></td></tr>
-            <tr><td>onMouseDoubleClicked</td><td></td></tr>
-            <tr><td>onMouseDragged</td><td></td></tr>
-            <tr><td>onMouseEntered</td><td></td></tr>
-            <tr><td>onMouseExited</td><td></td></tr>
-            <tr><td>onMouseMoved</td><td></td></tr>
-            <tr><td>onMousePressed</td><td></td></tr>
-            <tr><td>onMouseReleased</td><td></td></tr>
+
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMousePressedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMousePressedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMousePressed event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseReleasedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseReleasedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseReleased event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseMovedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseMovedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseMoved event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseClickedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseClickedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseClicked event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseDoubleClickedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseDoubleClickedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseDoubleClicked event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseDraggedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseDraggedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseDragged event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseEnteredHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseEnteredHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseEntered event handler using a method reference.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setMouseExitedHandler-doodlepad.Pad.PadMouseEventHandler-" target="_blank">public void setMouseExitedHandler(PadMouseEventHandler handler)</a></td>
+                <td>Assign an onMouseExited event handler using a method reference.</td>
+            </tr>
+
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMousePressed-double-double-int-" target="_blank">public void onMousePressed(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse pressed events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseReleased-double-double-int-" target="_blank">public void onMouseReleased(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse released events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseMoved-double-double-int-" target="_blank">public void onMouseMoved(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse moved events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseClicked-double-double-int-" target="_blank">public void onMouseClicked(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse clicked events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseDoubleClicked-double-double-int-" target="_blank">public void onMouseDoubleClicked(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse double-clicked events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseDragged-double-double-int-" target="_blank">public void onMouseDragged(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse dragged events. A mouse dragged event is the same as a mouse moved event while the mouse is pressed.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseEntered-double-double-int-" target="_blank">public void onMouseEntered(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse entered events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onMouseExited-double-double-int-" target="_blank">public void onMouseExited(double x, double y, int button)</a></td>
+                <td>A method that can be overridden to handle mouse exited events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#addMouseListener-doodlepad.PadMouseListener-" target="_blank">public void addMouseListener(PadMouseListener o)</a></td>
+                <td>Add object to the list of items that are notified on Pad's mouse events.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#removeMouseListener-doodlepad.PadMouseListener-" target="_blank">public void removeMouseListener(PadMouseListener o)</a></td>
+                <td>Remove object from Pad's mouse listener list.</td>
+            </tr>
         </table>
     </body>
 </html>
