@@ -55,7 +55,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 /**
  * A class that implements a drawing surface and window for graphical shapes.
@@ -69,6 +68,11 @@ public class Pad extends JFrame implements Iterable<Shape>
     // May be needed if direct drawing commands added to class
     //private Graphics2D g2D;
 
+	/**
+	 * Serialization ID
+	 */
+	private static final long serialVersionUID = 1L;
+	
     /**
      * Layers on the Pad
      */
@@ -228,6 +232,11 @@ public class Pad extends JFrame implements Iterable<Shape>
      */
     private final JPanel cvs = new JPanel() {
         
+    	/**
+    	 * Serialization ID
+    	 */
+    	private static final long serialVersionUID = 1L;
+
         /**
          * Override the JPanel's default paint method
          * @param   g   Graphics object on which to draw doodle
@@ -266,8 +275,10 @@ public class Pad extends JFrame implements Iterable<Shape>
                 Layer layer = layers.get(l);
                 
                 AffineTransform saveTransform = g2.getTransform();
-                g2.setTransform( layer.transform );
-                gh.setTransform( layer.transform );
+                g2.transform( layer.transform );
+                gh.transform( layer.transform );
+                //g2.setTransform( layer.transform );
+                //gh.setTransform( layer.transform );
                 
                 List<Shape> shapes = layer.getShapes();
                 for (int i=0; i<shapes.size(); i++) {
@@ -337,7 +348,8 @@ public class Pad extends JFrame implements Iterable<Shape>
         public void keyPressed(KeyEvent e) {
             // Delegate to any subclass overriding methods
             String keyText = KeyEvent.getKeyText(e.getKeyCode());
-            String keyModifiers = KeyEvent.getKeyModifiersText(e.getModifiers());
+            String keyModifiers = InputEvent.getModifiersExText(e.getModifiersEx());
+            //String keyModifiers = KeyEvent.getKeyModifiersText(e.getModifiers());
             
             onKeyPressed(keyText, keyModifiers);
 
@@ -351,7 +363,8 @@ public class Pad extends JFrame implements Iterable<Shape>
         public void keyReleased(KeyEvent e) {
             // Delegate to any subclass overriding methods
             String keyText = KeyEvent.getKeyText(e.getKeyCode());
-            String keyModifiers = KeyEvent.getKeyModifiersText(e.getModifiers());
+            String keyModifiers = InputEvent.getModifiersExText(e.getModifiersEx());
+            //String keyModifiers = KeyEvent.getKeyModifiersText(e.getModifiers());
             
             onKeyReleased(keyText, keyModifiers);
 
@@ -441,7 +454,7 @@ public class Pad extends JFrame implements Iterable<Shape>
                     ArrayList<Shape> shapes = lay.getShapes();
                     
                     for (int i=0; i<shapes.size(); i++) {
-                        Shape ts = shapes.get(i);
+//                        Shape ts = shapes.get(i);
 //                        if (ts.getSelected() == true) {
 //                            ts.startDrag(eX, eY);
 //                        }
