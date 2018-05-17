@@ -49,8 +49,8 @@ import java.util.List;
  */
 public class Image extends Shape
 {
-    String path;
-    BufferedImage img = null;
+    private String path;
+    private BufferedImage img = null;
     
     /**
      * Constructor for objects of class Image
