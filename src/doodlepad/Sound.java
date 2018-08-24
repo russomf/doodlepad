@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.LineUnavailableException;
 
@@ -38,11 +40,39 @@ import javax.sound.sampled.LineUnavailableException;
  * @author Mark F. Russo, Ph.D.
  * @version 1.0
  */
-public class Sound {
+public class Sound implements LineListener {
 
+    /**
+     * Flag that holds event enabled state
+     */
+    private boolean eventsEnabled = true;
+    
+    /**
+     * Variable holding path to sound clip file
+     */
 	private String path = null;
+	
+	/**
+	 * Variable holding internal Clip object
+	 */
 	private Clip clip = null;
 	
+    /**
+     * Interface used by methods that assign Sound event handlers
+     * given a method reference as a parameter.
+     */
+    public interface SoundEventHandler {
+        public void f(Sound snd);
+    }
+    
+    /**
+     * Private fields that hold event handlers assigned using method references.
+     */
+    private SoundEventHandler soundOpenedHandler = null;
+    private SoundEventHandler soundClosedHandler = null;
+    private SoundEventHandler soundStartedHandler = null;
+    private SoundEventHandler soundStoppedHandler = null;
+
 	/**
 	 * Nullary Sound constructor not initialized with sound file
 	 */
@@ -79,6 +109,7 @@ public class Sound {
 		File fil = new File(path);
 		AudioInputStream ais = AudioSystem.getAudioInputStream(fil);              
 		this.clip = AudioSystem.getClip();
+		this.clip.addLineListener(this);
 		this.clip.open(ais);
 	}
 	
@@ -86,7 +117,10 @@ public class Sound {
 	 * Close a sound file
 	 */
 	public void close() {
-		if (this.clip != null && this.clip.isOpen()) { this.clip.close(); }
+		if (this.clip != null) {
+			this.clip.removeLineListener(this);
+			if (this.clip.isOpen()) { this.clip.close(); }
+		}
 		this.clip = null;
 		this.path = null;
 	}
@@ -140,4 +174,117 @@ public class Sound {
 		}
 	}
 
+    /**
+     * Enable or disable add Pad events.
+     * @param enabled True to enable. False to disable
+     */
+    public void setEventsEnabled( boolean enabled )
+    {
+    	if (enabled == false && eventsEnabled == true) {
+    		eventsEnabled = false;
+        } else if (enabled == true && eventsEnabled == false) {
+        	eventsEnabled = true;
+        }
+    }
+    
+    /**
+     * Assign an onSoundOpened event handler using a method reference.
+     * @param handler Method reference to an event handler
+     */
+    public void setSoundOpenedHandler( SoundEventHandler handler ) {
+        this.soundOpenedHandler = handler;
+    }
+    
+    /**
+     * Assign an onSoundClosed event handler using a method reference.
+     * @param handler Method reference to an event handler
+     */
+    public void setSoundClosedHandler( SoundEventHandler handler ) {
+        this.soundClosedHandler = handler;
+    }
+    
+    /**
+     * Assign an onSoundStarted event handler using a method reference.
+     * @param handler Method reference to an event handler
+     */
+    public void setSoundStartedHandler( SoundEventHandler handler ) {
+        this.soundStartedHandler = handler;
+    }
+    
+    /**
+     * Assign an onSoundStopped event handler using a method reference.
+     * @param handler Method reference to an event handler
+     */
+    public void setSoundStoppedHandler( SoundEventHandler handler ) {
+        this.soundStoppedHandler = handler;
+    }
+    
+    /**
+     * A method that can be overridden to handle Sound opened events
+     */
+    public void onSoundOpened() {
+        // Also, override to implement.
+    	
+    	// If handler assigned, invoke
+        if (this.soundOpenedHandler != null) {
+            soundOpenedHandler.f(this);
+        }
+    }
+    
+    /**
+     * A method that can be overridden to handle Sound closed events
+     */
+    public void onSoundClosed() {
+    	// Also, override to implement.
+    	
+    	// If handler assigned, invoke
+        if (this.soundClosedHandler != null) {
+            soundClosedHandler.f(this);
+        }
+    }
+    
+    /**
+     * A method that can be overridden to handle Sound started events
+     */
+    public void onSoundStarted() {
+    	// Also, override to implement.
+    	
+    	// If handler assigned, invoke
+        if (this.soundStartedHandler != null) {
+        	soundStartedHandler.f(this);
+        }
+    }
+    
+    /**
+     * A method that can be overridden to handle Sound stopped events
+     */
+    public void onSoundStopped() {
+    	// Also, override to implement.
+
+    	// If handler assigned, invoke
+        if (this.soundStoppedHandler != null) {
+        	soundStoppedHandler.f(this);
+        }
+    }
+    
+	/**
+	 * Dispatch Line events
+	 */
+	@Override
+	public void update(LineEvent ev) {
+		// Do nothing if events disabled
+		if (!eventsEnabled) return;
+		
+		LineEvent.Type typ = ev.getType();
+		
+		if (typ == LineEvent.Type.OPEN) {
+			this.onSoundOpened();
+		} else if (typ == LineEvent.Type.CLOSE) {
+			this.onSoundClosed();
+		} else if (typ == LineEvent.Type.START) {
+			this.onSoundStarted();
+		} else if (typ == LineEvent.Type.STOP) {
+			this.onSoundStopped();
+		}
+	}
 }

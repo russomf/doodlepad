@@ -45,22 +45,22 @@ public abstract class Shape
     protected Layer layer = null;
     
     /**
-     * The x-coordinate of the upper left-hand coordinate of the Shape’s bounding box.
+     * The x-coordinate of the upper left-hand coordinate of the Shape's bounding box.
      */
     protected double x;
     
     /**
-     * The y-coordinate of the upper left-hand coordinate of the Shape’s bounding box.
+     * The y-coordinate of the upper left-hand coordinate of the Shape's bounding box.
      */
     protected double y;
     
     /**
-     * The width of the Shape’s bounding box.
+     * The width of the Shape's bounding box.
      */
     protected double width;
     
     /**
-     * The height of the Shape’s bounding box.
+     * The height of the Shape's bounding box.
      */
     protected double height;
     
@@ -204,7 +204,7 @@ public abstract class Shape
             onMousePressed(eX, eY, button);
             
                 // Removed traditional Java event handling method
-//            // Notify other registerd listeners
+//            // Notify other registered listeners
 //            for (ShapeMouseListener ml : mouseListeners) {
 //                ml.mousePressed(eX, eY, button);
 //            }
@@ -485,7 +485,7 @@ public abstract class Shape
 //    }
     
     /**
-     * A utility method that returns this Shape’s Pad instance
+     * A utility method that returns this Shape's Pad instance
      * @return The current Pad singleton object.
      */
     public Pad getPad(){
@@ -761,7 +761,7 @@ public abstract class Shape
     
     /**
      * Return the current location of the shape as a Point object.
-     * @return A Point object representing the current upper left corner of the Shape’s bounding box.
+     * @return A Point object representing the current upper left corner of the Shape's bounding box.
      */
     public Point getLocation() {
         return new Point(x, y);
@@ -807,7 +807,7 @@ public abstract class Shape
     
     /**
      * Return the current center point of the shape as a Point object.
-     * @return A Point object representing the current center point of the Shape’s bounding box.
+     * @return A Point object representing the current center point of the Shape's bounding box.
      */
     public Point getCenter() {
         return new Point(x + 0.5*width, y + 0.5*height);
@@ -815,7 +815,7 @@ public abstract class Shape
     
     /**
      * Get x-coordinate of Shape
-     * @return The Shape’s x-coordinate
+     * @return The Shape's x-coordinate
      */
     public double getX() {
         return this.x;
@@ -823,7 +823,7 @@ public abstract class Shape
     
     /**
      * Get y-coordinate of Shape
-     * @return The Shape’s y-coordinate
+     * @return The Shape's y-coordinate
      */
     public double getY() {
         return this.y;
@@ -885,8 +885,8 @@ public abstract class Shape
     }
     
     /**
-     * Get the Shape’s width
-     * @return A double that is the Shape’s current width
+     * Get the Shape's width
+     * @return A double that is the Shape's current width
      */
     public double getWidth() {
         return this.width;
@@ -903,8 +903,8 @@ public abstract class Shape
     }
     
     /**
-     * Get the Shape’s height
-     * @return A double that is the Shape’s current height
+     * Get the Shape's height
+     * @return A double that is the Shape's current height
      */
     public double getHeight() {
         return this.height;
