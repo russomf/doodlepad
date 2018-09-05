@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/hljs.css">
 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
           ga('create', 'UA-80544484-1', 'auto');
@@ -19,9 +20,92 @@
     </head>
     <body>
         <h2>Graphic Object Transformations</h2>
-        <hr></hr>
-<p>
-...
-</p>
+        <hr/>
+    <p>
+        As described in <a href="position_size.html">Graphic Object Position and Size</a>, each Shape object can be moved and sized and using methods
+        such as <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setLocation-double-double-" target="_blank">setLocation(...)</a>
+        and <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSize-double-double-" target="_blank">setSize(...)</a>.
+        This approach to moving and resizing Shapes has limitations, including the inability to rotate a Shape object.
+        Consider for a moment, how would you draw an oval rotated at a 45&deg; angle? This is not possible using
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setLocation-double-double-" target="_blank">setLocation(...)</a>
+        and <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSize-double-double-" target="_blank">setSize(...)</a>.
+        Fortunately, there is another way.
+    </p>
+    <p>
+        Most computer graphics systems implement a concept called <span style="font-style:italic;">graphics transformations</span>.
+        The easiest way to understand how graphics transformations work is to imagine that each and every object has its own coordinate system.
+        As described in <a href="model.html">DoodlePad Drawing Model</a>, when a new DoodlePad Shape object is created
+        its coordinate system is set up with the origin in the upper left corner of the Pad window,
+        x-coordinate values increasing from left to right, y-coordinate values increasing from top to bottom, and distances measured in pixels.
+        Graphics transformation functions give you the ability to move and modify the coordinate system of each and every Shape object independently.
+        For example, it is possible to create two Rectangle Shapes, both with their location set to (0, 0), but appearing at different parts of the Pad.
+        If the coordinate system of one is <span style="font-style:italic;">translated</span> to another part of the Pad,
+        then the two Rectangle Shapes would not be drawn at the same location in spite of the fact that they had the same x- and y-coordinate values.
+    </p>
+        <img src="images/transformations1.png" style="float:right;padding:10px;">
+    <p>
+        For example, the image on the right depicts two Rectangle Shapes, both with dimensions 50 pixels &times; 50 pixels
+        and coordinates x=0, y=0. One Rectangle has a red fill and the other has a green fill.
+        The difference between the two Shapes is that the green Rectangle has been transformed by translating it to the
+        location (100, 100). In other words, the origin of the green Rectangle's coordinate system has been moved (translated) to (100, 100).
+        In spite of the fact that both Rectangles have identical dimensions and location,
+        they are drawn at different parts of the Pad due to the fact that the green Rectangle's coordinate system was translated away from its default value.
+    </p>
+    <h3>Translate</h3>
+    <img src="images/transformations2.png" style="float:right;padding:10px;">
+    <p>
+        As suggested by the terminology used in the previous example,
+        the coordinate system of a Shape may be moved in the x- and y-directions by invoking a Shape object's
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#translate-double-double-" target="_blank">translate(...)</a> method.
+        The translate(...) method takes two double arguments.
+        The first indicates how far to move the Shape's coordinate system in the x-direction,
+        and the second indicates how far to move the Shape's coordinate system in the y-direction.
+        The following example program implements the previous red/green Rectangle example using DoodlePad.
+        The class constructor creates two Rectangle objects with identical location and dimension values, but different fill colors.
+        Following this, only the green Rectangle is translated by (100, 100) by executing the statement
+        <span class="code">grnRect.translate(100, 100)</span>.
+        Because the starting location of the green Rectangle is (0, 0), after the translation by (100, 100), the new coordinates
+        for the origin of the green Rectangle is (100, 100).
+        The image on the right illustrates the result of executing the following example program.
+    </p>
+    <pre><code class="java">import doodlepad.*;
+
+public class Transform1 {
+    private Rectangle redRect;
+    private Rectangle grnRect;
+
+    public Transform1() {
+        // Two Rectangles with identical location and dimensions
+        redRect = new Rectangle(0, 0, 50, 50);
+        grnRect = new Rectangle(0, 0, 50, 50);
+
+        // Set fill colors
+        redRect.setFillColor(255, 0, 0);
+        grnRect.setFillColor(0, 255, 0);
+
+        // Translate the green Rectangle only
+        grnRect.translate(100, 100);
+    }
+
+    public static void main(String[] args) {
+        Transform1 myTransform1 = new Transform1();
+    }
+}
+    </code></pre>
+    <p>
+        Translations are cumulative, as are all transformations.
+        If we create a Shape object, translate it by (50, 50), and then translate it by (50, 50) a second time,
+        the Shape's coordinate system will have its origin located at (100, 100).
+        Use the Shape's <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#reset--" target="_blank">reset()</a>
+        method to set all transformations back to their default values.
+    </p>
+    <h3>Scale</h3>
+    <p>
+        The second transformation method is
+        <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#scale-double-double-" target="_blank">scale(...)</a>.
+
+    </p>
+    <h3>Rotate</h3>
+    <p>...</p>
     </body>
 </html>
