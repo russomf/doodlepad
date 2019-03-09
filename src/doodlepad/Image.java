@@ -86,8 +86,6 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        super.setStrokeWidth(0.0);
-        super.setFillColor(Color.BLACK);
         
         try {
             img = ImageIO.read(new File(path));
@@ -96,6 +94,9 @@ public class Image extends Shape
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
+        super.setStrokeWidth(0.0);
+        super.setFillColor(Color.BLACK);
     }
     
     /**
@@ -137,8 +138,6 @@ public class Image extends Shape
     {
         super(x, y, 0, 0, layer);
         this.path = path;
-        super.setStrokeWidth(0.0);
-        super.setFillColor(Color.BLACK);
         
         try {
             img = ImageIO.read(new File(path));
@@ -147,6 +146,9 @@ public class Image extends Shape
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
+        super.setStrokeWidth(0.0);
+        super.setFillColor(Color.BLACK);
     }
 
     /**
