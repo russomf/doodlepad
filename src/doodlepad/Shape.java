@@ -1334,6 +1334,19 @@ public abstract class Shape
     }
     
     /**
+     * Add a rotation angle to Shape transform.
+     * @param angle Adds the rotation angle to the current transform (degrees)
+     * @param cx x-coordinate of point about which rotation occurs
+     * @param cy y-coordinate of point about which rotation occurs
+     */
+    public void rotate(double angle, double cx, double cy) {
+    	transform.translate(-cx, -cy);
+        transform.rotate(angle*Math.PI/180.0);
+    	transform.translate( cx,  cy);
+        repaint();
+    }
+    
+    /**
      * Add a translate to Shape transform.
      * @param deltaX Translate shape in the x-direction by deltaX
      * @param deltaY Translate shape in the y-direction by deltaY
@@ -1354,12 +1367,38 @@ public abstract class Shape
 
     /**
      * Add a scale factor to Shape transform.
+     * @param factor Scale the shape by a scale factor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double factor, double cx, double cy) {
+    	transform.translate(-cx, -cy);
+        transform.scale(factor, factor);
+    	transform.translate( cx,  cy);
+        repaint();
+    }
+
+    /**
+     * Add a scale factor to Shape transform.
      * @param xFactor Scale the shape in the x-direction by a xFactor
      * @param yFactor Scale the shape in the y-direction by a yFactor
-
      */
     public void scale(double xFactor, double yFactor) {
         transform.scale(xFactor, yFactor);
+        repaint();
+    }
+    
+    /**
+     * Add a scale factor to Shape transform.
+     * @param xFactor Scale the shape in the x-direction by a xFactor
+     * @param yFactor Scale the shape in the y-direction by a yFactor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double xFactor, double yFactor, double cx, double cy) {
+    	transform.translate(-cx, -cy);
+        transform.scale(xFactor, yFactor);
+    	transform.translate( cx,  cy);
         repaint();
     }
     

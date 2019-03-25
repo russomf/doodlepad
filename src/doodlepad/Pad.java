@@ -1745,6 +1745,20 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
+     * Add a rotation angle to Pad transform.
+     * @param angle Adds the rotation angle to the current transform (degrees)
+     * @param cx x-coordinate of point about which rotation occurs
+     * @param cy y-coordinate of point about which rotation occurs
+     */
+    public void rotate(double angle, double cx, double cy) {
+    	Layer lyr = this.getLayer(0);
+        lyr.translate(-cx, -cy);
+        lyr.rotate(angle*Math.PI/180.0);
+    	lyr.translate( cx,  cy);
+        repaint();
+    }
+    
+    /**
      * Add a translate to Pad transform.
      * @param deltaX Translate shape in the x-direction by deltaX
      * @param deltaY Translate shape in the y-direction by deltaY
@@ -1763,12 +1777,41 @@ public class Pad extends JFrame implements Iterable<Shape>
 
     /**
      * Add a scale factor to Pad transform.
+     * @param factor Scale the shape by a scale factor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double factor, double cx, double cy) {
+    	Layer lyr = this.getLayer(0);
+    	lyr.translate(-cx, -cy);
+        lyr.scale(factor, factor);
+    	lyr.translate( cx,  cy);
+        repaint();
+    }
+
+    /**
+     * Add a scale factor to Pad transform.
      * @param xFactor Scale the shape in the x-direction by a xFactor
      * @param yFactor Scale the shape in the y-direction by a yFactor
 
      */
     public void scale(double xFactor, double yFactor) {
         this.getLayer(0).scale(xFactor, yFactor);
+    }
+    
+    /**
+     * Add a scale factor to Pad transform.
+     * @param xFactor Scale the shape in the x-direction by a xFactor
+     * @param yFactor Scale the shape in the y-direction by a yFactor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double xFactor, double yFactor, double cx, double cy) {
+    	Layer lyr = this.getLayer(0);
+    	lyr.translate(-cx, -cy);
+        lyr.scale(xFactor, yFactor);
+    	lyr.translate( cx,  cy);
+        repaint();
     }
     
     /**
