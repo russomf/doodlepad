@@ -167,7 +167,7 @@ public class Layer implements Iterable<Shape>
     }
     
     /**
-     * Add a rotation angle to Pad transform.
+     * Add a rotation angle to Layer transform.
      * @param angle Adds the rotation angle to the current transform (radians)
      */
     public void rotate(double angle) {
@@ -176,7 +176,22 @@ public class Layer implements Iterable<Shape>
     }
     
     /**
-     * Add a translate to Pad transform.
+     * Add a rotation angle to Layer transform.
+     * @param angle Adds the rotation angle to the current transform (degrees)
+     * @param cx x-coordinate of point about which rotation occurs
+     * @param cy y-coordinate of point about which rotation occurs
+     */
+    public void rotate(double angle, double cx, double cy) {
+    	double radians = angle*Math.PI/180.0;
+    	double cosa = Math.cos(radians);
+    	double sina = Math.sin(radians);
+    	AffineTransform Tx = new AffineTransform(cosa, sina, -sina, cosa, cx-cx*cosa+cy*sina, cy-cx*sina-cy*cosa);
+    	transform.concatenate(Tx);
+        repaint();
+    }
+    
+    /**
+     * Add a translate to Layer transform.
      * @param deltaX Translate shape in the x-direction by deltaX
      * @param deltaY Translate shape in the y-direction by deltaY
      */
@@ -186,7 +201,7 @@ public class Layer implements Iterable<Shape>
     }
     
     /**
-     * Add a scale factor to Pad transform.
+     * Add a scale factor to Layer transform.
      * @param factor Scale the shape by a scale factor
      */
     public void scale(double factor) {
@@ -195,7 +210,19 @@ public class Layer implements Iterable<Shape>
     }
 
     /**
-     * Add a scale factor to Pad transform.
+     * Add a scale factor to Layer transform.
+     * @param factor Scale the shape by a scale factor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double factor, double cx, double cy) {
+    	AffineTransform Tx = new AffineTransform(factor, 0, 0, factor, cx-factor*cx, cy-factor*cy);
+    	transform.concatenate(Tx);
+        repaint();
+    }
+    
+    /**
+     * Add a scale factor to Layer transform.
      * @param xFactor Scale the shape in the x-direction by a xFactor
      * @param yFactor Scale the shape in the y-direction by a yFactor
 
@@ -206,7 +233,20 @@ public class Layer implements Iterable<Shape>
     }
     
     /**
-     * Resets the Pad to have no transformation.
+     * Add a scale factor to Layer transform.
+     * @param xFactor Scale the shape in the x-direction by a xFactor
+     * @param yFactor Scale the shape in the y-direction by a yFactor
+     * @param cx x-coordinate of point about which scaling occurs
+     * @param cy y-coordinate of point about which scaling occurs
+     */
+    public void scale(double xFactor, double yFactor, double cx, double cy) {
+    	AffineTransform Tx = new AffineTransform(xFactor, 0, 0, yFactor, cx-xFactor*cx, cy-yFactor*cy);
+    	transform.concatenate(Tx);
+        repaint();
+    }
+    
+    /**
+     * Resets the Layer to have no transformation.
      */
     public void reset() {
         transform.setToIdentity();

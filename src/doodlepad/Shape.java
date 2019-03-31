@@ -1340,9 +1340,11 @@ public abstract class Shape
      * @param cy y-coordinate of point about which rotation occurs
      */
     public void rotate(double angle, double cx, double cy) {
-    	transform.translate(-cx, -cy);
-        transform.rotate(angle*Math.PI/180.0);
-    	transform.translate( cx,  cy);
+    	double radians = angle*Math.PI/180.0;
+    	double cosa = Math.cos(radians);
+    	double sina = Math.sin(radians);
+    	AffineTransform Tx = new AffineTransform(cosa, sina, -sina, cosa, cx-cx*cosa+cy*sina, cy-cx*sina-cy*cosa);
+    	transform.concatenate(Tx);
         repaint();
     }
     
@@ -1372,9 +1374,8 @@ public abstract class Shape
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double factor, double cx, double cy) {
-    	transform.translate(-cx, -cy);
-        transform.scale(factor, factor);
-    	transform.translate( cx,  cy);
+    	AffineTransform Tx = new AffineTransform(factor, 0, 0, factor, cx-factor*cx, cy-factor*cy);
+    	transform.concatenate(Tx);
         repaint();
     }
 
@@ -1396,9 +1397,8 @@ public abstract class Shape
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double xFactor, double yFactor, double cx, double cy) {
-    	transform.translate(-cx, -cy);
-        transform.scale(xFactor, yFactor);
-    	transform.translate( cx,  cy);
+    	AffineTransform Tx = new AffineTransform(xFactor, 0, 0, yFactor, cx-xFactor*cx, cy-yFactor*cy);
+    	transform.concatenate(Tx);
         repaint();
     }
     

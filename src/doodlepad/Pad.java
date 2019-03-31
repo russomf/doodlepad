@@ -1751,11 +1751,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which rotation occurs
      */
     public void rotate(double angle, double cx, double cy) {
-    	Layer lyr = this.getLayer(0);
-        lyr.translate(-cx, -cy);
-        lyr.rotate(angle*Math.PI/180.0);
-    	lyr.translate( cx,  cy);
-        repaint();
+    	this.getLayer(0).rotate(angle, cx, cy);
     }
     
     /**
@@ -1782,11 +1778,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double factor, double cx, double cy) {
-    	Layer lyr = this.getLayer(0);
-    	lyr.translate(-cx, -cy);
-        lyr.scale(factor, factor);
-    	lyr.translate( cx,  cy);
-        repaint();
+    	this.getLayer(0).scale(factor, cx, cy);
     }
 
     /**
@@ -1807,11 +1799,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double xFactor, double yFactor, double cx, double cy) {
-    	Layer lyr = this.getLayer(0);
-    	lyr.translate(-cx, -cy);
-        lyr.scale(xFactor, yFactor);
-    	lyr.translate( cx,  cy);
-        repaint();
+    	this.getLayer(0).scale(xFactor, yFactor, cx, cy);
     }
     
     /**
