@@ -2,7 +2,7 @@
  * Pad.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2018 Mark F. Russo
+ * Copyright (c) 2012-2020 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -68,11 +68,11 @@ public class Pad extends JFrame implements Iterable<Shape>
     // May be needed if direct drawing commands added to class
     //private Graphics2D g2D;
 
-	/**
-	 * Serialization ID
-	 */
-	private static final long serialVersionUID = 1L;
-	
+    /**
+     * Serialization ID
+     */
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Layers on the Pad
      */
@@ -232,10 +232,10 @@ public class Pad extends JFrame implements Iterable<Shape>
      */
     private final JPanel cvs = new JPanel() {
         
-    	/**
-    	 * Serialization ID
-    	 */
-    	private static final long serialVersionUID = 1L;
+        /**
+         * Serialization ID
+         */
+        private static final long serialVersionUID = 1L;
 
         /**
          * Override the JPanel's default paint method
@@ -1751,7 +1751,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which rotation occurs
      */
     public void rotate(double angle, double cx, double cy) {
-    	this.getLayer(0).rotate(angle, cx, cy);
+        this.getLayer(0).rotate(angle, cx, cy);
     }
     
     /**
@@ -1778,7 +1778,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double factor, double cx, double cy) {
-    	this.getLayer(0).scale(factor, cx, cy);
+        this.getLayer(0).scale(factor, cx, cy);
     }
 
     /**
@@ -1799,7 +1799,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param cy y-coordinate of point about which scaling occurs
      */
     public void scale(double xFactor, double yFactor, double cx, double cy) {
-    	this.getLayer(0).scale(xFactor, yFactor, cx, cy);
+        this.getLayer(0).scale(xFactor, yFactor, cx, cy);
     }
     
     /**

@@ -2,7 +2,7 @@
  * Linear.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2018 Mark F. Russo
+ * Copyright (c) 2012-2020 Mark F. Russo
  *
  * DoodlePad is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
