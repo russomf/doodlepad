@@ -2,7 +2,7 @@
  * Shape.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -25,17 +25,21 @@ package doodlepad;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Font;
+import java.awt.font.TextLayout;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
+import javax.swing.UIManager;
 
 /**
  * Abstract base class for all graphical shape objects
  * 
  * @author Mark F. Russo, Ph.D.
- * @version 1.0
+ * @version 1.1
  */
 public abstract class Shape
 {
@@ -100,6 +104,25 @@ public abstract class Shape
     protected boolean stroked = true;
     
     /**
+     * The String to be displayed over a Shape
+     */
+    protected String text = null;
+
+    protected int fontSize = 12;
+    protected int fontStyle = Font.PLAIN;
+    protected String fontFamily = "Arial";
+
+    /**
+     * The Font to use to render the text
+     */
+    protected Font font = null;
+
+    /**
+     * Color to use to render the text
+     */
+    protected Color textFillColor = Color.black;
+
+    /**
      * Flag indicating if this Shape should receive events
      */
     protected boolean eventsEnabled = true;
@@ -115,9 +138,13 @@ public abstract class Shape
     protected boolean selectable = false;
     
     /**
-     * Initial mouse location when mouse pressed initiates dragging
+     * Initial mouse x-location when mouse pressed initiates dragging
      */
     private double dragDeltaX = 0.0;
+
+    /**
+     * Initial mouse y-location when mouse pressed initiates dragging
+     */
     private double dragDeltaY = 0.0;
     
     /**
@@ -563,7 +590,6 @@ public abstract class Shape
      * @param   green   the green component of the color [0, 255]
      * @param   blue    the blue component of the color [0, 255]
      */
-    //public void setFillColor(int red, int green, int blue) {
     public void setFillColor(double red, double green, double blue) {
         setFillColor( red, green, blue, 255 );
     }
@@ -575,7 +601,6 @@ public abstract class Shape
      * @param   blue    the blue component of the color [0, 255]
      * @param   alpha   the color transparency [0, 255]
      */
-    //public void setFillColor(int red, int green, int blue, int alpha) {
     public void setFillColor(double red, double green, double blue, double alpha) {
         int r = (int)Math.round(Util.constrain(red, 0, 255));
         int g = (int)Math.round(Util.constrain(green, 0, 255));
@@ -711,6 +736,162 @@ public abstract class Shape
         repaint();
     }
     
+    /**
+     * Set the Rectangle text
+     * @param text The internal text as a String
+     */
+    public void setText(String text) {
+
+        // If the text has not been set previously, create a Font
+        if ( this.text == null ) {
+            this.font = new Font(this.fontFamily, this.fontStyle, this.fontSize);
+            // this.font = UIManager.getDefaults().getFont("TabbedPane.font");
+        }
+
+        this.text = text;
+
+        // If setting text to null, delete the Font
+        if ( this.text == null ) { this.font = null; }
+
+        this.repaint();
+    }
+    
+    /**
+     * Return the Rectangle object String
+     * @return The text of the object as a String
+     */
+    public String getText() {
+        return this.text;
+    }
+
+    /**
+     * Set the gray scale text color with which to draw the shape.
+     * @param gray the gray scale value in the range [0, 255]
+     */
+    public void setTextColor(double gray) {
+        this.setTextColor(gray, gray, gray, 255);
+    }
+    
+    /**
+     * Set the text color
+     * @param   red     the red component of the color [0, 255]
+     * @param   green   the green component of the color [0, 255]
+     * @param   blue    the blue component of the color [0, 255]
+     */
+    public void setTextColor(double red, double green, double blue) {
+        setTextColor( red, green, blue, 255 );
+    }
+
+    /**
+     * Set the text color
+     * @param   red     the red component of the color [0, 255]
+     * @param   green   the green component of the color [0, 255]
+     * @param   blue    the blue component of the color [0, 255]
+     * @param   alpha   the color transparency [0, 255]
+     */
+    public void setTextColor(double red, double green, double blue, double alpha) {
+        int r = (int)Math.round(Util.constrain(red, 0, 255));
+        int g = (int)Math.round(Util.constrain(green, 0, 255));
+        int b = (int)Math.round(Util.constrain(blue, 0, 255));
+        int a = (int)Math.round(Util.constrain(alpha, 0, 255));
+        setTextColor( new Color(r, g, b, a) );
+    }
+    
+    /**
+     * Set the text color by passing a Color object
+     * @param color the Color to be used for fill
+     */
+    public void setTextColor(Color color) {
+        this.textFillColor = color;
+        repaint();
+    }
+
+    /**
+     * Update the Font family for the text of this Rectangle object.
+     * @param fontFamily The Font family name (ex. "Arial")
+     */
+    public void setFontFamily(String fontFamily) {
+        try {
+            if ( this.font != null ) {
+                font = new Font(fontFamily, this.fontStyle, this.fontSize);
+                this.fontFamily = fontFamily;   // Save only after we know it is valid
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        this.repaint();
+    }
+
+    /**
+     * Return the Font family name for this Rectangle object.
+     * @return The Font family name String
+     */
+    public String getFontFamily() {
+        return this.fontFamily;
+    }
+
+    /**
+     * Update the Font style for this Rectangle object.
+     * @param fontStyle The font style code (ex. 0 (Font.PLAIN), 1 (Font.BOLD), 2 (Font.ITALIC))
+     */
+    public void setFontStyle(int fontStyle) {
+        // Save if valid 
+        if (fontStyle == Font.PLAIN 
+        ||  fontStyle == Font.BOLD 
+        ||  fontStyle == Font.ITALIC 
+        ||  fontStyle == (Font.BOLD | Font.ITALIC)) {
+            this.fontStyle = fontStyle;
+        }
+
+        // Update font
+        try {
+            if ( this.font != null ) {
+                font = new Font(this.fontFamily, this.fontStyle, this.fontSize);
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        this.repaint();
+    }
+
+    /**
+     * Return the Font style code for this Rectangle object.
+     * @return The Font style code
+     */
+    public int getFontStyle() {
+        return this.fontStyle;
+    }
+
+    /**
+     * Update the Font size for this Rectangle object.
+     * @param fontSize The font size (ex. 10)
+     */
+    public void setFontSize(int fontSize) {
+        // Check if valid
+        if (fontSize > 0) {
+            this.fontSize = fontSize;
+        }
+
+        // Update Font
+        try {
+            if ( this.font != null ) {
+                font = new Font(this.fontFamily, this.fontStyle, this.fontSize);
+                this.fontSize = fontSize;       // Save only after we know it works
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        this.repaint();
+    }
+
+    /**
+     * Return the font size for this Text object.
+     * @return the font size.
+     */
+    public int getFontSize() {
+        return this.fontSize;
+    }
+
     /**
      * Set the current location of the shape and redraw it.
      * @param   x   the x-value of the position
@@ -1467,6 +1648,32 @@ public abstract class Shape
     }
     
     /**
+     * Draw the text over a Shape
+     * @param g     The Graphics2D on which to draw the hit region
+     */
+    protected void drawText(Graphics2D g)
+    {
+        if (this.text == null || this.font == null) return;
+
+        // if (stroked == false && filled == false) return;
+        if (this.text.isEmpty()) return;
+        
+        FontRenderContext frc = g.getFontRenderContext();
+        TextLayout tl = new TextLayout(this.text, font, frc);
+
+        // Stash the size and offset of the rendered text
+        Rectangle2D bounds = tl.getBounds();
+        double width  = bounds.getWidth();
+        double height = bounds.getHeight();
+        // double offX   = bounds.getX();
+        // double offY   = bounds.getY();
+        
+        // Draw text
+        g.setColor( textFillColor );
+        tl.draw(g, (float)(x + 0.5*(this.width - width)), (float)(y+0.5*(this.height + height)));
+    }
+
+    /**
      * Draw the region that will be used to detect a hit on the shape using the given color.
      * @param g     The Graphics2D on which to draw the hit region
      * @param clr   The unique color used to fill and stroke the hit region
@@ -1474,11 +1681,14 @@ public abstract class Shape
     void draw(Graphics2D g, Color clr) {
         Color oldFillColor = this.fillColor;
         Color oldStrokeColor = this.strokeColor;
+        Color oldTextColor = this.textFillColor;
         this.fillColor = clr;
         this.strokeColor = clr;
+        this.textFillColor = clr;
         this.draw(g);
         this.fillColor = oldFillColor;
         this.strokeColor = oldStrokeColor;
+        this.textFillColor = oldTextColor;
     }
 
     /**

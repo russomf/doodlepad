@@ -2,7 +2,7 @@
  * Arc.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -147,6 +147,12 @@ public class Arc extends Shape
         this.arcAngle = angle;
         repaint();
     }
+
+    /**
+     * A no-op to prevent setting text for this Shape.
+     */
+    public void setText(String text) { }
+
     /**
      * Builds and returns a string representation of the arc shape that includes position, size and layer.
      * @return String representation of the arc.
@@ -191,19 +197,6 @@ public class Arc extends Shape
         
         if (selected) drawSelRect(g);
     }
-    
-//    /**
-//     * Draw the region that will be used to detect a hit on the shape
-//     * @param g The Graphics2D on which to draw the hit region
-//     * @param clr The unique color used to fill on the hit region
-//     */
-//    @Override
-//    public void drawHitRegion(Graphics2D g, Color clr)
-//    {
-//        g.setColor(clr);
-//        if (this.fillColor.getAlpha() > 0)   g.fillArc(x, y, width, height, startAngle, arcAngle);
-//        if (this.strokeColor.getAlpha() > 0) g.drawArc(x, y, width, height, startAngle, arcAngle);
-//    }
     
     /**
      * Return the area of an arc. The area will be of the pie section if filled, and an open section if not filled.

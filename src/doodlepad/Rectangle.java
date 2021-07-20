@@ -2,7 +2,7 @@
  * Rectangle.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -31,7 +31,7 @@ import java.util.Random;
  * A class that implements a graphical rectangle object
  * 
  * @author Mark F. Russo, Ph.D.
- * @version 1.0
+ * @version 1.1
  */
 public class Rectangle extends Shape
 {
@@ -72,7 +72,7 @@ public class Rectangle extends Shape
         this.setDraggable(true);
     }
     
-     /**
+    /**
      * Draw the Rectangle
      * @param g         The Graphics2D object on which to draw the Rectangle
      */
@@ -90,11 +90,14 @@ public class Rectangle extends Shape
             g.setColor(strokeColor);
             
             float _strokeWidth = (float)strokeWidth;
-            //if (selected) _strokeWidth = 2.0f*_strokeWidth;
             g.setStroke( new BasicStroke(_strokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND) );
             g.draw( rect );
         }
-        
+
+        // If text, draw it.
+        if (this.text != null) { drawText(g); }
+
+        // If selected, draw select rect.
         if (selected) drawSelRect(g);
     }
     

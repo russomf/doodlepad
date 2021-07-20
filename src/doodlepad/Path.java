@@ -2,7 +2,7 @@
  * Path.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -32,7 +32,7 @@ import java.awt.geom.Rectangle2D;
  * A class that implements a general graphical path object.
  * 
  * @author Mark F. Russo, Ph.D.
- * @version 1.0
+ * @version 1.1
  */
 public class Path extends Shape
 {
@@ -397,6 +397,10 @@ public class Path extends Shape
             g.draw(path);
         }
         
+        // If text, draw it.
+        if (this.text != null) { drawText(g); }
+
+        // If selected, draw select rect.
         if (selected) drawSelRect(g);
     }
 }

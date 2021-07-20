@@ -2,7 +2,7 @@
  * Pad.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -31,6 +31,7 @@ import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -110,9 +111,13 @@ public class Pad extends JFrame implements Iterable<Shape>
     private BufferedImage hitImg;
 
     /**
-     * Timer event support
+     * Reference to a Timer object
      */
     private Timer timer = null;
+
+    /**
+     * The tick rate as ticks per second
+     */
     private double tickRate = 60.0;
     
     /**
@@ -277,8 +282,6 @@ public class Pad extends JFrame implements Iterable<Shape>
                 AffineTransform saveTransform = g2.getTransform();
                 g2.transform( layer.transform );
                 gh.transform( layer.transform );
-                //g2.setTransform( layer.transform );
-                //gh.setTransform( layer.transform );
                 
                 List<Shape> shapes = layer.getShapes();
                 for (int i=0; i<shapes.size(); i++) {
@@ -291,7 +294,6 @@ public class Pad extends JFrame implements Iterable<Shape>
                         AffineTransform g2at = g2.getTransform();
 
                         // Apply the Shape transform
-                        //g2.setTransform( s.transform );
                         g2.transform( s.transform );
                         s.draw(g2);
 
@@ -302,7 +304,6 @@ public class Pad extends JFrame implements Iterable<Shape>
                             AffineTransform ghat = gh.getTransform();
 
                             // Apply the Shape transform
-                            //gh.setTransform( s.transform );
                             gh.transform( s.transform );
 
                             // Draw the shape filled and stroked, with color corresponding to hash key
@@ -1156,7 +1157,7 @@ public class Pad extends JFrame implements Iterable<Shape>
         padSingleton.setVisible(true);
         return padSingleton;
     }
-    
+
     /**
      * Get the default layer for the Pad.
      * @return Default shape Layer.
@@ -1404,7 +1405,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     public void redraw() {
         cvs.repaint();
     }
-    
+
     /**
      * Add a shape to the shapes list
      * @param s The Shape object to add to the Pad
@@ -1430,8 +1431,6 @@ public class Pad extends JFrame implements Iterable<Shape>
         for (int l=0; l<layers.size(); l++) {
             layers.get(l).clear();
         }
-        //shapes.clear();
-        //repaint();
     }
     
 //    /**
@@ -2123,7 +2122,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     
     /**
      * Invoke a method on the GUI event dispatch thread
-     * @param meth A method implementing the DispatchMethodNoParameters interface, which is a method taking nor parameters.
+     * @param meth A method implementing the DispatchMethodNoParameters interface, which is a method taking no parameters.
      */
     public void invokeOnDispatch( DispatchMethodNoParameters meth ) {
         SwingUtilities.invokeLater(meth::f);

@@ -2,7 +2,7 @@
  * Text.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -53,7 +53,7 @@ public class Text extends Shape
      * @param text      The String drawn as the Text object
      * @param x         The x-coordinate of the Text object upper left corner.
      * @param y         The y-coordinate of the Text object upper left corner.
-     * @param size      The font size used to draw the Text object.
+     * @param size      The Font size used to draw the Text object.
      * @param style     The Font class constant that defines the style used to draw the Text object. Example: Font.PLAIN
      * @param fontName  The name of the font used to draw the Text object, Example: "Arial"
      * @param layer     The Layer object to which the Text should be added, or null if not to add to a Pad.
@@ -238,6 +238,84 @@ public class Text extends Shape
         return this.text;
     }
     
+    /**
+     * Update the Font family for this Text object.
+     * @param fontFamily The Font family name (ex. "Arial")
+     */
+    public void setFontFamily(String fontFamily) {
+        try {
+            int fontStyle  = font.getStyle();
+            int fontSize = font.getSize();
+            font = new Font(fontFamily, fontStyle, fontSize);
+            FontMetrics fm = layer.getPad().getFontMetrics(font);
+            width = fm.stringWidth(text);
+            height = fm.getHeight();
+            this.repaint();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Return the Font family name for this Text object.
+     * @return The Font family name String
+     */
+    public String getFontFamily() {
+        return font.getFamily();
+    }
+
+    /**
+     * Update the Font style for this Text object.
+     * @param fontStyle The font style code (ex. 0 (Font.PLAIN), 1 (Font.BOLD), 2 (Font.ITALIC))
+     */
+    public void setFontStyle(int fontStyle) {
+        try {
+            String fontFamily = font.getFamily();
+            int fontSize = font.getSize();
+            font = new Font(fontFamily, fontStyle, fontSize);
+            FontMetrics fm = layer.getPad().getFontMetrics(font);
+            width = fm.stringWidth(text);
+            height = fm.getHeight();
+            this.repaint();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Return the Font style code for this Text object.
+     * @return The Font style code
+     */
+    public int getFontStyle() {
+        return font.getStyle();
+    }
+
+    /**
+     * Update the Font size for this Text object.
+     * @param fontSize The font size (ex. 10)
+     */
+    public void setFontSize(int fontSize) {
+        try {
+            String fontFamily  = font.getFamily();
+            int fontStyle = font.getStyle();
+            font = new Font(fontFamily, fontStyle, fontSize);
+            FontMetrics fm = layer.getPad().getFontMetrics(font);
+            width = fm.stringWidth(text);
+            height = fm.getHeight();
+            this.repaint();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Return the font size for this Text object.
+     * @return the font size.
+     */
+    public int getFontSize() {
+        return font.getSize();
+    }
+
     /**
      * Draw the Text object
      * @param g         The Graphics2D object on which to draw the text object

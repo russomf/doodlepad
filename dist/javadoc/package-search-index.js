@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"doodlepad"},{"l":"doodlepad.easing"}]
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"doodlepad"},{"l":"doodlepad.easing"}];updateSearchResults();

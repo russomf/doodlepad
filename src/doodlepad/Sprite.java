@@ -2,7 +2,7 @@
  * Sprite.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -164,6 +164,11 @@ public class Sprite extends Shape {
         }
     }
     
+    /**
+     * A no-op to prevent setting text for this Shape.
+     */
+    public void setText(String text) { }
+
     /**
      * Generate a representation of the Sprite object.
      * @return String representation

@@ -2,7 +2,7 @@
  * Image.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -611,6 +611,11 @@ public class Image extends Shape
     public void drawText(String text, double x, double y) {
         this.drawText(text, x, y, 12, Font.PLAIN, "Arial");
     }
+    
+    /**
+     * A no-op to prevent setting text for this Shape.
+     */
+    public void setText(String text) { }
     
     /**
      * Generate a representation of the Image object.

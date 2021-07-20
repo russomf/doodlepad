@@ -2,7 +2,7 @@
  * Oval.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -32,7 +32,7 @@ import java.util.Random;
  * A class that implements a graphical oval shape.
  * 
  * @author Mark F. Russo, Ph.D.
- * @version 1.0
+ * @version 1.1
  */
 public class Oval extends Shape
 {   
@@ -117,6 +117,10 @@ public class Oval extends Shape
             g.draw(ellipse);
         }
         
+        // If text, draw it.
+        if (this.text != null) { drawText(g); }
+
+        // If selected, draw select rect.
         if (selected) drawSelRect(g);
     }
     

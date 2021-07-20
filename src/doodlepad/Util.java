@@ -2,7 +2,7 @@
  * Util.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -22,6 +22,9 @@
 
 package doodlepad;
 
+import java.lang.reflect.InvocationTargetException;
+import javax.swing.SwingUtilities;
+
 /**
  * A class with useful static utility methods.
  * 
@@ -29,22 +32,26 @@ package doodlepad;
  * @version 1.0
  */
 public class Util {
-    
+
     /**
      * Constrain a value to the given range.
+     * 
      * @param val The value to constrain.
      * @param min The minimum possible value.
      * @param max The maximum possible value.
      * @return The constrained value.
      */
     public static int constrain(int val, int min, int max) {
-        if (val < min) val = min;
-        if (val > max) val = max;
+        if (val < min)
+            val = min;
+        if (val > max)
+            val = max;
         return val;
     }
-    
+
     /**
      * Constrain a value to the given range.
+     * 
      * @param val The value to constrain.
      * @param min The minimum possible value.
      * @param max The maximum possible value.
@@ -52,5 +59,31 @@ public class Util {
      */
     public static double constrain(double val, double min, double max) {
         return Math.max(Math.min(val, max), min);
+    }
+
+    /**
+     * Invoke a Runnable synchronously on the AWT event dispatching
+     * @param methodRef Method reference with signature void methodRef()
+     */
+    public static void invokeAndWait( Runnable methodRef ) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait( methodRef );
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            methodRef.run();
+        }
+    }
+
+    /**
+     * Force a redraw of all Shapes synchronously on the AWT event dispatching
+     * thread.
+     */
+    public static void redraw() {
+        Util.invokeAndWait( Pad.getPad()::redraw );
     }
 }

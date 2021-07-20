@@ -2,7 +2,7 @@
  * RoundRect.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2020 Mark F. Russo
+ * Copyright (c) 2012-2021 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -128,6 +128,10 @@ public class RoundRect extends Shape
             g.draw( rect );
         }
         
+        // If text, draw it.
+        if (this.text != null) { drawText(g); }
+
+        // If selected, draw select rect.
         if (selected) drawSelRect(g);
     }
     
