@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Images in DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Images</h2>
+        <hr/>
+    <h3>Contents</h3>
+    <p>
+        <ul>
+            <li><a href="#Introduction">Introduction</a></li>
+            <li><a href="#Constructors">Image Constructors</a></li>
+            <li><a href="#Methods">Image Methods</a></li>
+            <li><a href="#SimpleExample">A Simple Example</a></li>
+            <li><a href="#ImageAsShape">An Image as a Shape</a></li>
+        </ul>
+    </p>
+    <h3><a name="Introduction"></a>Introduction</h3>
+    <p>
+        DoodlePad includes a special Shape class called <a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html" target="_blank">Image</a>. 
+        The Image class implements a rectangular region of <i>pixels</i> (tiny picture elements having a single color) 
+        which may be modified programmatically; you may set or get the color of individual pixels. 
+        Also, the Image class implements methods that allow you to draw shapes and draw text on the Image. 
+        Note that drawing on an Image does not create Shape objects, it only sets the pixels of the Image to form the shape or text.
+        In the end, with an Image, we have only pixels.
+    </p>
+    <h3><a name="Constructors"></a>Image Constructors</h3>
+    <p>
+        Images may be constructed blank, or upon construction they may load and display an image from a file.
+        This behavior is governed by the constructor used to create an Image. Following are three Image object constructors.
+        The first constructor creates an blank Image with the givel location (xm y) and dimensions (width, height).
+        The second constructor creates an Image object and loads an image from a file, given a path to it on the file system.
+        The dimensions of the Image are set to match the dimensions of the image loaded from the file.
+        The third constructor creats an Image object of the given dimensions, and also loads and resizes the
+        image stored in the given file path prior to displaying it. For all Image constructors, refer to the 
+        <a hred="https://doodlepad.org/dist/javadoc/doodlepad/Image.html" target="_blank">docs</a>.
+    </p>
+    <table>
+        <tr><th>Constructor Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#Image-double-double-double-double-" target="_blank">
+            public Image(double x, double y, double width, double height)
+            </a></td>
+            <td>
+            An Image object constructor that creates a blank Image object with an upper left corner at (x,y) and dimensions (width, height).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#Image-java.lang.String-double-double-" target="_blank">
+            public Image(java.lang.String path, double x, double y)
+            </a></td>
+            <td>
+            An Image object constructor that creates an Image object and loads and displays an image from the path given as the first
+            argument. The upper left corner of the image is at (x,y) and its dimensions map the dimensions of the loaded image.
+            Loadable Image formats include GIF, PNG, JPEG, BMP, and WBMP.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#Image-java.lang.String-double-double-double-double-" target="_blank">
+            public Image(java.lang.String path, double x, double y, double width, double height)
+            </a></td>
+            <td>
+            An Image object constructor that creates an Image object and loads and displays an image from the path given as the first
+            argument. The upper left corner of the image is at (x,y) and its dimensions (width, height).
+            Loadable Image formats include GIF, PNG, JPEG, BMP, and WBMP.
+            </td>
+        </tr>
+    </table>
+    <img src="images/Image1.jpg" style="float:right;padding:10px;width:250px;height:250px;">
+    <p>
+        The following simple example demonstrates how to create a new Image object using the constructor that
+        loads and displays an image upon construction. The screenshot on the right shows the result of the Image1.java program.
+        While strictly not required, in this example an instance of the Pad object is created first to set the size of the 
+        initial window and to give it a title. The image is a selfie taken by the wild Indonesian macaque named Naturo who
+        was the subject of a well-known 
+        <a href="https://en.wikipedia.org/wiki/Monkey_selfie_copyright_dispute" target="_blank">copyright dispute</a>.
+    </p>
+
+    <pre><code class="java">// Image1.java
+import doodlepad.*;
+
+public class Image1 {
+    public static void main(String[] args) {
+        Pad pad = new Pad("Naruto Selfie", 355, 355);
+        Image im = new Image("naruto-selfie.png", 0, 0);
+    }
+}
+    </code></pre>
+
+    <h3><a name="Methods"></a>Image Methods</h3>
+    <p>
+        The Image object implements several methods for modifying its pixels, whether that be one pixel at at time,
+        or by setting pixels to form shapes or text. 
+        Following are selected Image object methods with descriptions.
+    </p>
+    <table>
+        <tr><th>Method Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#setPixel-int-int-int-int-int-" target="_blank">
+            public void setPixel(int x, int y, int red, int green, int blue)
+            </a></td>
+            <td>
+                Set the color of the pixel at the coordinate (x, y) to the color identified by (red, green, blue).
+                (See <a href="https://doodlepad.org/colors.html" target="_blank">Colors</a>.) 
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getRed-int-int-" target="_blank">
+            public int getRed(int x, int y)
+            </a></td>
+            <td>
+                Return an <span class="code">int</span> corresponding to the red component of the pixel color at (x, y). 
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getGreen-int-int-" target="_blank">
+            public int getGreen(int x, int y)
+            </a></td>
+            <td>
+                Return an <span class="code">int</span> corresponding to the green component of the pixel color at (x, y). 
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getBlue-int-int-" target="_blank">
+            public int getBlue(int x, int y)
+            </a></td>
+            <td>
+                Return an <span class="code">int</span> corresponding to the blue component of the pixel color at (x, y). 
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getAlpha-int-int-" target="_blank">
+            public int getAlpha(int x, int y)
+            </a></td>
+            <td>
+                Return an <span class="code">int</span> corresponding to the alpha (transparency) component of the pixel color at (x, y). 
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawArc-double-double-double-double-double-double-" target="_blank">
+            public void drawArc(double x, double y, double width, double height, double startAngle, double arcAngle)
+            </a></td>
+            <td>
+                Draw an arc on the Image defined by a section of an ellipse bounded by the rectangle with upper left corner at (x, y) 
+                and size (width, height). The arc starts at angle startAngle (degrees) and extends by arcAngle (degrees).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawLine-double-double-double-double-" target="_blank">
+            public void drawLine(double x1, double y1, double x2, double y2)
+            </a></td>
+            <td>
+                Draw a line on the Image from the coordinate (x1, y1) to (x2, y2).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getAlpha-int-int-" target="_blank">
+            public void drawOval(double x, double y, double width, double height)
+            </a></td>
+            <td>
+                Draw an oval on the Image within the bounding box having an upper left corner at (x, y) and dimensions (width, height).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawPolygon-double:A-double:A-" target="_blank">
+            public void drawPolygon(double[] xPoints, double[] yPoints)
+            </a></td>
+            <td>
+                Draw a polygon on the Image that connects corresponding coordinate pairs stored in the two arrays xPoints and yPoints.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawPolygon-java.util.List-" target="_blank">
+            public void drawPolygon(java.util.List<Point> points)
+            </a></td>
+            <td>
+                Draw a polygon on the Image that connects coordinates stored as a List&lt;&gt; of 
+                <a href="https://doodlepad.org/dist/javadoc/doodlepad/Point.html" target="_blank">Point</a> objects.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawRectangle-double-double-double-double-" target="_blank">
+            public void drawRectangle(double x, double y, double width, double height)
+            </a></td>
+            <td>
+                Draw a rectangle within the bounding box having an upper left corner at (x, y) and dimensions (width, height).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#getAlpha-int-int-" target="_blank">
+            public void drawRoundRect(double x, double y, double width, double height, double arcWidth, double arcHeight)
+            </a></td>
+            <td>
+                Draw a rounded rectangle within the bounding box having an upper left corner at (x, y), dimensions (width, height),
+                and rounded corners defined by an arc with width arcWidth and height arcHeight.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawText-java.lang.String-double-double-" target="_blank">
+            public void drawText(java.lang.String text, double x, double y)
+            </a></td>
+            <td>
+                Draw text on an Image stored in the String <span class="code">text</span>, with an upper left corner defined by (x, y).
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Image.html#drawText-java.lang.String-double-double-int-" target="_blank">
+            public void drawText(java.lang.String text, double x, double y, int size)
+            </a></td>
+            <td>
+                Draw text on an Image stored in the String <span class="code">text</span>, with an upper left corner defined by (x, y),
+                and a font size of <span class="code">size</span>.
+            </td>
+        </tr>
+    </table>
+    <p>
+        You will note that none of the previous methods set the fill color, stroke color, or stroke width to be used when
+        drawing on an Image. To set the fill and stroke properties of drawn lines and shapes, set these values using the Image object's
+        methods prior to invoking one its drawing methods. Once set, these settings are used for all subsequent drawing performed
+        on an Image object, until new settings are specified.
+    </p>
+    <table>
+        <tr><th>Method Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setFillColor-double-double-double-" target="_blank">
+            public void setFillColor(double red, double green, double blue)
+            </a></td>
+            <td>
+                Set the color to be used to fill shapes drawn on an Image.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStrokeColor-double-double-double-" target="_blank">
+            public void setStrokeColor(double red, double green, double blue)
+            </a></td>
+            <td>
+                Set the color to be used to outline shapes drawn on an Image.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStrokeWidth-double-" target="_blank">
+            public void setStrokeWidth(double width)
+            </a></td>
+            <td>
+                Set the width in pixels of the stroke to outline any shape that is drawn on an Image.
+            </td>
+        </tr>
+    </table>
+    <h3><a name="SimpleExample"></a>A Simple Example</h3>
+    <img src="images/Image2.jpg" style="float:right;padding:10px;width:300px;height:300px;">
+    <p>
+        The following example program demonstrates the use of Image object methods used to draw on the Image.
+        In this example 200 lines are drawn on the Image object using a for statement. 
+        Each line is drawn after setting random endpoint coordinates, random width, and random stroke color. 
+    </p>
+
+    <pre><code class="java">// Image2.java
+import java.util.Random;
+import doodlepad.*;
+
+public class Image2 {
+    public static void main(String[] args) {
+        double x1, x2, y1, y2, w;
+        int r, g, b;
+
+        // Create a Pad object, an Image object for the Pad,
+        // and a Random object for generating random numbers.
+        Pad pad    = new Pad(400, 400);
+        Image im   = new Image(0, 0, 400, 400);
+        Random rnd = new Random();
+        
+        for (int i=0; i<100; i++) {
+            // Random numbers
+            y1 = 400*rnd.nextDouble();
+            x1 = 200*rnd.nextDouble();
+            x2 = 200+200*rnd.nextDouble();
+            w  = 10*rnd.nextDouble();
+            r  = rnd.nextInt(256);
+            g  = rnd.nextInt(256);
+            b  = rnd.nextInt(256);
+            
+            // Draw line on Image
+            im.setStrokeColor(r,g,b);
+            im.setStrokeWidth(w);
+            im.drawLine(x1,y1,x2,y1);
+            
+            // More random numbers
+            x1 = 400*rnd.nextDouble();
+            y1 = 200*rnd.nextDouble();
+            y2 = 200+200*rnd.nextDouble();
+            w  = 10*rnd.nextDouble();
+            r  = rnd.nextInt(256);
+            g  = rnd.nextInt(256);
+            b  = rnd.nextInt(256);
+            
+            // Draw line on Image
+            im.setStrokeColor(r,g,b);
+            im.setStrokeWidth(w);
+            im.drawLine(x1,y1,x1,y2);
+        }
+    }
+}</code></pre>
+
+    <h3><a name="ImageAsShape"></a>An Image as a Shape</h3>
+    <img src="images/Image3.jpg" style="float:right;padding:10px;width:300px;height:300px;">
+    <p>
+        Because Image is a subclass of <a href="https://doodlepad.org/dist/javadoc/doodlepad/Shape.html" target="_blank">Shape</a>
+        it inherits all of the Shape methods. For example, you may resize and move an Image as well as respond to all the 
+        standard mouse events. This gives you the ability to programmatically draw on the Image in response to interacting with it
+        using the mouse. The following example draws a randomly-sized green oval where the mouse is pressed.
+        For a more complete program that uses this technique to create a drawing program using DoodlePad, 
+        refer to the <a href="https://doodlepad.org/interactive_drawing.html" target="_blank">Interactive Drawing</a> example. 
+    </p>
+
+    <pre><code class="java">// Image3.java
+import doodlepad.*;
+
+public class Image3 {
+
+    public static void main(String[] args) {
+        // Create Pad and Image
+        Pad pad  = new Pad(400, 400);
+        Image im = new Image(0, 0, 400, 400);
+        
+        // Set up mouse event handler
+        im.setMousePressedHandler( Image3::onSpot );
+        
+        // Set drawing fill color to green
+        im.setFillColor(0,200,0);
+    }
+    
+    // What to do when mouse is pressed on Image
+    public static void onSpot(Shape shp, double cx, double cy, int button) {
+        // Cast Shape to Image
+        Image im = (Image)shp;
+        
+        // Draw randomly sized oval
+        double radius = Math.random()*40;
+        im.drawOval(cx-radius, cy-radius, 2*radius, 2*radius);
+    }
+}</code></pre>
+
+    </body>
+</html>

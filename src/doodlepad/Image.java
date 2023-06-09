@@ -2,7 +2,7 @@
  * Image.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2021 Mark F. Russo
+ * Copyright (c) 2012-2024 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -169,6 +169,39 @@ public class Image extends Shape
         img = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_ARGB);
     }
     
+    /**
+     * Save an Image to the given file path as type. 
+     * Note: JPG files are not supported because that format does not have an alpha channel.
+     * @param path  Full path to where new file is to be saved. Must include file extension png or tiff
+     * @return      true if successful, false otherwise
+     */
+    public boolean save(String path) {
+        try {
+            File outfile;
+            String lpath = path.trim().toLowerCase();
+            if (lpath.endsWith(".png")) {
+                outfile = new File(path);
+                if (!ImageIO.write(img, "png", outfile)) {
+                    System.out.println("Unable to write image of type PNG");
+                    return false;
+                }
+            } else if (lpath.endsWith(".tiff")) {
+                outfile = new File(path);
+                if (!ImageIO.write(img, "tiff", outfile)) {
+                    System.out.println("Unable to write image of type TIFF");
+                    return false;
+                }
+            } else {
+                System.out.println("Unsupported image file type. Try file extensions png or tiff");
+                return false;
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Set the color of the pixel at coordinates (x, y)
      * @param   x       The x-coordinate of the image upper left corner.

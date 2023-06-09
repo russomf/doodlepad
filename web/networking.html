@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Networking in DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Networking</h2>
+        <hr/>
+    <h3>Contents</h3>
+    <p>
+        <ul>
+            <li><a href="#Introduction">Introduction</a></li>
+            <li><a href="#Methods">Methods</a></li>
+            <li><a href="#OverridableMethods">Overridable Methods</a></li>
+        </ul>
+    </p>
+
+    <h3><a name="Introduction"></a>Introduction</h3>
+    <p>
+        ...
+    </p>
+    
+    <h3><a name="Methods"></a>Methods</h3>
+    <p>
+        ...
+    </p>
+    <table>
+        <tr><th>Method Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getIPv4Addresses--" target="_blank">
+            public java.util.List<java.lang.String> getIPv4Addresses()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getIPv6Addresses--" target="_blank">
+            public java.util.List<java.lang.String> getIPv6Addresses()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#openConnection-java.lang.String-int-" target="_blank">
+            public int openConnection(java.lang.String host, int port)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getConnectionIds--" target="_blank">
+            public java.util.Set<java.lang.Integer> getConnectionIds()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#connectionExists-int-" target="_blank">
+            public boolean connectionExists(int id)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#send-int-java.lang.String-" target="_blank">
+            public void send(int id, java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#broadcast-java.lang.String-" target="_blank">
+            public void broadcast(java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#closeConnection-int-" target="_blank">
+            public void closeConnection(int id)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#closeAllConnections--" target="_blank">
+            public void closeAllConnections()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#startListening-int-" target="_blank">
+            public void startListening(int port)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#stopListening--" target="_blank">
+            public void stopListening()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getNumConnections--" target="_blank">
+            public int getNumConnections()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+    </table>
+    <h3><a name="OverridableMethods"></a>Overridable Methods</h3>
+    <p>
+        ...
+    </p>
+    <table>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientOpened-int-" target="_blank">
+            public void onClientOpened(int id)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientClosed-int-" target="_blank">
+            public void onClientClosed(int id)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientReceived-int-java.lang.String-" target="_blank">
+            public void onClientReceived(int id, java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientInfo-int-java.lang.String-" target="_blank">
+            public void onClientInfo(int id, java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onClientError-int-java.lang.String-" target="_blank">
+            public void onClientError(int id, java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerStarted--" target="_blank">
+            public void onServerStarted()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerStopped--" target="_blank">
+            public void onServerStopped()
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerInfo-java.lang.String-" target="_blank">
+            public void onServerInfo(java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#onServerError-java.lang.String-" target="_blank">
+            public void onServerError(java.lang.String msg)
+            </a></td>
+            <td>
+            ...
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>

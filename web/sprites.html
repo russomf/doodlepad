@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sprites in DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Sprites</h2>
+        <hr/>
+    <h3>Contents</h3>
+    <p>
+        <ul>
+            <li><a href="#Introduction">Introduction</a></li>
+            <li><a href="#Constructors">Sprite Constructors</a></li>
+            <li><a href="#Methods">Sprite Methods</a></li>
+            <li><a href="#FlyingBird">Flying Bird Example</a></li>
+        </ul>
+    </p>
+    <h3><a name="Introduction"></a>Introduction</h3>
+    <p>
+        A core element of many classic computer games and other computer displays are
+        animated characters or other objects called 
+        <a href="https://en.wikipedia.org/wiki/Sprite_(computer_graphics)" target="_blank">sprites.</a> 
+        Sprites appear animated by displaying in a single place the sequential static frames of an animation loop, 
+        as you might see with an animated cartoon or 
+        <a href="https://en.wikipedia.org/wiki/Flip_book" target="_blank">flip book</a>.
+        Typical sprite animation loops show characters running, jumping, rotating, or other repetitive activities. 
+    </p>
+    <p>
+        The frames of a modern sprite animation are stored together in a single image called a <i>sprite sheet</i>.
+        A sprite display engine copies successive frames from the sprite sheet image and displays them in sequence
+        at a given rate to create the sprite animation. The following image is a sprite sheet that may be used by the
+        DoodlePad <a href="https://doodlepad.org/dist/javadoc/doodlepad/Sprite.html" target="_blank">Sprite</a> class. 
+        All five frames of the sprite animation stored in the following sprite sheet, where each frame is separated
+        at a horizontal interval of 190 pixels.
+    </p>
+    <img src="images/FlyingBird.png" style="padding:10px;width:665px;height:126px;"">
+
+    <h3><a name="Constructors"></a>Sprite Constructors</h3>
+    <p>
+        To operate properly, Sprite objects need several items. They must load their sprite sheet images
+        and have the parameters necessary for copying frames from the sprite sheet including frame width 
+        and the number of frames stored on the sprite sheet image. In addition, the coordinates for where 
+        the frames should be drawn must also be known, and optionally the dimensions of the frames. 
+        The following Sprite constructors are two of the most common and include the necessary parameters.
+    </p>
+    <table>
+        <tr><th>Constructor Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Sprite.html#Sprite-java.lang.String-double-double-int-int-" target="_blank">
+            Sprite(java.lang.String path, double x, double y, int frameWidth, int nFrames)
+            </a></td>
+            <td>
+            Construct a new Sprite specifying a path to the sprite sheet image,
+            the (x, y) coordinates indicating where to render the sprite, 
+            the width of a single frame, and the number of frames on the sprite sheet organized horizontally.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Sprite.html#Sprite-java.lang.String-double-double-double-int-int-int-" target="_blank">
+            Sprite(java.lang.String path, double x, double y, double frameWidth, int nFrames, int targetWidth, int targetHeight)
+            </a></td>
+            <td>
+            Construct a new Sprite specifying a path to the sprite sheet image,
+            the (x, y) coordinates indicating where to render the sprite, 
+            the width of a single frame, the number of frames on the sprite sheet organized horizontally,
+            and the target dimensions for the sprite when frames are rendered.
+            </td>
+        </tr>
+    </table>
+
+    <h3><a name="Methods"></a>Image Methods</h3>
+    <p>
+        As a subclass of <a href="https://doodlepad.org/dist/javadoc/doodlepad/Shape.html" target="_blank">Shape</a>, 
+        Sprite objects inherit all the standard Shape methods.
+        The primary additional method unique to the Sprite class is advance(). This is the method
+        that instructs a Sprite object to move to the next frame in its animation sequence.
+        The next frame image from the sprite sheet is copied and drawn at the Sprite location,
+        possibly resizing to fit within target dimensions.
+    </p>
+    <table>
+        <tr><th>Method Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Sprite.html#advance--" target="_blank">
+            public void advance()
+            </a></td>
+            <td>
+            Advance the sprite frame and repaint the new frame image.
+            </td>
+        </tr>
+    </table>
+
+    <h3><a name="FlyingBird"></a>Flying Bird Example</h3>
+    <img src="images/FlyingBird.gif" style="float:right;width:230px;height:230px;">
+    <p>
+        The following example program creates a flying bird Sprite object that makes use of the sprite sheet 
+        displayed above. On the right is an animated image showing the flying bird Sprite in action.
+        The Pad object's timer functionality is used to drive the Sprite animation by invoking its
+        <span class="code">advance()</span> method repeatedly at a regular interval.
+    </p>
+
+    <pre><code class="java">// FlyingBird.java
+import doodlepad.*;
+
+public class FlyingBird {
+
+    public static void main(String[] args) {
+        // Create a Pad and a Sprite
+        Pad pad = new Pad(300, 300);
+        Sprite sprite = new Sprite("FlyingBird.png", 50, 50, 190, 5);
+        
+        // Set Pad timer with a Java lambda function that advances sprite
+        pad.setTickHandler( (Pad p, long when) -> { sprite.advance(); } );
+        pad.setTickRate(10);
+        pad.startTimer();
+    }
+}</code></pre>
+    </body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shape Position and Size</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Graphic Object Position and Size</h2>
+        <hr></hr>
+        <p>
+            All graphic objects have a <i>location</i> and a <i>size</i>,
+            where <i>location</i> is the upper left x-y coordinate of the object's bounding box
+            and <i>size</i> is the width and height of the bounding box.
+            A Shape object's bounding box is the smallest box that surrounds the Shape.
+            If a Shape is set to be <a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSelectable-boolean-" target="_blank">selectable</a>,
+            the light gray selection box drawn around the Shape while it is selected corresponds with the Shape's bounding box.
+            All Shapes may be moved and sized by setting the location and size of its bounding box.
+        </p>
+        <h3>
+            <a name="position_size_related_methods">Position- and Size-related Methods</a>
+        </h3>
+        <p>
+            Shape implements a number of mutator and accessor methods that may be used to modify its location and size,
+            as well as to interrogate its current location and size.
+            In all cases the methods can be thought of a modifying the Shape's bounding box.
+            The Shape itself is modified to fill the new bounding box.
+            The manner in which the Shape's defining coordinates change depend upon the Shape.
+        </p>
+        <p>
+            One additional Shape method to note is <span class="code">move(double dx, double dy)</span>.
+            This is a convenience method that moves the location of a Shape by <span class="code">dx</span> in the x-direction
+            and by <span class="code">dy</span> in the y-direction.
+            It is useful when you have the amount by which a Shape should move relative to its current location
+            rather than the new absolute position of a Shape.
+        </p>
+        <p>
+            The following Shape methods permit a Shape's bounding box to be modified.
+            These methods may be used on all Shape subclasses.
+            <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getHeight--" target="_blank">public double getHeight()</a></td>
+                <td>Return the Shape's height.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setHeight-double-" target="_blank">public void setHeight(double height)</a></td>
+                <td>Set the height of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getWidth--" target="_blank">public double getWidth()</a></td>
+                <td>Return the Shape's width.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setWidth-double-" target="_blank">public void setWidth(double width)</a></td>
+                <td>Set the width of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getSize--" target="_blank">public Dimension getSize()</a></td>
+                <td>Return the Shape's height and width as a Dimension object.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setSize-double-double-" target="_blank">public void setSize(double width, double height)</a></td>
+                <td>Set both the width and height of the Shape.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getLocation--" target="_blank">public Point getLocation()</a></td>
+                <td>Return the location of the upper left corner of the Shape's bounding box as a Point object.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setLocation-double-double-" target="_blank">public void setLocation(double x, double y)</a></td>
+                <td>Set the coordinates of the upper left corner of teh Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getX--" target="_blank">public double getX()</a></td>
+                <td>Return the x-location of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setX-double-" target="_blank">public void setX(double x)</a></td>
+                <td>Set the x-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getY--" target="_blank">public double getY()</a></td>
+                <td>Return the y-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setY-double-" target="_blank">public void setY(double y)</a></td>
+                <td>Set the y-coordinate of the upper left corner of the Shape's bounding box.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getCenter--" target="_blank">public Point getCenter()</a></td>
+                <td>Return the coordinates of the Shape's bounding box center.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setCenter-double-double-" target="_blank">public void setCenter(double cx, double cy)</a></td>
+                <td>Move the Shape so that its bounding box has specified center coordinates.</td></tr>
+            <tr><td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#move-double-double-" target="_blank">public void move(double dx, double dy)</a></td>
+                <td>Move a Shape by the distance (dx, dy).</td></tr>
+            </table>
+        </p>
+        <h3>
+            <a name="position_size_examples">Box Drive Example</a>
+        </h3>
+        <p>
+            In the following example a blue Rectangle is created and positioned on a Pad object.
+            The default Pad object's keyPressed event is handled with a custom method that reacts to the arrow keys being pressed.
+            Only arrow keys are tested; all other keys are ignore.
+            When the down arrow is pressed, the box object's <span class="code">move(...)</span> method is used to move the box 10 pixels down (by increasing its y-location).
+            Likewise, the remaining three arrow keys move the box left, right or up, depending upon the key pressed.
+            The result is a simple program that can be used to drive a box around the Pad using the arrow keys.
+        </p>
+        <p>
+            One item to note is the way the key String being pressed is tested.
+            For all arrows keys the <span class="code">keyText</span> String argument passed to the event handler method
+            is compared to both a String describing the key (e.g. "Left") and a symbol (e.g. "←").
+            An arrow key is identified with a positive match to either the description or symbol String.
+            The reason we test both is that the String passed to the event handler may be different depending upon your operating system.
+            Specifically, Windows sets <span class="code">keyText</span> to key description ("Left")
+            while MacOS uses a symbol (e.g. "←"). Give it a try.
+        </p>
+        <pre><code class="java">import doodlepad.*;
+
+public class BoxDriver
+{
+    // The box to drive around the Pad
+    private Rectangle box;
+
+    public BoxDriver() {
+        // Explicitly create a Pad and handle key-pressed event
+        Pad p = new Pad(600, 600);
+        p.setKeyPressedHandler( this::onKeyPressed );
+
+        // Create ans style the box to drive
+        box = new Rectangle(100, 100, 50, 50);
+        box.setFillColor(0, 0, 255);
+    }
+
+    // Key pressed event handler moves box according key pressed
+    public void onKeyPressed(Pad p, String keyText, String keyMods) {
+        if (keyText.equals("Left") || keyText.equals("←")) {
+            box.move(-10, 0);
+        } else if (keyText.equals("Right") || keyText.equals("→")) {
+            box.move(10, 0);
+        } else if (keyText.equals("Up") || keyText.equals("↑")) {
+            box.move(0, -10);
+        } else if (keyText.equals("Down") || keyText.equals("↓")) {
+            box.move(0, 10);
+        }
+    }
+
+    public static void main(String[] args) {
+        BoxDriver myBoxDriver = new BoxDriver();
+    }
+}
+</code></pre>
+    </body>
+</html>

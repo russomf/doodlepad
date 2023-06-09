@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Repeated Actions in DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Repeated Actions</h2>
+        <hr/>
+    <h3>Contents</h3>
+    <p>
+        <ul>
+                <li><a href="#Introduction">Introduction</a></li>
+                <li><a href="#Methods">Timer Methods</a></li>
+                <li><a href="#Example1">Example: Animating Shape Motion</a></li>
+            </ul>
+    </p>
+    <h3><a name="Introduction"></a>Introduction</h3>
+    <p>
+        One way to perform animations or other graphic illustrations requiring repeated sequential execution of code 
+        is to make use of a timer. Smilar to its hardware counterpart, a software timer may be started and stopped,
+        set to run at a presepecified tick rate, and take some action at one or more timepoints in the future.
+        In DoodlePad the <a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html" target="_blank">Pad</a> class 
+        provides the functionality of a timer, which may be used to run repeated actions. 
+    </p>
+    <h3><a name="Methods"></a>Timer Methods</h3>
+    <p>
+        The Pad's timer functionality is encapsulated by five methods:
+        <table>
+        <tr><th>Method Signature</th><th>Description</th></tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setTickRate-double-" target="_blank">
+                public final void setTickRate(double tps)
+            </a></td>
+            <td>
+                Set the rate at which the Pad's internal timer fires. 
+                The single method argument is the tick rate, provided in the units ticks-per-second.
+                The default tick rate value is 60.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getTickRate--" target="_blank">
+                public final double getTickRate()
+            </a></td>
+            <td>
+                Return the current tick rate value in ticks-per-second that has been set for a Pad object's internal timer.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setTickHandler-doodlepad.Pad.PadTimerEventHandler-" target="_blank">
+                public void setTickHandler(Pad.PadTimerEventHandler handler)
+            </a></td>
+            <td>
+                Provide a method reference for a method to be executed when a Pad timer ticks, the tick event handler.
+                The method signature for the handler must match the signature <span class="code">void handler(Pad pad, long when)</span>.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#startTimer--" target="_blank">
+                public void startTimer()
+            </a></td>
+            <td>
+                Start a Pad's timer ticking. The timer will invoke the associated tick event handler at its preset tick rate.
+            </td>
+        </tr>
+        <tr><td><a href="https://doodlepad.org/dist/javadoc/doodlepad/Pad.html#stopTimer--" target="_blank">
+                public void stopTimer()
+            </a></td>
+            <td>
+                Stop a Pad's timer ticking.
+            </td>
+        </tr>
+        </table>
+    </p>
+    <h3><a name="Example1"></a>Example: Animating Shape Motion</h3>
+    <img src="images/MouseSeeker.gif" style="float:right;padding:10px;">
+    <p>
+        The following example demonstrates the use of a timer in DoodlePad. 
+        In this example a small green "bug" (an Oval object) continually seek the mouse location.
+        Moving the mouse on the Pad causes the bug to change direction.
+    </p>
+    <p>
+        The program's <span class="code">main()</span> method starts by creating and styling new Pad and Oval objects.
+        The Pad's mouseMoved event is handled by a method that updates target coordinates.
+        These target coordinates are continuously being sought by the bug.
+        The Pad timer's tick rate is set to 30 ticks-per-second, and its tick event handler is set to a method named <span class="code">moveBug()</span>.
+        Before exiting <span class="code">main()</span> the Pad timer is started.
+    </p>
+    <p>
+        The <span class="code">moveBug()</span> method is the Pad timer's event handler. It is fired approximately 30 times per second by the timer.
+        Each time it is fired, it computes a new location that is about 10% of the way between its current location and the target location,
+        and it moves the bug to the new location. Because it does not move the bug all the way to the target location,
+        the bug continuously changes direction as the mouse moves.
+        The result is a fun program to play with, and the basis for more interesting games and animated illustrations.
+    </p>
+    <p>
+        Finally, note that a Shape's location is not the only thing that may be animated. Any object property may change.
+        For example, a Shapes' fill or stroke color may be animated, as can its width, height or other properties.
+        The only limit is your imagination.
+    </p>
+<pre><code class="java">// Seeker.java
+// Continually move a green bug to follow a moving mouse
+import doodlepad.*;
+
+public class Seeker {
+
+    // The mouse-seeking bug Shape
+    private static Oval bug;
+
+    // The coordinates being sought by the bug
+    private static double targetX, targetY;
+
+    public static void main(String[] args) {
+        // Create a new Pad object
+        Pad pad = new Pad("Mouse Seeker", 400, 400);
+
+        // Create the green bug Shape that seeks the mouse
+        bug = new Oval(0, 0, 10, 10);
+        bug.setFillColor(0, 255, 0);
+
+        // Handle the Pad mouseMoved event
+        pad.setMouseMovedHandler( Seeker::onMouseMoved );
+
+        // Set up and start the Pad timer
+        pad.setTickRate(30);
+        pad.setTickHandler( Seeker::moveBug );
+        pad.startTimer();
+    }
+
+    // Set a new target location for the bug every time the mouse is moved
+    public static void onMouseMoved(Pad pad, double x, double y, int button) {
+        targetX = x;
+        targetY = y;
+    }
+
+    // Move the bug part-way toward the target mouse location
+    public static void moveBug(Pad pad, long when) {
+        // Get the current bug location
+        double currX = bug.getX();
+        double currY = bug.getY();
+        // Compute a new location closer to the mouse
+        double newX  = currX + 0.1*(targetX - currX);
+        double newY  = currY + 0.1*(targetY - currY);
+        // Update the bug location
+        bug.setX( newX );
+        bug.setY( newY );
+    }
+}
+</code></pre>
+
+    </body>
+</html>

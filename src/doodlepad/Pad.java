@@ -2,7 +2,7 @@
  * Pad.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2021 Mark F. Russo
+ * Copyright (c) 2012-2024 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -31,7 +31,6 @@ import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.InvocationTargetException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -78,12 +77,7 @@ public class Pad extends JFrame implements Iterable<Shape>
      * Layers on the Pad
      */
     private List<Layer> layers = null;
-    
-    /**
-     * The current affine transform to be used when drawing all Shapes on this Pad
-     */
-    //protected AffineTransform transform;
-    
+        
     /**
      * Background color used to create the Pad on redraw
      */
@@ -123,9 +117,9 @@ public class Pad extends JFrame implements Iterable<Shape>
     /**
      * Lists of custom listeners registered to receive events
      */
-    private java.util.List<PadTickListener> tickListeners = new ArrayList<>();
+    private java.util.List<PadTickListener>  tickListeners = new ArrayList<>();
     private java.util.List<PadMouseListener> mouseListeners = new ArrayList<>();
-    private java.util.List<PadKeyListener> keyListeners = new ArrayList<>();
+    private java.util.List<PadKeyListener>   keyListeners = new ArrayList<>();
     
     /**
      * Create a new Pad object, properly invoking on the event dispatch thread.
@@ -207,18 +201,18 @@ public class Pad extends JFrame implements Iterable<Shape>
      * Private fields that hold event handlers assigned using method references.
      * See for example setMouseClickedHandler()
      */
-    private PadMouseEventHandler mouseClickedHandler = null;
-    private PadMouseEventHandler mouseDoubleClickedHandler = null;
-    private PadMouseEventHandler mouseDraggedHandler = null;
-    private PadMouseEventHandler mouseEnteredHandler = null;
-    private PadMouseEventHandler mouseExitedHandler = null;
-    private PadMouseEventHandler mouseMovedHandler = null;
-    private PadMouseEventHandler mousePressedHandler = null;
-    private PadMouseEventHandler mouseReleasedHandler = null;
-    private PadKeyEventHandler keyPressedHandler = null;
-    private PadKeyEventHandler keyReleasedHandler = null;
+    private PadMouseEventHandler    mouseClickedHandler = null;
+    private PadMouseEventHandler    mouseDoubleClickedHandler = null;
+    private PadMouseEventHandler    mouseDraggedHandler = null;
+    private PadMouseEventHandler    mouseEnteredHandler = null;
+    private PadMouseEventHandler    mouseExitedHandler = null;
+    private PadMouseEventHandler    mouseMovedHandler = null;
+    private PadMouseEventHandler    mousePressedHandler = null;
+    private PadMouseEventHandler    mouseReleasedHandler = null;
+    private PadKeyEventHandler      keyPressedHandler = null;
+    private PadKeyEventHandler      keyReleasedHandler = null;
     private PadKeyTypedEventHandler keyTypedHandler = null;
-    private PadTimerEventHandler tickHandler = null;
+    private PadTimerEventHandler    tickHandler = null;
     
     // Flag indicating if dragging is underway.
     private boolean dragging = false;
@@ -249,8 +243,6 @@ public class Pad extends JFrame implements Iterable<Shape>
         @Override
         public void paintComponent(Graphics g) 
         {
-            //System.out.println("paintComponent");
-            
             // Execute base class paint() method
             super.paintComponent(g);
             
@@ -455,10 +447,6 @@ public class Pad extends JFrame implements Iterable<Shape>
                     ArrayList<Shape> shapes = lay.getShapes();
                     
                     for (int i=0; i<shapes.size(); i++) {
-//                        Shape ts = shapes.get(i);
-//                        if (ts.getSelected() == true) {
-//                            ts.startDrag(eX, eY);
-//                        }
                         shapes.get(i).startDrag(eX, eY);
                     }
 
@@ -1312,7 +1300,7 @@ public class Pad extends JFrame implements Iterable<Shape>
             closeAllConnections();      // Close all client socket connections, if any
             stopListening();            // Close listening socket and terminate listening loop 
         } finally {
-            super.finalize();           // Always call base class implementation
+            // super.finalize();           // Always call base class implementation
         }
     }
     
@@ -1496,9 +1484,6 @@ public class Pad extends JFrame implements Iterable<Shape>
         for (int l=0; l<layers.size(); l++) {
             layers.get(l).deselectAll();
         }
-//        for (int i=0; i<shapes.size(); i++) {
-//            shapes.get(i).setSelected(false);
-//        }
     }
     
     /**
@@ -1507,8 +1492,8 @@ public class Pad extends JFrame implements Iterable<Shape>
      */
     public final void setTickRate(double tps) {
         // Check for validity of tick rate
-        if (tps < 0.0) {
-            throw new IllegalArgumentException("tick rate cannot be less than 0");
+        if (tps <= 0.0) {
+            throw new IllegalArgumentException("tick rate cannot be less than or equal to 0");
         }
         
         // Set up new timer
@@ -1528,7 +1513,7 @@ public class Pad extends JFrame implements Iterable<Shape>
     }
     
     /**
-     * Add object to the list if items that are notified on Pad's timer tick action.
+     * Add object to the list of items that are notified on Pad's timer tick action.
      * @param o An object that implements the ActionListener interface.
      */
     public void addTickListener(PadTickListener o) {
@@ -2447,7 +2432,6 @@ public class Pad extends JFrame implements Iterable<Shape>
      * @param when The difference in milliseconds between the timestamp of when this event occurred and midnight, January 1, 1970 UTC.
      */
     public void onTick(long when) {
-        //System.out.println(System.nanoTime());
         // Also, override to implement.
         if (tickHandler != null) {
             tickHandler.f(this, when);

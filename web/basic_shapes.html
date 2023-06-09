@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Basic Shapes with DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Basic Shapes</h2>
+        <hr></hr>
+        <a name="top"></a>
+<p>
+DoodlePad defines a variety of graphic objects that you can instantiate and interact with, including basic shapes. Available basic shape classes include the following. Don't miss other DoodlePad classes such as <a href="http://doodlepad.org/dist/javadoc/doodlepad/Polygon.html" target="_blank">Polygon</a>, <a href="http://doodlepad.org/dist/javadoc/doodlepad/Path.html" target="_blank">Path</a>, <a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html" target="_blank">Pad</a>, <a href="http://doodlepad.org/dist/javadoc/doodlepad/Text.html" target="_blank">Text</a>, <a href="http://doodlepad.org/dist/javadoc/doodlepad/Image.html" target="_blank">Image</a>, <a href="http://doodlepad.org/dist/javadoc/doodlepad/Sprite.html" target="_blank">Sprite</a> and more.
+</p>
+<p>
+Click each link for more information and examples.
+</p>
+
+<table style="margin-left:20px;">
+    <tr><td><a href="#rectangle">Rectangle</a></td><td>Your garden variety rectangle</td></tr>
+    <tr><td><a href="#oval">Oval</a></td><td>Another name for an ellipse</td></tr>
+    <tr><td><a href="#roundrect">RoundRect</a></td><td>A Rectangle with rounded corners</td></tr>
+    <tr><td><a href="#line">Line</a></td><td>A straight line between two points</td></tr>
+    <tr><td><a href="#arc">Arc</a></td><td>A curved line that is part of an ellipse outline</td></tr>
+</table>
+
+<p><hr></hr></p>
+<h3><a name="rectangle">Rectangle</a></h3>
+<p>
+<a href="http://doodlepad.org/dist/javadoc/doodlepad/Rectangle.html" target="_blank">Rectangles</a> are one of the more simple shapes in DoodlePad. Creating a new Rectangle is as simple as creating an instance of the Rectangle class. The Rectangle class's 0-argument constructor creates a 100 pixel &times; 100 pixel Rectangle at a randomly selected location, but other Rectangle constructors give you more control of the Rectangle created. For example, the following sample program creates a 70 pixel &times; 40 pixel Rectangle with its upper left corner at the location (50, 60). Refer to <a href="compile_run.html">Compile and Run</a> for instructions on how to compile and run your programs.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class RectangleDemo1 {
+    public static void main(String[] args) {
+    
+        Rectangle r1 = new Rectangle(50, 60, 70, 40);
+        
+    }
+}
+</code></pre>
+
+<p>
+The Rectangle size and location are passed as numerical arguments to the Rectangle constructor. The first pair of arguments correspond to the Rectangle location (x=50, y=60) and the second pair correspond to its size (width=70, height=40). This is a pattern that is repeated in many graphic object constructors in DoodlePad.
+</p>
+
+<p><a href="#top">&uarr; Top</a></p>
+
+<p><hr></hr></p>
+<h3><a name="oval">Oval</a></h3>
+<p>
+Creating an <a href="http://doodlepad.org/dist/javadoc/doodlepad/Oval.html" target="_blank">Oval</a> is very similar to creating a Rectangle. An Oval's 0-argument constructor <a href="/compile_run.html">creates</a> a new 100 pixel &times; 100 pixel ellipse shape with a randomly selected starting location. An Oval also has a four-argument constructor similar to a Rectangle. The first two arguments of this constructor are the x and y coordinates of the upper left corner of the Oval and the second two arguments are the Oval's width and height. Note that the four numerical argument values of this Oval constructor can be thought of as describing the bounding box within which the Oval is be created.
+</p>
+
+<p>
+The only difference between the following example program and the following sample program creates a 70 pixel &times; 40 pixel Rectangle with its upper left corner at the location (50, 60). 
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class OvalDemo1 {
+    public static void main(String[] args) {
+    
+        Oval r1 = new Oval(50, 60, 70, 40);
+        
+    }
+}
+</code></pre>
+
+<p><a href="#top">&uarr; Top</a></p>
+
+<p><hr></hr></p>
+<h3><a name="roundrect">RoundRect</a></h3>
+
+<img src="images/roundrect.png" style="float:right;padding:10px;">
+
+<p>
+The <a href="http://doodlepad.org/dist/javadoc/doodlepad/RoundRect.html" target="_blank">RoundRect</a> class differs from Rectangle in that the corners of a RoundRect are, well, <i>rounded</i>. In addition to specifying the location and size of a RoundRect, you must also specify the width and height of the arcs that form the rounded corners. These additional parameters are called <span class="code">arcWidth</span> and <span class="code">arcHeight</span> and come after <span class="code">x-location</span>, <span class="code">y-location</span>, <span class="code">width</span> and <span class="code">height</span> in the RoundRect constructor.
+</p>
+
+<p>
+In the following example we create a RoundRect object at (10, 10) with width = 200, height = 150, arcWidth and arcHeight = 30. The diagram on the right illustrates how these parameters are used to define the shape. Note that the arcWidth and arcHeight parameters are not required to have equal values.
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class RoundRectDemo1 {
+    public static void main(String[] args) {
+        
+        RoundRect r1 = new RoundRect(10, 10, 200, 150, 30, 30);
+        
+    }
+}
+</code></pre>
+
+<p><a href="#top">&uarr; Top</a></p>
+
+<p><hr></hr></p>
+<h3><a name="arc">Arc</a></h3>
+
+<img src="images/arc.png" style="float:right;padding:10px;">
+
+<p>
+The <a href="http://doodlepad.org/dist/javadoc/doodlepad/Arc.html" target="_blank">Arc</a> shape class can be thought of as a pie-section taken from an Oval. In fact, to define an Arc one starts with the location and dimensions of an Oval and then adds the start and angular extent of the section to be taken. In DoodlePad these angles are defined with 0&deg; indicated by a horizontal line extending from the center of the oval to the right. As the angle increases the line rotates in the counter clockwise direction. 
+</p>
+
+<p>
+The beginning of an arc is specified with an angle between 0&deg; and 360&deg;, and the length of the arc is determined by an angle that the arc sweeps. The arc itself follows the outline of the equivalent oval. The figure on the right describes the arc specified (in red) by the program below. The first four arguments of the Arc constructor are the same as an Oval (<span class="code">x</span>, <span class="code">y</span>, <span class="code">width</span>, <span class="code">height</span>). The last two parameters are the starting angle (<span class="code">startAngle</span>) and the extent of the arc (<span class="code">arcAngle</span>) measure in degrees. 
+</p>
+
+<p>
+When an arc is filled, it becomes a pie section, which can be filled and outlined to form a pie-shaped graphic object. When an arc is not filled, as is the case with the example below, only the segment of the equivalent Oval's outline is rendered. 
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class ArcDemo1 {
+    public static void main(String[] args) {
+        
+        // Create the Arc starting at 45 degrees and extending for 90 degrees
+        Arc a1 = new Arc(100, 100, 200, 200, 45, 90);
+        
+        // Do not fill the arc so only the arc is drawn.
+        a1.setFilled(false);
+
+    }
+}
+</code></pre>
+
+<p><a href="#top">&uarr; Top</a></p>
+
+<p><hr></hr></p>
+<h3><a name="line">Line</a></h3> 
+<p>
+The <a href="http://doodlepad.org/dist/javadoc/doodlepad/Line.html" target="_blank">Line</a> shape is created by specifying its two endpoint coordinates. The <a href="http://doodlepad.org/dist/javadoc/doodlepad/Line.html#Line-double-double-double-double-" target="_blank">Line constructor</a> takes four values, (<span class="code">x1</span>, <span class="code">y1</span>, <span class="code">x2</span>, <span class="code">y2</span>), where (<span class="code">x1</span>, <span class="code">y1</span>) is the first endpoint and (<span class="code">x2</span>, <span class="code">y2</span>) is the second endpoint.
+</p>
+
+<p>
+The example below creates a diagonal Line shape between the endpoints (100, 100) and (200, 200).
+</p>
+
+<pre><code class="java">import doodlepad.*;
+
+public class LineDemo1 {
+    public static void main(String[] args) {
+        
+        // Create a diagonal Line shape from (100, 100) and (200, 200)
+        Line l1 = new Line(100, 100, 200, 200);
+
+    }
+}
+</code></pre>
+
+<p><a href="#top">&uarr; Top</a></p>
+
+    </body>
+</html>

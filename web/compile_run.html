@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Compile and Run with DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Compiling and Running a DoodlePad Program</h2>
+        <hr></hr>
+
+        <h3>Setting Up</h3>
+        <p>
+        Once you've written your program, make sure to save it to a file with a base name that matches your main class and the <span class="code">.java</span> extension. For example, assume you have the program introduced in <a href="about.html">About DoodlePad</a>:
+        </p>
+        
+<pre><code class="java">import doodlepad.*;
+
+public class MyFirstOval {
+    public static void main(String[] args) {
+      Oval oval1 = new Oval();
+    }
+}
+</code></pre>
+
+        <p>
+        Save this program to a file named "MyFirstOval.java". Make sure your program and the <span class="code"">doodlepad.jar</span> file are in the same directory by saving your program to a directory that already has a copy of <span class="code">doodlepad.jar</span>, copying <span class="code">doodlepad.jar</span> from another directory into your current one, or if necessary, <a href="http://doodlepad.org/dist/doodlepad.jar">download a new copy of doodlepad.jar</a>.
+        </p>
+        <h3>Compile Your Program</h3>
+        <p>
+        Open a Command Prompt (on Windows) or a terminal (on MacOS or Linux) and change the current working directory to the one containing your program file and doodlepad.jar. Enter the following command to compile your program. If everything works as expected, you will have the file MyFirstOval.class in your directory. If you see any compiler errors, fix your mistakes and compile again. Repeat this process until you have no more compiler errors.
+        </p>
+        <pre>javac -cp doodlepad.jar MyFirstOval.java</pre>
+        </p>
+        <h3>Run Your Program</h3>
+        <p>
+        To run your program, on Windows enter the following command into the Command Prompt. Note the semicolon (;).
+        </p>
+        <pre>java -cp .<span style="color:red;font-weight:bold;">;</span>doodlepad.jar MyFirstOval</pre>
+        <p>
+        On the Mac or Linux enter the following, slightly different command into the terminal. Note the colon (:).
+        </p>
+        <pre>java -cp .<span style="color:red;font-weight:bold;">:</span>doodlepad.jar MyFirstOval</pre>
+        <p>
+        After a moment you will see a new Pad graphics window with an Oval object displayed. In this case you may click and drag the Oval around the Pad window.
+        </p>
+        <p>
+        If you are using another development tool, like <a href="http://bluej.org" target="_blank">BlueJ</a> and <a href="http://www.drjava.org/" target="_blank">DrJava</a>, follow instructions provided with those tools to compile and run your program.
+        </p>
+
+    </body>
+</html>

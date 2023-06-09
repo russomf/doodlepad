@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Getting Started with DoodlePad</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+    </head>
+    <body>
+        <h2>Getting Started</h2>
+        <hr></hr>
+        <h3>Get Java 8</h3>
+        <p>
+        DoodlePad is written using the features of Java 8, so it is important that you have at least the Standard Edition (SE) of Java 8 or later installed on your computer, 
+        To determine which version of Java that you have installed on your machine, on Windows open a Command Prompt, on MacOS or Linux open a terminal, 
+        and type the following.
+        </p>
+        <pre>javac -version</pre>
+        <p>If the Java 8 JDK is installed you will see something like,</p>
+        <pre>javac 1.<span style="color:red;font-weight:bold;">8</span>.X_XX</pre>
+        <p>
+        If you do not have Java 8 installed, 
+        <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">visit Oracle and download the latest Java Developer Kit (JDK)</a> 
+        for your operation system. It is important to get the JDK and not the JRE (Java Runtime Environment).
+        </p>
+        <h3>Make sure you have a good editor</h3>
+        <p>
+        One way to write Java programs is to use a simple editor capable of saving text files. 
+        On Windows, Notepad is one option, but a better choice is <a href="https://notepad-plus-plus.org/" target="_blank">Notepad++</a>.
+        On the Mac consider <a href="http://www.barebones.com/products/textwrangler/" target="_blank">TextWrangler</a> or <a href="http://macromates.com/" target="_blank">TextMate</a>.
+        As long as your editor saves plain text files you can use it for writing programs.
+        </p>
+        <p>
+        Even better than a plain text editor is one of many great development environments designed for educational purposes. 
+        Two good examples are <a href="http://bluej.org" target="_blank">BlueJ</a> and <a href="http://www.drjava.org/" target="_blank">DrJava</a>. 
+        These cross-platform environments will help you create projects, edit and debug your code. Consider downloading one of these
+        excellent tools for your DoodlePad programing.
+        </p>
+        <h3>Download <a href="https://github.com/russomf/doodlepad/blob/master/dist/doodlepad.jar?raw=true">doodlepad.jar</a></h3>
+        <p>
+        You'll need to get the doodlepad.jar file. All of DoodlePad is included in this single file. 
+        <a href="https://github.com/russomf/doodlepad/blob/master/dist/doodlepad.jar?raw=true">Click here</a> to download doodlepad.jar and save it to your computer. 
+        </p>
+        <h3>Write your program</h3>
+        <p>
+        The next step is to open a new file and write your first program. 
+        For now let's enter the program introduced in <a href="about.html">About DoodlePad</a>, as follows.
+        </p>
+        
+<pre><code class="java">import doodlepad.*;
+
+public class MyFirstOval {
+    public static void main(String[] args) {
+      Oval oval1 = new Oval();
+    }
+}
+</code></pre>
+
+        <p>
+        When ready, save your program to a file with the name of your class and the ".java" extension. For example, the above program should be saved to a file named "MyFirstOval.java" and then follow the instructions in <a href="compile_run.html">Compile and Run</a>.
+        </p>
+
+        <h3>What's Next?</h3>
+        <p>
+        Have a look at the links under <b>Topics</b> for more information on the many things you can do with DoodlePad.
+        </p>
+
+    </body>
+</html>

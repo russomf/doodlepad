@@ -2,7 +2,7 @@
  * Shape.java
  * 
  * Author: Mark F. Russo, Ph.D.
- * Copyright (c) 2012-2021 Mark F. Russo
+ * Copyright (c) 2012-2024 Mark F. Russo
  * 
  * This file is part of DoodlePad
  * 
@@ -33,7 +33,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
-import javax.swing.UIManager;
+// import javax.swing.UIManager;
 
 /**
  * Abstract base class for all graphical shape objects

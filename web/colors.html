@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DoodlePad Colors</title>
+        <meta name="description" content="DoodlePad is an open source object-oriented graphics library for Java that is easy to learn and makes event-driven programming fun" />
+        <meta name="keywords" content="graphics,java,open source,events,progamming,learn" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/hljs.css">
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <!-- script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script -->
+        <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-80544484-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-80544484-1');
+        </script>
+        <style>
+            #overlay {                  /* Invisible, whole-window overlay */
+                position: absolute;
+                left: 0px;
+                right:0px;
+                top: 0px;
+                bottom: 0px;
+                background-color: rgba(0,0,0,0);
+                display: none;
+                z-index: 1000;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay"></div>
+        <h2>Colors</h2>
+        <hr/>
+        <h3>
+            <a name="components">Color Components</a>
+        </h3>
+        <p>
+            Most DoodlePad Shape subclasses may be filled with one color and stroked (outlined) with a separate color.
+            It is also possible to disable Shape fill or stroke, drawing empty shapes or shapes without an outline.
+            Colors in DoodlePad are constructed from color components: <span style="font-weight: bold; color: red;">red</span>, <span style="font-weight: bold; color: green;">green</span>, and <span style="font-weight: bold; color: blue;">blue</span>,
+            and one transparency component called <span style="font-weight: bold;">alpha</span>.
+            The value of each of the four components may be an integer in the range [0, 255].
+        </p>
+        <p style="float:right">
+            <canvas id="cvs" width="550" height="350" style="border: 1px solid black;"></canvas>
+        </p>
+        <script src="widgets/colorPicker.min.js" type="text/javascript"></script>
+        <p>
+            Use the interactive widget on the right to explore how these four values combine to achieve a desired fill or stroke color.
+            Drag the colored slider knobs up and down with the mouse to change a component's value.
+            The color that results from combining the four components is shown in the rectangular swatch on the right.
+            To illustrate transparency (alpha), behind the swatch there are three colored lines.
+            Transparency is increased by decreasing the alpha component.
+            When alpha is 0, the resulting color is completely transparent.
+            When alpha is 255, the color is completely opaque.
+            Drag the alpha slider up and down to see the impact on color.
+        </p>
+        <p>
+            Pure red, green or blue is achieved by setting the corresponding color component value to its maximum (255)
+            and leaving the other two color color values at 0.
+            Other colors are constructed from different combinations of the color components.
+            All shades of gray, from black to white, are formed by setting the values of red, green, and blue to equal values between 0 and 255.
+        </p>
+        <table>
+            <tr><th>Color</th><th style="width:60px;">Red</th><th style="width:60px;">Green</th><th style="width:60px;">Blue</th><th>Sample</th></tr>
+            <tr><td>Yellow</td><td>255</td><td>255</td><td>0</td><td style="background-color:rgb(255, 255, 0);"></td></tr>
+            <tr><td>Orange</td><td>255</td><td>127</td><td>0</td><td style="background-color:rgb(255, 127, 0);"></td></tr>
+            <tr><td>Cyan</td><td>0</td><td>255</td><td>255</td><td style="background-color:rgb(0, 255, 255);"></td></tr>
+            <tr><td>Magenta</td><td>255</td><td>0</td><td>255</td><td style="background-color:rgb(255, 0, 255);"></td></tr>
+            <tr><td>Black</td><td>0</td><td>0</td><td>0</td><td style="background-color:rgb(0, 0, 0);"></td></tr>
+            <tr><td>Gray</td><td>127</td><td>127</td><td>127</td><td style="background-color:rgb(127, 127, 127);"></td></tr>
+            <tr><td>White</td><td>255</td><td>255</td><td>255</td><td style="background-color:rgb(255, 255, 255);"></td></tr>
+        </table>
+        <h3>
+            <a name="fill_and_stroke">Setting Fill And Stroke Color</a>
+        </h3>
+        <p>
+            Each Shape object's fill color and stroke color may be specified using color component values.
+            There are two mutator methods for setting Shape color: <span class="code">setFillColor(...)</span> and <span class="code">getStrokeColor(...)</span>.
+            These setter methods each have three overloads.
+            The base method signature has four parameters, one for each of the four color components: <span style="color:red;font-weight: bold;">red</span>, <span style="color:green;font-weight: bold;">green</span>, <span style="color:blue;font-weight: bold;">blue</span> and <span style="font-weight: bold;">alpha</span>.
+            A second overloaded method has only three parameters, which specify red, green and blue components.
+            In this case the alpha component is assumed to have a value of 255, meaning that the Shape color has no transparency.
+            The third overloaded method has only one parameter, often called <span class="code">gray</span>.
+            In this case the parameter value is repeated for all three color components, and alpha once again is set to 255.
+        </p>
+        <h3>
+            <a name="fill_and_stroke_examples">Fill And Stroke Color Examples</a>
+        </h3>
+        <img src="images/colors.png" style="float:right;padding:10px;">
+
+        <p>
+            The following example program creates five shapes with various fill and stroke colors.
+            The resulting Shape objects are shown in the image on the right.
+            Note that the Oval is unfilled, so the underlying red Rectangle is visible.
+            Also note that the filled Arc has a semi-transparent yellow fill, so the underlying Line is partially visible.
+        </p>
+        <pre><code class="java">import doodlepad.*;
+
+public class Colors {
+    private Oval myOval;
+    private Rectangle myRect;
+    private Line myLine;
+    private Arc myArc;
+    private Polygon myPoly;
+
+    public Colors() {
+        // Red Rectangle with default stroke style
+        myRect = new Rectangle( 10, 55, 50, 40);
+        myRect.setFillColor(255, 0, 0);
+
+        // Unfilled Oval with thick light gray stroke
+        myOval = new Oval(40, 50, 50, 50);
+        myOval.setFilled(false);
+        myOval.setStrokeColor(200);
+        myOval.setStrokeWidth(5);
+
+        // Gray Line with thick stroke
+        myLine = new Line(80, 50, 120, 90);
+        myLine.setStrokeColor(127);
+        myLine.setStrokeWidth(10);
+
+        // Semi-transparent yellow filled Arc with default stroke style
+        myArc = new Arc(100, 50, 50, 50, 30, 290);
+        myArc.setFillColor(255, 255, 0, 127);
+
+        // Green Polygon with no stroke
+        double[] xs = {130, 150, 170};
+        double[] ys = {50, 100, 50};
+        myPoly = new Polygon(xs, ys);
+        myPoly.setFillColor(0, 255, 0);
+        myPoly.setStroked(false);
+    }
+
+    public static void main(String[] args) {
+        Colors myColors = new Colors();
+    }
+}
+</code></pre>
+        <h3>
+            <a name="color_related_methods">Color-related Methods</a>
+        </h3>
+        <p>
+            The following table lists all color-related Shape methods and their overloads with descriptions.
+            Both setter and getter methods are listed.
+        </p>
+        <table>
+            <tr><th>Method</th><th>Description</th></tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setFillColor-double-double-double-double-" target="_blank">public void setFillColor(double red, double green, double blue, double alpha)</a></td>
+                <td>Set the color used to fill a Shape by specifying all four color components.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setFillColor-double-double-double-" target="_blank">public void setFillColor(double red, double green, double blue)</a></td>
+                <td>Set the color used to fill a Shape.
+                    The alpha color component is set to 255, meaning that the Shape fill is not transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setFillColor-double-" target="_blank">public void setFillColor(double gray)</a></td>
+                <td>Set the fill color of a Shape to a shade of gray.
+                    The single parameter value is used for red, green and blue.
+                    The alpha component is set to 255, meaning that the Shape fill is not transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFillRed--" target="_blank">public int getFillRed()</a></td>
+                <td>Return the red fill color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFillBlue--" target="_blank">public int getFillBlue()</a></td>
+                <td>Return the blue fill color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFillGreen--" target="_blank">public int getFillGreen()</a></td>
+                <td>Retrun the green fill color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFillAlpha--" target="_blank">public int getFillAlpha()</a></td>
+                <td>Return the alpha fill color component indicating the degree to which the shape fill is transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFillColor--" target="_blank">public java.awt.Color getFillColor()</a></td>
+                <td>Return the color used to fill a Shape as a java.awt.Color object.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setFilled-boolean-" target="_blank">public void setFilled(boolean filled)</a></td>
+                <td>Specify whether or not a Shape is to be filled with a color.
+                    If set to false the Shape will not be filled.
+                </td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getFilled--" target="_blank">public boolean getFilled()</a></td>
+                <td>Return a boolean indicating whether or not the Shape is filled.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStrokeColor-double-double-double-double-" target="_blank">public void setStrokeColor(double red, double green, double blue, double alpha)</a></td>
+                <td>Set the color used to stroke (outline) a Shape by specifying al four color components</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStrokeColor-double-double-double-" target="_blank">public void setStrokeColor(double red, double green, double blue)</a></td>
+                <td>Set the color used to outline a Shape.
+                    The alpha color component is set to 255, meaning that the Shape outline is not transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStrokeColor-double-" target="_blank">public void setStrokeColor(double gray)</a></td>
+                <td>Set the color used to outline a Shape to a shade of gray.
+                The single parameter value is used for red, green and blue.
+                The alpha component is set to 255, meaning that the Shape outline is not transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStrokeRed--" target="_blank">public int getStrokeRed()</a></td>
+                <td>Return the red outline color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStrokeBlue--" target="_blank">public int getStrokeBlue()</a></td>
+                <td>Return the blue outline color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStrokeGreen--" target="_blank">public int getStrokeGreen()</a></td>
+                <td>Return the green outline color component.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStrokeAlpha--" target="_blank">public int getStrokeAlpha()</a></td>
+                <td>Return the alpha outline color component indicating the degree to which the shape outline is transparent.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStrokeColor--" target="_blank">public java.awt.Color getStrokeColor()</a></td>
+                <td>Return the color used to outline a Shape as a java.awt.Color object.</td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#setStroked-boolean-" target="_blank">public void setStroked(boolean filled)</a></td>
+                <td>Specify whether or not a Shape is to be outline with a color.
+                    If set to false the Shape will not be outlined.
+                </td>
+            </tr>
+            <tr>
+                <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Shape.html#getStroked--" target="_blank">public boolean getStroked()</a></td>
+                <td>Return a boolean indicating whether or not the Shape is outlined.</td>
+            </tr>
+        </table>
+    <p>
+        The Pad object also has a few color-related methods.
+        These are used only for setting and getting the Pad's background color.
+        The Pad has only two overloads for its method of setting background color.
+        Because a Pad's color may not be transparent, no overload is available that includes an alpha parameter.
+    </p>
+    <table>
+        <tr><th>Method</th><th>Description</th></tr>
+        <tr>
+            <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setBackground-double-double-double-" target="_blank">public void setBackground(double red, double green, double blue)</a></td>
+            <td>Specify the color to use to fill the background of a Pad object.
+            Only red, green and blue color components are specified because Pad objects may not be transparent.</td>
+        </tr>
+        <tr>
+            <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#setBackground-double-" target="_blank">public void setBackground(double gray)</a></td>
+            <td>Specify the shade of gray to use to fill the background of a Pad object.
+                The single parameter value is used for red, green and blue.
+            </td>
+        </tr>
+        <tr>
+            <td><a href="http://doodlepad.org/dist/javadoc/doodlepad/Pad.html#getBackground--" target="_blank">public java.awt.Color getBackground()</a></td>
+            <td>Return the color used to fill the background of a Pad object as a java.awt.Color object.</td>
+        </tr>
+    </table>
+    </body>
+</html>
