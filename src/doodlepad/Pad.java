@@ -1204,6 +1204,16 @@ public class Pad extends JFrame implements Iterable<Shape>
     public Pad(String title, int width, int height) {
         this(title, width, height, Color.WHITE);
     }
+
+    /**
+     * Simple Pad constructor taking only title and window dimensions
+     * @param width The width of the window
+     * @param height The height of the window
+     * @param background The default color of the background
+     */
+    public Pad(int width, int height, Color background) {
+        this("DoodlePad", width, height, background);
+    }
     
     /**
      * Simple Pad constructor taking only window dimensions
@@ -1342,6 +1352,16 @@ public class Pad extends JFrame implements Iterable<Shape>
         this.setBackground(gray, gray, gray);
     }
     
+    /**
+     * Set the background color by passing a Color object
+     * @param color the Color to be used for the background
+     */
+    @Override
+    public void setBackground(Color color) {
+        this.background = color;
+        this.repaint();
+    }
+
     /**
      * Return the current background color used to clear the Pad
      * @return Color object used for the Pad background
